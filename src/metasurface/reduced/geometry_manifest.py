@@ -3,12 +3,13 @@
 import csv
 import io
 import json
+import time
 from pathlib import Path
 
 import numpy as np
 
-from geometry import all_codes, pixel_layout
-from storage import atomic_write, canonical_json, load_npz, save_npz
+from metasurface.reduced.geometry import all_codes, pixel_layout
+from metasurface.common.storage import atomic_write, canonical_json, load_npz, save_npz
 
 
 def load_geometries(path, require_complete=True):
@@ -38,6 +39,10 @@ def load_geometries(path, require_complete=True):
             or state["completed"].shape != (256,)
             or state["completed"].dtype != np.bool_):
         raise ValueError("Invalid geometry checkpoint dimensions or codes.")
+    if "seconds" in state and (state["seconds"].shape != (256,) or
+                               not np.isfinite(state["seconds"]).all() or
+                               np.any(state["seconds"] < 0)):
+        raise ValueError("Invalid geometry runtimes.")
     for i in np.flatnonzero(state["completed"]):
         if not np.array_equal(state["pixels"][i], pixel_layout(state["codes"][i])):
             raise ValueError("Saved pixels differ from their pattern codes.")
@@ -78,15 +83,24 @@ def generate_geometries(directory, pixel_m, limit=None):
     else:
         state = {"metadata": np.asarray(metadata), "codes": all_codes(),
                  "pixels": np.zeros((256, 32, 32), dtype=np.uint8),
-                 "completed": np.zeros(256, dtype=bool)}
+                 "completed": np.zeros(256, dtype=bool),
+                 "seconds": np.zeros(256)}
         save_npz(path, state)
+    from metasurface.common.progress import Progress
+
+    progress = Progress("Geometries", 256, int(state["completed"].sum()))
     pending = np.flatnonzero(~state["completed"])
     if limit is not None:
         pending = pending[:limit]
+    if len(pending) and "seconds" not in state:
+        state["seconds"] = np.zeros(256)
     for i in pending:
+        started = time.perf_counter()
         state["pixels"][i] = pixel_layout(state["codes"][i])
+        state["seconds"][i] = time.perf_counter() - started
         state["completed"][i] = True
         save_npz(path, state)
+        progress.committed(int(state["completed"].sum()), f"layout {i:03d}")
     if state["completed"].all():
         table = io.StringIO(newline="")
         writer = csv.writer(table, lineterminator="\n")

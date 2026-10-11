@@ -13,10 +13,10 @@ estão em `paper/`. O exercício está em `.agents/prompts/assignment_context.md
 
 | Etapa | Comando | Entrada → saída | Lumerical? |
 |---|---|---|---|
-| Geometrias | `python 01_generate_geometries.py` | Configuração → máscaras e códigos | Não |
-| Simulação | `python 02_simulate_geometries.py` | Geometrias salvas → espectros brutos | Sim, via lumapi |
-| Preparação e treino | `python 03_train.py` | Espectros → dataset preparado e modelo | Não |
-| Teste e exportação | `python 04_test_and_export.py` | Modelo/dataset → métricas e um desenho | Apenas na validação física opcional |
+| Geometrias | `uv run --locked python src/real/01_generate_geometries.py` | Configuração → máscaras e códigos | Não |
+| Simulação | `uv run --locked python src/real/02_simulate_geometries.py` | Geometrias salvas → espectros brutos | Sim, via lumapi |
+| Preparação e treino | `uv run --locked python src/real/03_train.py` | Espectros → dataset preparado e modelo | Não |
+| Teste e exportação | `uv run --locked python src/real/04_test_and_export.py` | Modelo/dataset → métricas e um desenho | Apenas na validação física opcional |
 
 A primeira etapa apenas desenha o cobre. A segunda calcula a resposta física.
 O treino usa arquivos salvos, sem consultar o solver. Uma licença remota pode
@@ -27,53 +27,48 @@ exigir rede durante as simulações, mas o treino pode funcionar offline.
 Use Python 3.12. Na pasta do projeto:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+uv venv --python 3.12
+uv lock
+uv sync --locked
 ```
 
-No Windows, ative com `.venv\Scripts\Activate.ps1` no PowerShell.
-Instale PyTorch com CUDA pelo comando apropriado no
-[instalador oficial](https://pytorch.org/get-started/locally/). Confira:
+Confira a disponibilidade CUDA no ambiente sincronizado:
 
 ```bash
-python -c "import torch; print(torch.__version__, torch.version.cuda); assert torch.cuda.is_available(); print(torch.cuda.get_device_name(0))"
-python -m pip freeze > environment.lock.txt
+uv run --locked python -c "import torch; print(torch.__version__, torch.version.cuda); assert torch.cuda.is_available(); print(torch.cuda.get_device_name(0))"
 ```
 
 Mantenha esse ambiente para retomar checkpoints. Mudanças de versão do PyTorch
 invalidam o treino existente. Testes de software CPU usam `requirements-cpu.txt`.
-Não há fallback automático de CUDA para CPU. GPU no PyTorch não habilita GPU FDTD.
+O fluxo real reduzido e o fluxo `real_paper` não fazem fallback automático de CUDA para CPU. O fluxo dummy escolhe CPU explicitamente quando CUDA não está disponível. GPU no PyTorch não habilita GPU FDTD.
 
 ## 2. Configurar
 
-Edite `config.py`. Os scripts não recebem argumentos:
+Edite `src/metasurface/config.py`. Os scripts não recebem argumentos:
 
 - `LUMAPI_DIR`: pasta que contém `lumapi.py` na instalação do Lumerical.
   Exemplos: `/opt/lumerical/v252/api/python` ou
   `Path(r"C:\Program Files\Lumerical\v252\api\python")`.
   Versões recentes podem usar `C:\Program Files\Ansys Inc\v261\Lumerical\api\python`.
   Confira sua instalação antes de usar um exemplo.
-- `BACKEND = "lumerical"` para resultados físicos.
 - `GENERATION_LIMIT = 4` para um piloto de quatro simulações adicionais.
   Depois use `None` para retomar todas as restantes. Esse limite não limita máscaras.
 - `TRAINING["device"] = "cuda"` para treino na GPU NVIDIA.
 - `RUN_EXPORTED_DESIGN = False` para exportar sem iniciar o solver.
-- `GEOMETRY_DIR`, `DATA_DIR`, `TRAIN_DIR`, `EXPORT_DIR`: diretórios de saída.
+- `GEOMETRY_DIR`, `DATA_DIR`, `TRAIN_DIR`, `EXPORT_DIR`: diretórios do fluxo real reduzido.
 
 O cenário tem 256 combinações espelhadas, pixel de 0,2 mm, célula de 6,4 mm,
 FR4 de 1,5 mm, metal de 18 micrômetros, banda de 4–45 GHz, incidência normal
-com polarização x. Os quatro padrões em `geometry.py` são uma adaptação.
+com polarização x. Os quatro padrões em `src/metasurface/reduced/geometry.py` são uma adaptação.
 Não são os oito padrões exatos do artigo.
 
 ## 3. Gerar e salvar geometrias
 
 ```bash
-python 01_generate_geometries.py
+uv run --locked python src/real/01_generate_geometries.py
 ```
 
-Em `runs/geometries/`, `geometry_checkpoint.npz` salva todos os códigos A/B/C/D,
+Em `runs/real/geometries/`, `geometry_checkpoint.npz` salva todos os códigos A/B/C/D,
 as máscaras 32 × 32, escala, checksum e flags. `geometry_codes.csv` lista os IDs.
 Cada máscara é confirmada antes da próxima. Esta etapa não importa Torch nem
 Lumerical. Repetir o comando retoma trabalho pendente e mantém o manifesto completo.
@@ -83,7 +78,7 @@ Lumerical. Repetir o comando retoma trabalho pendente e mantém o manifesto comp
 Com Lumerical FDTD instalado e licença disponível:
 
 ```bash
-python 02_simulate_geometries.py
+uv run --locked python src/real/02_simulate_geometries.py
 ```
 
 O adaptador carrega `lumapi` da instalação e constrói materiais, substrato,
@@ -96,7 +91,7 @@ ajuste do FR4, desligamento automático e refinamento de malha/tempo em um pilot
 Falhas interrompem a coleta. O cobre usa condutividade de 5,8e7 S/m.
 Uma malha inicial pode não resolver adequadamente perdas por efeito pelicular.
 
-`runs/data/simulation_checkpoint.npz` salva frequências, códigos, potências
+`runs/real/data/simulation_checkpoint.npz` salva frequências, códigos, potências
 co/cross/total, flags, tempos e proveniência após cada simulação.
 Nenhum notch é extraído nesta etapa. `seconds` mede a chamada por layout,
 incluindo construção e validação dos arrays, mas exclui preflight e escrita.
@@ -104,7 +99,7 @@ incluindo construção e validação dos arrays, mas exclui preflight e escrita.
 Inspecione o progresso sem abrir o solver:
 
 ```bash
-python -c "import config; from dataset import load_simulations; d=load_simulations(config.DATA_DIR/'simulation_checkpoint.npz'); print('completed:',d['completed'].sum()); print('simulation seconds:',d['seconds'].sum())"
+uv run --locked python -c "from metasurface import config; from metasurface.reduced.dataset import load_simulations; d=load_simulations(config.DATA_DIR/'simulation_checkpoint.npz'); print('completed:',d['completed'].sum()); print('simulation seconds:',d['seconds'].sum())"
 ```
 
 Meça o piloto antes de decidir coletar todas as 256 geometrias. Repetir o comando
@@ -115,11 +110,11 @@ pula resultados salvos. Uma falha repete apenas o layout não confirmado.
 O Lumerical pode ser fechado:
 
 ```bash
-python 03_train.py
+uv run --locked python src/real/03_train.py
 ```
 
 O script extrai frequência, profundidade, largura e presença para até dois
-notches e salva `runs/data/training_dataset.npz`. Os espectros brutos permanecem
+notches e salva `runs/real/data/training_dataset.npz`. Os espectros brutos permanecem
 intactos. A largura usa cruzamentos interpolados de -10 dB. Espectros sem notch,
 com mais de dois, truncados ou não resolvidos ficam preservados com o motivo.
 O mínimo de 24 exemplos elegíveis é operacional, não garantia de generalização.
@@ -129,29 +124,30 @@ decisões de quatro classes. Usa entropia cruzada, Adam, taxa 0,001, batch 16,
 até 500 épocas e parada após 30 sem melhora. Divisão: 70% treino, 15% validação,
 restante teste. O scaler usa somente treino. O melhor modelo usa validação.
 
-`runs/training/last.pt` salva pesos atuais/melhores, Adam, divisão, scaler,
+`runs/real/training/last.pt` salva pesos atuais/melhores, Adam, divisão, scaler,
 histórico, ordem/cursor dos batches e estados aleatórios CPU/CUDA após cada batch.
 Reexecutar retoma o último batch confirmado. Igualdade exata na retomada foi
 verificada em CPU. Não é prometida entre GPUs ou versões distintas.
 
-A análise automática salva `docs/ANALISE_REDES.md` e `network_analysis.json`.
+A análise automática salva `ANALISE_REDES.md` e `network_analysis.json` em
+`runs/real/analysis/`.
 Para contar as redes sem Torch, CUDA ou solver:
 
 ```bash
-python 00_analyze_networks.py
+uv run --locked python src/real/00_analyze_networks.py
 ```
 
 ## 6. Avaliar e exportar um desenho
 
 ```bash
-python 04_test_and_export.py
+uv run --locked python src/real/04_test_and_export.py
 ```
 
 O alvo padrão é o primeiro exemplo de teste, sem escolher o melhor resultado.
 Um alvo customizado usa `TARGET_NOTCHES = [(30.0, -20.0, 0.5)]`, em GHz, dB e GHz.
 Aceita até dois notches. Alvos fora da faixa de treino são sinalizados.
 
-| Arquivo em `runs/design/` | Uso |
+| Arquivo em `runs/real/design/` | Uso |
 |---|---|
 | `report.json` | Acurácia por posição/layout, baseline, alvo, previsão e status físico |
 | `design_pixels.csv` | Exatamente uma máscara 32 × 32, linhas em y crescente |
@@ -168,7 +164,7 @@ comprova correspondência física. Arquivos físicos antigos são invalidados na
 ## 7. Verificar no Lumerical
 
 1. Abra um projeto FDTD vazio. Configure o diretório de trabalho como a pasta
-   absoluta `runs/design/` e rode `build_design.lsf` no Script File Editor.
+   absoluta `runs/real/design/` e rode `build_design.lsf` no Script File Editor.
    O script limpa objetos desse projeto e salva `design.fsp`.
 2. Compare com a imagem. Confira período de 6,4 mm, camadas em `design_spec.json`,
    fonte propagando para -z, polarização x, fronteiras periódicas x/y e PML em z.
@@ -178,7 +174,7 @@ comprova correspondência física. Arquivos físicos antigos são invalidados na
    os layouts. O cobre pode precisar de malha muito mais fina para resolver perdas.
 
 Para comparação quantitativa consistente, configure `RUN_EXPORTED_DESIGN = True`
-e repita `python 04_test_and_export.py`. Ele simula o mesmo único desenho,
+e repita `uv run --locked python src/real/04_test_and_export.py`. Ele simula o mesmo único desenho,
 salva `design.fsp` e `design_validation_spectrum.csv`, e adiciona erros de
 frequência, profundidade e largura quando a quantidade de notches coincide.
 Caso contrário, registra a divergência de quantidade.
@@ -205,12 +201,55 @@ e transmissão desprezível pelo plano de terra.
   novas pastas para este fluxo.
 
 ```bash
-python -m pytest -q
+uv run --locked python -m pytest -q
 ```
 
 Os testes usam dados sintéticos e CPU explicitamente selecionados. Não comprovam
 execução CUDA nem resultados físicos do Lumerical. Evidência desta revisão está
 em `evidence/validation.md`. `evidence/software-proof/` contém um exemplo artificial.
+
+## Fluxos dummy e real_paper
+
+Os comandos de todos os fluxos, somente na ordem de execução, estão em
+[RUN_COMMANDS.md](RUN_COMMANDS.md). Cada execução salva console, erros e tempo
+total em `runs/<fluxo>/logs/<etapa>/`. Os arquivos JSON de status incluem
+tempos de preparação, treino e exportação. Checkpoints de geometria e simulação
+registram tempos por layout quando medidos. `geometry_metrics.json`,
+`simulation_metrics.json`, `dataset_metrics.json` e `training_metrics.json`
+resumem os resultados salvos. Checkpoints antigos preservam os resultados, mas
+não podem recuperar tempos ou perdas por minibatch que não foram medidos.
+
+
+Cada fluxo tem scripts e saídas próprios. Os manifestos reduzidos em
+`runs/real/geometries/` e `runs/dummy/geometries/` são cópias independentes do
+manifesto de 256 geometrias já gerado. Para refazer o fluxo dummy:
+
+```bash
+uv run --locked python src/dummy/01_generate_geometries.py
+uv run --locked python src/dummy/02.1_simulate_geometries.py
+uv run --locked python src/dummy/03.1_dummy_train.py
+uv run --locked python src/dummy/04.1_dummy_test_and_export.py
+```
+
+Os arquivos em `runs/dummy/` usam espectros inventados. O treino usa CUDA se
+estiver disponível e seleciona CPU com mensagem explícita em caso contrário.
+Suas métricas, figuras e projeto exportado verificam somente o software.
+
+O fluxo `real_paper` usa 2.000 amostras de 16 escolhas entre oito máscaras,
+até oito notches e a rede restrita de 24 entradas e 48 saídas. Requer
+Lumerical e CUDA para as etapas físicas e de treino, respectivamente:
+
+```bash
+uv run --locked python src/real_paper/01_generate_geometries.py
+uv run --locked python src/real_paper/02_simulate_geometries.py
+uv run --locked python src/real_paper/03_train.py
+uv run --locked python src/real_paper/04_test_and_export.py
+```
+
+As saídas ficam em `runs/real_paper/`. Consulte
+[as hipóteses do cenário em escala do artigo](docs/REAL_PAPER.md) antes de
+interpretar resultados. Oito máscaras aproximadas e convenções explícitas de
+pré-processamento não tornam este fluxo uma réplica exata dos dados CST do artigo.
 
 ## Referências
 

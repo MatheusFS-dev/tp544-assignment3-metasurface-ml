@@ -8,8 +8,8 @@ import sys
 import numpy as np
 from scipy.integrate import trapezoid
 
-from geometry import rectangles
-from storage import canonical_json, load_npz, save_npz
+from metasurface.reduced.geometry import rectangles
+from metasurface.common.storage import canonical_json, load_npz, save_npz
 
 C0 = 299792458.0
 
@@ -67,13 +67,14 @@ def rectangle_script(name, x, y, dx, dy, z_min, z_max, material):
             f'set("z min",{z_min:.12g}); set("z max",{z_max:.12g}); set("material","{material}");\n')
 
 
-def project_script(codes, physics, reference="device"):
+def project_script(codes, physics, reference="device", rectangle_fn=rectangles):
     """Build a self-contained LSF project for a device, empty space, or PEC mirror.
 
     Args:
         codes (array-like): Four independent pattern IDs.
         physics (dict): SI material, mesh, source, and simulation settings.
         reference (str): 'device', 'empty', or 'mirror'.
+        rectangle_fn (callable): Family-specific SI rectangle builder.
     Returns:
         str: LSF commands constructing a ready-to-save layout, without running it.
     Raises:
@@ -85,7 +86,7 @@ def project_script(codes, physics, reference="device"):
         Path('build_project.lsf').write_text(project_script([1, 2, 3, 0], PHYSICS))
     """
     validate_physics(physics)
-    objects = rectangles(codes, physics["pixel_m"])
+    objects = rectangle_fn(codes, physics["pixel_m"])
     if reference not in ("device", "empty", "mirror"):
         raise ValueError("Invalid reference mode.")
     p = physics
@@ -94,7 +95,7 @@ def project_script(codes, physics, reference="device"):
     t = p["metal_thickness_m"]
     metal = "Copper_RF" if p["metal_model"] == "copper" else "PEC"
     fmin, fmax = p["frequency_min_hz"], p["frequency_max_hz"]
-    script = f'''# Generated reduced metasurface. All dimensions use SI units.
+    script = f'''# Generated metasurface. All dimensions use SI units.
 switchtolayout; selectall; delete;
 if(materialexists("FR4_RF")) {{ deletematerial("FR4_RF"); }}
 if(materialexists("Copper_RF")) {{ deletematerial("Copper_RF"); }}
@@ -234,11 +235,13 @@ def plane_field(result, component):
 class LumericalSolver:
     """Run licensed FDTD projects with shared reference normalization."""
 
-    def __init__(self, physics):
+    def __init__(self, physics, rectangle_fn=rectangles, code_count=4):
         """Record validated settings without loading the proprietary API yet.
 
         Args:
             physics (dict): Simulation configuration.
+            rectangle_fn (callable): Family-specific SI rectangle builder.
+            code_count (int): Tile-code count for preflight references.
         Returns:
             None.
         Raises:
@@ -246,6 +249,8 @@ class LumericalSolver:
         """
         validate_physics(physics)
         self.physics = dict(physics)
+        self.rectangle_fn = rectangle_fn
+        self.code_count = code_count
         self.reference = None
         self.directory = None
 
@@ -262,7 +267,7 @@ class LumericalSolver:
             RuntimeError: If API loading, material fit, or numerical gates fail.
             ValueError: If monitor data are malformed.
         """
-        import config
+        import metasurface.config as config
 
         api_dir = str(config.LUMAPI_DIR)
         if not (Path(api_dir) / "lumapi.py").exists():
@@ -273,7 +278,7 @@ class LumericalSolver:
         p = self.physics
         expected = np.linspace(p["frequency_min_hz"], p["frequency_max_hz"], p["frequency_points"])
         with lumapi.FDTD(hide=True) as sim:
-            sim.eval(project_script(codes, p, reference))
+            sim.eval(project_script(codes, p, reference, self.rectangle_fn))
             fitted = np.asarray(sim.getfdtdindex("FR4_RF", expected, expected[0], expected[-1])).reshape(-1)**2
             target = p["epsilon_real"] + 1j * p["epsilon_imag"]
             if len(fitted) != len(expected) or not np.isfinite(fitted).all() or np.max(abs(fitted - target)) > p["material_fit_tolerance"]:
@@ -350,22 +355,28 @@ class LumericalSolver:
             if reference["physics"].item() != signature or not bool(reference["passed"].item()):
                 raise ValueError("Saved physical preflight configuration mismatch.")
             self.reference = reference
+            print("Preflight: accepted saved reference and convergence evidence", flush=True)
             return
-        raw = self._run([0] * 4, "empty", directory / "reference_empty.fsp")
+        print("Preflight: empty reference", flush=True)
+        raw = self._run([0] * self.code_count, "empty", directory / "reference_empty.fsp")
         if np.max(abs(raw["total"])) > 0.01:
             raise RuntimeError("Empty-space reflection calibration exceeds 1%.")
         self.reference = raw
-        mirror = self._powers(self._run([0] * 4, "mirror", directory / "reference_pec.fsp"))
+        print("Preflight: PEC mirror", flush=True)
+        mirror = self._powers(self._run([0] * self.code_count, "mirror", directory / "reference_pec.fsp"))
         if np.max(abs(mirror["co"] - 1)) > 0.05 or np.max(mirror["cross"]) > 0.01:
             raise RuntimeError("PEC mirror does not reproduce unit co-polarized reflection.")
-        coarse = self._powers(self._run([2] * 4, project_path=directory / "pilot_coarse.fsp"))
+        print("Preflight: coarse pilot", flush=True)
+        coarse = self._powers(self._run([2] * self.code_count, project_path=directory / "pilot_coarse.fsp"))
         refined = dict(self.physics)
         refined["mesh_xy_m"] *= 0.75
         refined["mesh_z_m"] *= 0.75
         refined["metal_mesh_divisions"] = 4
         refined["simulation_time_s"] *= 2
-        fine_solver = LumericalSolver(refined)
+        fine_solver = LumericalSolver(refined, self.rectangle_fn, self.code_count)
+        print("Preflight: refined reference", flush=True)
         fine_solver.reference = fine_solver._run([0] * 4, "empty")
+        print("Preflight: refined pilot", flush=True)
         fine = fine_solver._powers(fine_solver._run([2] * 4, project_path=directory / "pilot_refined.fsp"))
         error = max(np.max(abs(coarse[key] - fine[key])) for key in ("co", "total"))
         if error > self.physics["convergence_power_tolerance"]:
@@ -373,6 +384,7 @@ class LumericalSolver:
         record = {**raw, "physics": np.asarray(signature), "passed": np.asarray(True),
                   "convergence_error": np.asarray(error), "coarse_co": coarse["co"], "fine_co": fine["co"]}
         save_npz(path, record)
+        print(f"Preflight: passed and saved, power difference {error:.4g}", flush=True)
         self.reference = record
 
     def simulate(self, codes, frequencies):

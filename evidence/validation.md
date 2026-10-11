@@ -42,5 +42,3 @@ Não executados: CUDA real, Lumerical licenciado, convergência da previsão fin
 reprodução da precisão do artigo, fabricação ou medições. O padrão entregue
 continua solicitando CUDA e dados reais, sem substituir silenciosamente esses
 recursos por CPU ou dados artificiais.
-
-Entrega: ZIP atualizado, sem publicação em GitHub.

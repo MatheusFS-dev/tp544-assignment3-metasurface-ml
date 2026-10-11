@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from storage import atomic_write
+from metasurface.common.storage import atomic_write
 
 
 def dense_cost(widths):

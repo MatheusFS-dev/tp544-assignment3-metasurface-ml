@@ -2,12 +2,11 @@
 
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-GEOMETRY_DIR = ROOT / "runs" / "geometries"
-DATA_DIR = ROOT / "runs" / "data"
-TRAIN_DIR = ROOT / "runs" / "training"
-EXPORT_DIR = ROOT / "runs" / "design"
-BACKEND = "lumerical"
+ROOT = Path(__file__).resolve().parents[2]
+GEOMETRY_DIR = ROOT / "runs" / "real" / "geometries"
+DATA_DIR = ROOT / "runs" / "real" / "data"
+TRAIN_DIR = ROOT / "runs" / "real" / "training"
+EXPORT_DIR = ROOT / "runs" / "real" / "design"
 LUMAPI_DIR = Path("/opt/lumerical/v252/api/python")
 GENERATION_LIMIT = None  # Set to 4 for a short pilot, then None to resume all layouts.
 ALLOW_SYNTHETIC_TRAINING = False
@@ -47,4 +46,20 @@ TRAINING = {
     "patience": 30,
     "device": "cuda",  # NVIDIA GPU required; explicitly choose cpu for software tests.
     "allow_synthetic": ALLOW_SYNTHETIC_TRAINING,
+}
+
+DUMMY_ROOT = ROOT / "runs" / "dummy"
+PAPER_ROOT = ROOT / "runs" / "real_paper"
+
+PAPER_COUNT = 2000
+PAPER_GENERATION_LIMIT = None
+PAPER_RUN_EXPORTED_DESIGN = False
+PAPER_TRAINING = {
+    "seed": 2026,
+    "batch_size": 30,
+    "learning_rate": 0.001,
+    "max_epochs": 10000,
+    "dropout": 0.5,
+    "device": "cuda",
+    "allow_test_fixture": False,
 }

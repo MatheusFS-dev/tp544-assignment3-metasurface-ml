@@ -1,9 +1,19 @@
 .venv/
 __pycache__/
 .pytest_cache/
-runs/
+# Track stage 01 geometry results and logs for each scenario.
+runs/*
+!runs/dummy/
+!runs/real/
+!runs/real_paper/
+runs/*/*
+!runs/*/geometries/
+!runs/*/logs/
+runs/*/logs/*
+!runs/*/logs/01_generate_geometries/
 repository.bundle
 *.pyc
 .superpowers/
 superpowers/
 *.log
+!runs/*/logs/01_generate_geometries/*.log

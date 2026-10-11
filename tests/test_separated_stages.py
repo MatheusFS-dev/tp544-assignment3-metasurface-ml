@@ -21,7 +21,7 @@ def manifest(tmp_path):
     Raises:
         AssertionError: If implementation is absent.
     """
-    return module("geometry_manifest").generate_geometries(tmp_path / "geometries", 0.2e-3)
+    return module("metasurface.reduced.geometry_manifest").generate_geometries(tmp_path / "geometries", 0.2e-3)
 
 
 def test_geometry_stage_saves_exact_masks_and_stable_identity(tmp_path):
@@ -34,14 +34,14 @@ def test_geometry_stage_saves_exact_masks_and_stable_identity(tmp_path):
     Raises:
         AssertionError: If the persisted layout contract differs.
     """
-    m = module("geometry_manifest")
+    m = module("metasurface.reduced.geometry_manifest")
     path = manifest(tmp_path)
     state = m.load_geometries(path)
     original = path.read_bytes()
     assert state["completed"].all()
     assert state["pixels"].shape == (256, 32, 32)
     for i in (0, 85, 170, 255):
-        assert np.array_equal(state["pixels"][i], module("geometry").pixel_layout(state["codes"][i]))
+        assert np.array_equal(state["pixels"][i], module("metasurface.reduced.geometry").pixel_layout(state["codes"][i]))
     assert (path.parent / "geometry_codes.csv").exists()
     m.generate_geometries(path.parent, 0.2e-3)
     assert path.read_bytes() == original
@@ -58,7 +58,7 @@ def test_geometry_crash_resumes_and_preserves_saved_rows(tmp_path, monkeypatch):
     Raises:
         AssertionError: If resume changes committed masks or skips work.
     """
-    m = module("geometry_manifest")
+    m = module("metasurface.reduced.geometry_manifest")
     original = m.save_npz
     calls = []
 
@@ -101,7 +101,7 @@ def test_incomplete_and_wrong_scale_manifests_are_rejected(tmp_path):
     Raises:
         AssertionError: If an incomplete or changed-scale manifest is accepted.
     """
-    m = module("geometry_manifest")
+    m = module("metasurface.reduced.geometry_manifest")
     path = m.generate_geometries(tmp_path / "geometries", 0.2e-3, limit=2)
     with pytest.raises(ValueError, match="complete"):
         m.load_geometries(path)
@@ -119,10 +119,10 @@ def test_simulation_requires_preexisting_geometry_file(tmp_path):
     Raises:
         AssertionError: If the missing manifest is silently regenerated.
     """
-    d = module("dataset")
+    d = module("metasurface.reduced.dataset")
     assert hasattr(d, "simulate_geometries"), "Missing separated simulation stage"
     with pytest.raises(FileNotFoundError):
-        d.simulate_geometries(tmp_path / "missing.npz", tmp_path / "raw", module("config").PHYSICS, "synthetic")
+        d.simulate_geometries(tmp_path / "missing.npz", tmp_path / "raw", module("metasurface.config").PHYSICS, "synthetic")
     assert not (tmp_path / "raw").exists()
 
 
@@ -137,7 +137,7 @@ def test_simulation_is_raw_only_and_resume_uses_saved_codes(tmp_path, monkeypatc
     Raises:
         AssertionError: If the stages are coupled or committed work repeats.
     """
-    d = module("dataset")
+    d = module("metasurface.reduced.dataset")
     assert hasattr(d, "simulate_geometries"), "Missing separated simulation stage"
     path = manifest(tmp_path)
     seen = []
@@ -167,16 +167,16 @@ def test_simulation_is_raw_only_and_resume_uses_saved_codes(tmp_path, monkeypatc
             ValueError: If codes are invalid.
         """
         seen.append(tuple(codes))
-        return module("synthetic").response(codes, frequencies)
+        return module("metasurface.reduced.synthetic").response(codes, frequencies)
 
     monkeypatch.setattr(d, "extract_features", forbidden)
-    raw = d.simulate_geometries(path, tmp_path / "raw", module("config").PHYSICS, "synthetic", 2, response)
-    d.simulate_geometries(path, tmp_path / "raw", module("config").PHYSICS, "synthetic", 1, response)
+    raw = d.simulate_geometries(path, tmp_path / "raw", module("metasurface.config").PHYSICS, "synthetic", 2, response)
+    d.simulate_geometries(path, tmp_path / "raw", module("metasurface.config").PHYSICS, "synthetic", 1, response)
     state = d.load_simulations(raw)
-    assert seen == [tuple(c) for c in module("geometry").all_codes()[:3]]
+    assert seen == [tuple(c) for c in module("metasurface.reduced.geometry").all_codes()[:3]]
     assert state["completed"].sum() == 3
     assert "features" not in state and "reason" not in state
-    assert json.loads(state["metadata"].item())["geometry_id"] == module("geometry_manifest").load_geometries(path)["checksum"].item()
+    assert json.loads(state["metadata"].item())["geometry_id"] == module("metasurface.reduced.geometry_manifest").load_geometries(path)["checksum"].item()
 
 
 def test_raw_simulation_crash_resume_and_physics_identity(tmp_path):
@@ -189,7 +189,7 @@ def test_raw_simulation_crash_resume_and_physics_identity(tmp_path):
     Raises:
         AssertionError: If interrupted simulation loses committed records.
     """
-    d = module("dataset")
+    d = module("metasurface.reduced.dataset")
     assert hasattr(d, "simulate_geometries"), "Missing separated simulation stage"
     path = manifest(tmp_path)
     seen = []
@@ -208,9 +208,9 @@ def test_raw_simulation_crash_resume_and_physics_identity(tmp_path):
         seen.append(tuple(codes))
         if len(seen) == 3:
             raise RuntimeError("injected simulation crash")
-        return module("synthetic").response(codes, frequencies)
+        return module("metasurface.reduced.synthetic").response(codes, frequencies)
 
-    physics = module("config").PHYSICS
+    physics = module("metasurface.config").PHYSICS
     with pytest.raises(RuntimeError, match="injected"):
         d.simulate_geometries(path, tmp_path / "raw", physics, "synthetic", simulator=interrupted)
     raw = d.simulate_geometries(path, tmp_path / "raw", physics, "synthetic", limit=1)
@@ -230,9 +230,9 @@ def test_offline_preparation_preserves_source_and_is_idempotent(tmp_path, monkey
     Raises:
         AssertionError: If preparation changes source data or loads lumapi.
     """
-    d = module("dataset")
+    d = module("metasurface.reduced.dataset")
     assert hasattr(d, "prepare_dataset"), "Missing offline preparation stage"
-    raw = d.simulate_geometries(manifest(tmp_path), tmp_path / "raw", module("config").PHYSICS, "synthetic", limit=32)
+    raw = d.simulate_geometries(manifest(tmp_path), tmp_path / "raw", module("metasurface.config").PHYSICS, "synthetic", limit=32)
     original = raw.read_bytes()
     monkeypatch.setitem(sys.modules, "lumapi", None)
     prepared = d.prepare_dataset(raw, tmp_path / "prepared" / "training_dataset.npz")
@@ -256,8 +256,8 @@ def test_geometry_and_data_offline_imports_do_not_load_solver_or_torch():
     Raises:
         AssertionError: If proprietary API or Torch is loaded unnecessarily.
     """
-    assert importlib.util.find_spec("geometry_manifest") is not None, "Missing geometry stage"
-    code = "import sys; import geometry_manifest, dataset; assert 'torch' not in sys.modules; assert 'lumapi' not in sys.modules; assert 'lumerical' not in sys.modules"
+    assert importlib.util.find_spec("metasurface.reduced.geometry_manifest") is not None, "Missing geometry stage"
+    code = "import sys; import metasurface.reduced.geometry_manifest, metasurface.reduced.dataset; assert 'torch' not in sys.modules; assert 'lumapi' not in sys.modules; assert 'lumerical' not in sys.modules"
     subprocess.run([sys.executable, "-c", code], check=True)
 
 
@@ -271,10 +271,10 @@ def test_network_parameter_counts_match_shapes_and_torch():
     Raises:
         AssertionError: If analytical or published-table counts are confused.
     """
-    a = module("network_analysis").analyze_networks()
+    a = module("metasurface.common.network_analysis").analyze_networks()
     assert a["paper_unrestricted"]["parameters"] == 587224
     assert a["paper_unrestricted"]["published_parameter_sum"] == 670024
     assert a["paper_restricted"]["parameters"] == 788648
     assert a["reduced"]["parameters"] == 3440
-    assert sum(p.numel() for p in module("learning").InverseNet().parameters()) == a["reduced"]["parameters"]
+    assert sum(p.numel() for p in module("metasurface.reduced.learning").InverseNet().parameters()) == a["reduced"]["parameters"]
     assert a["reduced"]["forward_macs_per_sample"] == 3328

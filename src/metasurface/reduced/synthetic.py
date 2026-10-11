@@ -16,7 +16,7 @@ def response(codes, frequencies):
     Notes:
         These invented responses do not represent the physical geometry.
     """
-    from geometry import pixel_layout
+    from metasurface.reduced.geometry import pixel_layout
 
     pixel_layout(codes)
     a, b, c, d = np.asarray(codes, dtype=int)

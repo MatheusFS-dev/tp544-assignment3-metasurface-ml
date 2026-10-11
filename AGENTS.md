@@ -2,8 +2,7 @@
 
 Project: `tp544-assignment3-metasurface-ml`. Read
 `.agents/prompts/assignment_context.md` for the assignment objectives, required
-workflow, deliverables and interpretation criteria. Delivery is a downloadable
-ZIP, with no repository publication required.
+workflow, deliverables and interpretation criteria. No repository publication is required.
 
 This repository implements a small, explicitly changed version of Ghorbani et al.,
 "Deep neural network-based automatic metasurface design with a wide frequency range",
@@ -98,7 +97,7 @@ normal incidence, propagation -z and x polarization. This is not a finite array.
   with optional fresh Lumerical validation.
 - `geometry_checkpoint.npz`, `simulation_checkpoint.npz` and `last.pt` save
   progress after every geometry, simulation and minibatch, respectively.
-- See `JUSTIFICATIVA_REDUCAO.md` and `docs/ANALISE_REDES.md`. Do not equate
+- See `JUSTIFICATIVA_REDUCAO.md` and generated `runs/real/analysis/ANALISE_REDES.md`. Do not equate
   2,000 sampled training records with exhaustive exploration of 281 trillion layouts.
   Do not assert that the K80 is faster than an unmeasured user workstation.
 - Table 1 lists 90,300 parameters for the 24 -> 300 dense layer. Its dimensions
@@ -128,3 +127,13 @@ normal incidence, propagation -z and x polarization. This is not a finite array.
 
 The deadline-oriented scope is a functional reduced workflow and one design check,
 not reproducing the full paper's training set, broad target coverage or results.
+
+## Additional workflow added after the reduced assignment
+
+The repository also contains independent `dummy` and `real_paper` workflows
+under `src/`. The dummy path generates invented spectra for software checks.
+The `real_paper` path implements only the paper's restricted 48-output network,
+with 2,000 sampled 16-tile layouts and eight explicitly approximated masks.
+Its solver is Lumerical rather than the paper's CST. See `docs/REAL_PAPER.md`
+for mask definitions and undocumented choices. Neither workflow changes the
+reduced reproduction's physical claims or turns synthetic results into them.

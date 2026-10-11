@@ -32,7 +32,7 @@ def test_all_256_distinct_symmetric_layouts():
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    g = module("geometry")
+    g = module("metasurface.reduced.geometry")
     codes = g.all_codes()
     assert codes.shape == (256, 4)
     assert len({g.pixel_layout(c).tobytes() for c in codes}) == 256
@@ -54,7 +54,7 @@ def test_invalid_codes(codes):
         AssertionError: If the expected contract is violated.
     """
     with pytest.raises(ValueError):
-        module("geometry").pixel_layout(codes)
+        module("metasurface.reduced.geometry").pixel_layout(codes)
 
 
 def test_ring_areas_and_rectangle_area():
@@ -67,7 +67,7 @@ def test_ring_areas_and_rectangle_area():
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    g = module("geometry")
+    g = module("metasurface.reduced.geometry")
     expected = [0, 12, 20, 32]
     for i, area in enumerate(expected):
         p = g.pixel_layout([i] * 4)
@@ -86,7 +86,7 @@ def test_notch_width_uses_threshold_crossings():
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    s = module("spectra")
+    s = module("metasurface.reduced.spectra")
     f = np.linspace(4e9, 45e9, 4101)
     db = -20 * np.maximum(1 - abs(f / 1e9 - 20), 0)
     feat, reason = s.extract_features(f, 10**(db / 10))
@@ -107,7 +107,7 @@ def test_ineligible_spectra(case, reason):
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    s = module("spectra")
+    s = module("metasurface.reduced.spectra")
     f = np.linspace(4e9, 45e9, 4101)
     db = np.zeros_like(f)
     centers = {"flat": [], "boundary": [4], "three": [10, 20, 30]}[case]
@@ -127,7 +127,7 @@ def test_nonfinite_spectrum_rejected():
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    s = module("spectra")
+    s = module("metasurface.reduced.spectra")
     with pytest.raises(ValueError):
         s.extract_features(np.linspace(4e9, 45e9, 100), np.full(100, np.nan))
 
@@ -142,8 +142,8 @@ def test_generation_resume_skips_completed(tmp_path):
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    d = module("dataset")
-    physics = module("config").PHYSICS.copy()
+    d = module("metasurface.reduced.dataset")
+    physics = module("metasurface.config").PHYSICS.copy()
     p = d.generate(tmp_path, physics, "synthetic", limit=3)
     state = d.load_dataset(p)
     assert state["completed"].sum() == 3
@@ -163,8 +163,8 @@ def test_generation_crash_restarts_only_uncommitted(tmp_path):
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    d = module("dataset")
-    physics = module("config").PHYSICS.copy()
+    d = module("metasurface.reduced.dataset")
+    physics = module("metasurface.config").PHYSICS.copy()
     seen = []
 
     def interrupted(codes, frequencies):
@@ -181,7 +181,7 @@ def test_generation_crash_restarts_only_uncommitted(tmp_path):
         seen.append(tuple(codes))
         if len(seen) == 3:
             raise RuntimeError("Injected solver crash")
-        return module("synthetic").response(codes, frequencies)
+        return module("metasurface.reduced.synthetic").response(codes, frequencies)
 
     with pytest.raises(RuntimeError, match="Injected"):
         d.generate(tmp_path, physics, "synthetic", simulator=interrupted)
@@ -201,8 +201,8 @@ def test_changed_generation_config_rejected(tmp_path):
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    d = module("dataset")
-    physics = module("config").PHYSICS.copy()
+    d = module("metasurface.reduced.dataset")
+    physics = module("metasurface.config").PHYSICS.copy()
     d.generate(tmp_path, physics, "synthetic", limit=1)
     physics["substrate_thickness_m"] *= 2
     with pytest.raises(ValueError, match="configuration"):
@@ -219,8 +219,8 @@ def test_tampered_dataset_rejected(tmp_path):
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    d = module("dataset")
-    p = d.generate(tmp_path, module("config").PHYSICS.copy(), "synthetic", limit=3)
+    d = module("metasurface.reduced.dataset")
+    p = d.generate(tmp_path, module("metasurface.config").PHYSICS.copy(), "synthetic", limit=3)
     data = d.load_dataset(p)
     data["codes"][0] = [3, 3, 3, 3]
     np.savez_compressed(p, **data)
@@ -238,7 +238,7 @@ def test_corrupt_checkpoint_recovers_previous_snapshot(tmp_path):
     Raises:
         AssertionError: If the expected contract is violated.
     """
-    d = module("dataset")
-    p = d.generate(tmp_path, module("config").PHYSICS.copy(), "synthetic", limit=3)
+    d = module("metasurface.reduced.dataset")
+    p = d.generate(tmp_path, module("metasurface.config").PHYSICS.copy(), "synthetic", limit=3)
     p.write_bytes(b"interrupted file")
     assert d.load_dataset(p)["completed"].sum() == 2

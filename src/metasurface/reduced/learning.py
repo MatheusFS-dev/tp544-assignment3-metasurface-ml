@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import pickle
+import time
 import zipfile
 
 import numpy as np
@@ -14,8 +15,8 @@ os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 import torch
 from torch import nn
 
-from dataset import load_dataset
-from storage import atomic_write, canonical_json
+from metasurface.reduced.dataset import load_dataset
+from metasurface.common.storage import atomic_write, canonical_json
 
 
 class InverseNet(nn.Module):
@@ -192,17 +193,25 @@ def train(dataset_path, output_dir, options, max_steps=None):
                  "metadata": metadata, "splits": splits, "mean": torch.tensor(mean, dtype=torch.float32),
                  "std": torch.tensor(std, dtype=torch.float32), "epoch": 0, "step": 0, "cursor": 0,
                  "order": torch.empty(0, dtype=torch.long), "best_loss": float("inf"), "best_model": None,
-                 "stale": 0, "history": [], "sum_loss": 0.0, "seen": 0, "finished": False}
+                 "stale": 0, "history": [], "batch_history": [], "sum_loss": 0.0, "seen": 0, "finished": False}
+    state.setdefault("batch_history", [])
     x = ((torch.tensor(state_data["features"], dtype=torch.float32) - state["mean"]) / state["std"]).to(device)
     y = torch.tensor(state_data["codes"], dtype=torch.long, device=device)
+    from metasurface.common.progress import Progress
+
+    print(f"Training: resuming epoch {state['epoch'] + 1}, minibatch cursor {state['cursor']}, {state['step']} saved steps", flush=True)
     additional_steps = 0
     while not state["finished"] and state["epoch"] < options["max_epochs"]:
         if not len(state["order"]):
             indices = torch.tensor(state["splits"]["train"], dtype=torch.long)
             state["order"] = indices[torch.randperm(len(indices))]
             state["cursor"] = 0
+        progress = Progress(f"Epoch {state['epoch'] + 1}", len(state["order"]), state["cursor"])
         while state["cursor"] < len(state["order"]):
             batch = state["order"][state["cursor"]:state["cursor"] + options["batch_size"]].to(device)
+            if device.type == "cuda":
+                torch.cuda.synchronize(device)
+            batch_started = time.perf_counter()
             model.train()
             optimizer.zero_grad(set_to_none=True)
             logits = model(x[batch])
@@ -211,21 +220,33 @@ def train(dataset_path, output_dir, options, max_steps=None):
                 raise RuntimeError("Training loss became nonfinite. Last committed minibatch remains recoverable.")
             loss.backward()
             optimizer.step()
+            if device.type == "cuda":
+                torch.cuda.synchronize(device)
+            compute_seconds = time.perf_counter() - batch_started
             state["cursor"] += len(batch)
             state["step"] += 1
             state["sum_loss"] += loss.item() * len(batch)
             state["seen"] += len(batch)
+            state["batch_history"].append({"epoch": state["epoch"] + 1, "step": state["step"],
+                                           "cursor": state["cursor"], "batch_size": len(batch),
+                                           "loss": float(loss.item()), "compute_seconds": compute_seconds})
             state["model"] = model.state_dict()
             state["optimizer"] = optimizer.state_dict()
             state["rng"] = torch.get_rng_state()
             state["cuda_rng"] = torch.cuda.get_rng_state_all() if device.type == "cuda" else []
             save_checkpoint(path, state)
+            progress.committed(state["cursor"], f"step {state['step']}")
             additional_steps += 1
             if max_steps is not None and additional_steps >= max_steps:
                 return path
+        train_metrics = metrics(model, x, y, state["splits"]["train"])
         val = metrics(model, x, y, state["splits"]["val"])
         state["epoch"] += 1
-        state["history"].append({"epoch": state["epoch"], "train_loss": state["sum_loss"] / state["seen"], **val})
+        record = {"epoch": state["epoch"], "train_loss": state["sum_loss"] / state["seen"],
+                  "train_eval_loss": train_metrics["loss"],
+                  "train_position_accuracy": train_metrics["position_accuracy"],
+                  "train_exact_accuracy": train_metrics["exact_accuracy"], **val}
+        state["history"].append(record)
         if val["loss"] < state["best_loss"]:
             state["best_loss"] = val["loss"]
             state["best_model"] = copy.deepcopy(model.state_dict())
@@ -238,7 +259,12 @@ def train(dataset_path, output_dir, options, max_steps=None):
         state["seen"] = 0
         state["finished"] = state["stale"] >= options["patience"] or state["epoch"] >= options["max_epochs"]
         save_checkpoint(path, state)
-        print(f"Epoch {state['epoch']}: validation loss {val['loss']:.5f}, position accuracy {val['position_accuracy']:.3f}")
+        print(f"Epoch {state['epoch']}: train_loss={record['train_loss']:.5f} "
+              f"val_loss={val['loss']:.5f} "
+              f"train_position_accuracy={record['train_position_accuracy']:.3f} "
+              f"val_position_accuracy={val['position_accuracy']:.3f} "
+              f"train_exact_accuracy={record['train_exact_accuracy']:.3f} "
+              f"val_exact_accuracy={val['exact_accuracy']:.3f}", flush=True)
     if state["best_model"] is None:
         raise ValueError("No validation epoch completed. Resume training before evaluation.")
     print(f"Checkpoint: {path}. Best validation loss: {state['best_loss']:.5f}")

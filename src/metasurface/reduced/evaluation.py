@@ -11,12 +11,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from dataset import load_dataset
-from geometry import pixel_layout, rectangles
-from learning import InverseNet, load_checkpoint, metrics
-from lumerical import LumericalSolver, project_script
-from spectra import extract_features
-from storage import canonical_json
+from metasurface.reduced.dataset import load_dataset
+from metasurface.reduced.geometry import pixel_layout, rectangles
+from metasurface.reduced.learning import InverseNet, load_checkpoint, metrics
+from metasurface.reduced.lumerical import LumericalSolver, project_script
+from metasurface.reduced.spectra import extract_features
+from metasurface.common.storage import canonical_json
 
 
 def target_features(notches, physics):
@@ -90,6 +90,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
     Examples:
         evaluate('runs/training/last.pt', 'runs/data/dataset_checkpoint.npz', 'runs/design')
     """
+    print("Export: loading checkpoint and dataset", flush=True)
     state = load_checkpoint(checkpoint_path)
     data = load_dataset(dataset_path)
     if state["dataset_id"] != data["checksum"].item() or state["best_model"] is None:
@@ -124,6 +125,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
     if data["completed"][geometry_id]:
         report["cached_descriptor_comparison"] = physical_errors(requested, data["features"][geometry_id], data["reason"][geometry_id])
         report["cached_spectrum_provenance"] = report["backend"]
+    print("Export: writing predicted design and comparisons", flush=True)
     directory = Path(output_dir)
     directory.mkdir(parents=True, exist_ok=True)
     # Invalidate prior physical artifacts before writing a different target.
@@ -176,6 +178,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
     fig.savefig(directory / "training_loss.png", dpi=160)
     plt.close(fig)
     if run_lumerical:
+        print("Export: running Lumerical preflight and fresh validation", flush=True)
         solver = LumericalSolver(physics)
         solver.preflight(Path(dataset_path).parent)
         raw = solver._run(codes, project_path=directory / "design.fsp")
@@ -186,5 +189,6 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
         report["physical_validation"] = "fresh_lumerical_run"
         report["physical_errors"] = physical_errors(requested, observed, reason)
     (directory / "report.json").write_text(json.dumps(report, indent=2))
+    print(f"Export: report saved to {directory / 'report.json'}", flush=True)
     print(json.dumps(report, indent=2))
     return report

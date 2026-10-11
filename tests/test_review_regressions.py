@@ -16,8 +16,8 @@ def test_recovery_preserves_backup_for_a_second_crash(tmp_path, kind):
     Raises:
         AssertionError: If recovery destroys the known-good snapshot.
     """
-    from storage import save_npz, load_npz
-    from learning import save_checkpoint, load_checkpoint
+    from metasurface.common.storage import save_npz, load_npz
+    from metasurface.reduced.learning import save_checkpoint, load_checkpoint
     save, load = (save_npz, load_npz) if kind == "npz" else (save_checkpoint, load_checkpoint)
     path = tmp_path / ("checkpoint." + kind)
     save(path, {"value": np.asarray(1)} if kind == "npz" else {"value": 1})
@@ -40,7 +40,7 @@ def test_real_lumapi_vector_fields_on_nonuniform_mesh():
     Raises:
         AssertionError: If component extraction or quadrature is wrong.
     """
-    from lumerical import plane_field
+    from metasurface.reduced.lumerical import plane_field
     x, y = np.array([0., 0.2, 1.]), np.array([0., 0.7, 2.])
     electric = np.zeros((3, 3, 1, 10, 3), dtype=complex)
     electric[:, :, 0, :, 0] = (x[:, None, None] + 2*y[None, :, None]) * (1 + 2j)
@@ -61,7 +61,7 @@ def test_crash_during_recovery_keeps_backup(tmp_path, monkeypatch):
     Raises:
         AssertionError: If the backup is lost during recovery.
     """
-    import storage
+    import metasurface.common.storage as storage
     path = tmp_path / "recovery.npz"
     storage.save_npz(path, {"value": np.asarray(1)})
     storage.save_npz(path, {"value": np.asarray(2)})
@@ -102,10 +102,10 @@ def test_cuda_default_does_not_silently_use_cpu(tmp_path, monkeypatch):
     Raises:
         AssertionError: If CUDA default silently falls back to CPU.
     """
-    import config
+    import metasurface.config as config
     import torch
-    from dataset import generate
-    from learning import train
+    from metasurface.reduced.dataset import generate
+    from metasurface.reduced.learning import train
     assert config.TRAINING["device"] == "cuda"
     data = generate(tmp_path / "data", config.PHYSICS, "synthetic", limit=32)
     monkeypatch.setattr(torch.cuda, "is_available", lambda: False)

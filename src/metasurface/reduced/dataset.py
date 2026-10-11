@@ -6,10 +6,11 @@ import time
 
 import numpy as np
 
-from geometry import all_codes
-from geometry_manifest import load_geometries
-from spectra import extract_features, validate_spectrum
-from storage import canonical_json, load_npz, save_npz
+from metasurface.reduced.geometry import all_codes
+from metasurface.reduced.geometry_manifest import load_geometries
+from metasurface.reduced.spectra import extract_features, validate_spectrum
+from metasurface.common.storage import canonical_json, load_npz, save_npz
+from metasurface.common.run_records import timed_part
 
 
 def load_simulations(path):
@@ -97,6 +98,9 @@ def simulate_geometries(geometry_path, directory, physics, backend="lumerical", 
         for key in ("co", "cross", "total"):
             state[key] = np.full((256, len(f)), np.nan)
         save_npz(path, state)
+    from metasurface.common.progress import Progress
+
+    progress = Progress("Simulations", 256, int(state["completed"].sum()))
     pending = np.flatnonzero(~state["completed"])
     if limit is not None:
         pending = pending[:limit]
@@ -104,25 +108,27 @@ def simulate_geometries(geometry_path, directory, physics, backend="lumerical", 
         print("All requested saved geometries are already simulated.")
         return path
     if backend == "synthetic":
-        from synthetic import response
+        from metasurface.reduced.synthetic import response
 
         print("SYNTHETIC SOFTWARE TEST: spectra have no electromagnetic meaning.")
         simulator = response if simulator is None else simulator
     else:
-        from lumerical import LumericalSolver
+        from metasurface.reduced.lumerical import LumericalSolver
 
         solver = LumericalSolver(physics)
-        solver.preflight(directory)
+        with timed_part("lumerical_preflight"):
+            solver.preflight(directory)
         simulator = solver.simulate
-    for i in pending:
-        start = time.monotonic()
-        result = simulator(state["codes"][i], f)
-        for key in ("co", "cross", "total"):
-            _, state[key][i] = validate_spectrum(f, result[key])
-        state["seconds"][i] = time.monotonic() - start
-        state["completed"][i] = True
-        save_npz(path, state)
-        print(f"Simulation {i:03d}: {state['completed'].sum()}/256 saved, {state['seconds'][i]:.2f} s")
+    with timed_part("layout_collection"):
+        for i in pending:
+            start = time.monotonic()
+            result = simulator(state["codes"][i], f)
+            for key in ("co", "cross", "total"):
+                _, state[key][i] = validate_spectrum(f, result[key])
+            state["seconds"][i] = time.monotonic() - start
+            state["completed"][i] = True
+            save_npz(path, state)
+            progress.committed(int(state["completed"].sum()), f"layout {i:03d}, solver {state['seconds'][i]:.2f}s")
     return path
 
 
@@ -161,9 +167,16 @@ def prepare_dataset(simulation_path, output_path):
             return destination
     state["features"] = np.zeros((256, 8))
     state["reason"] = np.full(256, "pending", dtype="U32")
-    for i in np.flatnonzero(state["completed"]):
+    from metasurface.common.progress import Progress
+
+    completed = np.flatnonzero(state["completed"])
+    progress = Progress("Dataset preparation", len(completed))
+    for count, i in enumerate(completed, 1):
         state["features"][i], state["reason"][i] = extract_features(state["frequencies"], state["co"][i])
+        if count == len(completed) or count % 16 == 0:
+            print(f"Dataset preparation: {count}/{len(completed)} extracted", flush=True)
     save_npz(destination, state)
+    progress.committed(len(completed))
     eligible = int((state["completed"] & (state["reason"] == "ok")).sum())
     print(f"Prepared {eligible} eligible rows from {state['completed'].sum()} saved simulations: {destination}")
     return destination
@@ -250,12 +263,12 @@ def generate(directory, physics, backend="lumerical", limit=None, simulator=None
         print("All requested geometries are already completed.")
         return path
     if backend == "synthetic":
-        from synthetic import response
+        from metasurface.reduced.synthetic import response
 
         print("SYNTHETIC SOFTWARE TEST: results have no electromagnetic meaning.")
         simulator = response if simulator is None else simulator
     else:
-        from lumerical import LumericalSolver
+        from metasurface.reduced.lumerical import LumericalSolver
 
         solver = LumericalSolver(physics)
         solver.preflight(directory)
