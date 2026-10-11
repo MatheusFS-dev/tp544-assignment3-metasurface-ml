@@ -1,0 +1,147 @@
+{
+  "paper_unrestricted": {
+    "widths": [
+      24,
+      24,
+      300,
+      300,
+      300,
+      300,
+      1024
+    ],
+    "layers": [
+      {
+        "input": 24,
+        "output": 24,
+        "parameters": 600,
+        "forward_macs_per_sample": 576
+      },
+      {
+        "input": 24,
+        "output": 300,
+        "parameters": 7500,
+        "forward_macs_per_sample": 7200
+      },
+      {
+        "input": 300,
+        "output": 300,
+        "parameters": 90300,
+        "forward_macs_per_sample": 90000
+      },
+      {
+        "input": 300,
+        "output": 300,
+        "parameters": 90300,
+        "forward_macs_per_sample": 90000
+      },
+      {
+        "input": 300,
+        "output": 300,
+        "parameters": 90300,
+        "forward_macs_per_sample": 90000
+      },
+      {
+        "input": 300,
+        "output": 1024,
+        "parameters": 308224,
+        "forward_macs_per_sample": 307200
+      }
+    ],
+    "parameters": 587224,
+    "forward_macs_per_sample": 584976,
+    "fp32_weights_bytes": 2348896,
+    "published_parameter_sum": 670024,
+    "table_correction": "Table 1 reports 90,300 parameters for 24 -> 300. Dense dimensions imply 7,500.",
+    "parameter_ratio_to_reduced": 170.7046511627907
+  },
+  "paper_restricted": {
+    "widths": [
+      24,
+      24,
+      500,
+      500,
+      500,
+      500,
+      48
+    ],
+    "layers": [
+      {
+        "input": 24,
+        "output": 24,
+        "parameters": 600,
+        "forward_macs_per_sample": 576
+      },
+      {
+        "input": 24,
+        "output": 500,
+        "parameters": 12500,
+        "forward_macs_per_sample": 12000
+      },
+      {
+        "input": 500,
+        "output": 500,
+        "parameters": 250500,
+        "forward_macs_per_sample": 250000
+      },
+      {
+        "input": 500,
+        "output": 500,
+        "parameters": 250500,
+        "forward_macs_per_sample": 250000
+      },
+      {
+        "input": 500,
+        "output": 500,
+        "parameters": 250500,
+        "forward_macs_per_sample": 250000
+      },
+      {
+        "input": 500,
+        "output": 48,
+        "parameters": 24048,
+        "forward_macs_per_sample": 24000
+      }
+    ],
+    "parameters": 788648,
+    "forward_macs_per_sample": 786576,
+    "fp32_weights_bytes": 3154592,
+    "parameter_ratio_to_reduced": 229.25813953488372
+  },
+  "reduced": {
+    "widths": [
+      8,
+      32,
+      64,
+      16
+    ],
+    "layers": [
+      {
+        "input": 8,
+        "output": 32,
+        "parameters": 288,
+        "forward_macs_per_sample": 256
+      },
+      {
+        "input": 32,
+        "output": 64,
+        "parameters": 2112,
+        "forward_macs_per_sample": 2048
+      },
+      {
+        "input": 64,
+        "output": 16,
+        "parameters": 1040,
+        "forward_macs_per_sample": 1024
+      }
+    ],
+    "parameters": 3440,
+    "forward_macs_per_sample": 3328,
+    "fp32_weights_bytes": 13760
+  },
+  "assumptions": [
+    "Counts follow the published dense widths, including biases.",
+    "MAC counts describe one forward pass, not full training cost.",
+    "Actual training speed requires a benchmark on the execution workstation.",
+    "The paper trained on 2,000 sampled layouts, not every possible combination."
+  ]
+}

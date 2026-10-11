@@ -1,0 +1,460 @@
+                                                                                                        www.nature.com/scientificreports
+
+
+
+
+                OPEN             Deep neural network‑based
+                                 automatic metasurface design
+                                 with a wide frequency range
+                                 Fardin Ghorbani*, Sina Beyraghi, Javad Shabanpour*, Homayoon Oraizi,
+                                 Hossein Soleimani & Mohammad Soleimani
+
+                                 Beyond the scope of conventional metasurface, which necessitates plenty of computational resources
+                                 and time, an inverse design approach using machine learning algorithms promises an effective way
+                                 for metasurface design. In this paper, benefiting from Deep Neural Network (DNN), an inverse design
+                                 procedure of a metasurface in an ultra-wide working frequency band is presented in which the output
+                                 unit cell structure can be directly computed by a specified design target. To reach the highest working
+                                 frequency for training the DNN, we consider 8 ring-shaped patterns to generate resonant notches
+                                 at a wide range of working frequencies from 4 to 45 GHz. We propose two network architectures.
+                                 In one architecture, we restrict the output of the DNN, so the network can only generate the
+                                 metasurface structure from the input of 8 ring-shaped patterns. This approach drastically reduces the
+                                 computational time, while keeping the network’s accuracy above 91%. We show that our model based
+                                 on DNN can satisfactorily generate the output metasurface structure with an average accuracy of over
+                                 90% in both network architectures. Determination of the metasurface structure directly without time-
+                                 consuming optimization procedures, an ultra-wide working frequency, and high average accuracy
+                                 equip an inspiring platform for engineering projects without the need for complex electromagnetic
+                                 theory.
+
+
+                                 Metamaterials, defined as artificial media composed of engineered subwavelength periodic or nonperiodic
+                                 geometric arrays, have witnessed significant attention due to their exotic properties capable of modifying the
+                                 permittivity and permeability of ­materials1–3. Today, just two decades after the first implementation of metama-
+                                 terials by Smith et al.4 who unearthed Veselago’s original p  ­ aper5, metamaterials and their 2D counterpart, meta-
+                                 surfaces, have been widely used in practical applications such as, but not limited to, polarization ­conversion6,7,
+                                 reconfigurable wave m   ­ anipulation8,9, vortex g­ eneration10,11, and perfect a­ bsorption12,13. Programmable digital
+                                 metamaterials remarkably provide a wider range of wave-matter applications which present them especially
+                                 appealing in the usages of ­imaging14, smart ­metasurfaces15,16, information ­metamaterials17–19, and machine learn-
+                                 ing ­applications20,21.
+                                     However, all of the abovementioned works are based on traditional design approaches, consisting of model
+                                 designs, trial-and-error method, parameter sweep, and optimization algorithms. Conducting numerical full-wave
+                                 numerical simulations assisted by optimization algorithm is a time-consuming process that consumes plenty
+                                 of computing resources. In addition, if the design requirements change, simulations must be repeated afresh,
+                                 which impedes users from paying attention to their actual needs. Therefore, to fill the existing gaps to find a fast,
+                                 efficient, and automated design approach, we have taken machine learning into our consideration.
+                                     Machine learning and its specific branch, deep learning, are approaches to automatically learn the connec-
+                                 tion between input data and target data from the examples of past experiences. Machine learning is an effort to
+                                 employ algorithms to devise a machine to learn and operate without explicitly planning and dictating individual
+                                 actions. To be more specific, machine learning equips an inspiring platform to deduce the fundamental principles
+                                 based on previously given data; thus, for another given input, machines can make logical decisions automatically.
+                                 With the ever-increasing evolution of machine learning and its potential capacity to handle crucial challenges,
+                                 such as signal p­ rocessing22 and physical s­ cience23, we are now witnessing their applications to electromagnetic
+                                 problems. Due to its remarkable potential to provide less computational resources, more accuracy, less design
+                                 time, and more flexibility, machine learning has been entered in various wave-interaction phenomena, such as
+                                 Electromagnetic Compatibility (EMC)24,25, Antenna Optimization and D         ­ esign26,27, All-Dielectric M
+                                                                                                                                           ­ etasurface28,
+                                 Optical and photonic s­ tructures29, and Plasmonic ­nanostructure30.
+
+
+                                 School of Electrical Engineering, Iran University of Science and Technology, Narmak, Tehran 16486‑13114, Iran.
+                                 *
+                                   email: fardin.ghorbania@gmail.com; m.javadshabanpour1372@gmail.com
+
+
+Scientific Reports |   (2021) 11:7102                 | https://doi.org/10.1038/s41598-021-86588-2                                                      1
+
+                                                                                                                                                   Vol.:(0123456789)
+          www.nature.com/scientificreports/
+
+
+
+
+                                            Figure 1.  Sketch representation of the design process of DNN-based approach for metasurface inverse design.
+                                            The process consists of three steps of generating data and pre-processing, training of machine learning, and
+                                            evaluation of a model.
+
+
+                                                Recently, T. Cui et al. have proposed a deep learning-based metasurface design method named REACTIVE,
+                                            which is capable of detecting the inner rules between a unit-cell building and its EM properties with an average
+                                            accuracy of 76.5%31. A machine-learning method to realize anisotropic digital coding metasurfaces has been
+                                            investigated, whereby 70000 training coding patterns have been applied to train the n  ­ etwork32. In ­Ref33, a deep
+                                            convolutional neural network has been studied to encode the programmable metasurface for steered multiple
+                                            beam generation with an average accuracy of more than 94 %. A metasurface inverse design method using a
+                                            machine learning approach has been introduced ­in34 to design an output unit cell for specified electromagnetic
+                                            properties with 81% accuracy in a low-frequency bandwidth of 16-20 GHz. Recently, a double deep Q-learning
+                                            network (DDQN) to identify the right material type and optimize the design of metasurface holograms has
+                                            been ­developed35.
+                                                In this paper, benefiting from Deep Neural Network (DNN), an inverse design procedure of a metasurface
+                                            with an average accuracy of up to 92 % has been presented. Unlike previous works, to reach the highest working
+                                            frequency, we consider 8 ring-shaped digital distributions (see top left of Fig. 1) to generate resonant notches
+                                            in a wide range of working frequencies from 4 to 45 GHz. Therefore, after training the deep learning model by
+                                            a set of samples, our proposed model can automatically generate the desired metasurface pattern, with four
+                                            predetermined reflection information (as number of resonances, resonance frequencies, resonance depth, and
+                                            resonance bandwidths) for ultra-wide working frequency bands. Comparison of the output of numerical simu-
+                                            lations with the design target illustrates that our proposed approach is successful in generating corresponding
+                                            metasurface structures with any desired S-parameter configurations. Determination of the metasurface struc-
+                                            tures directly without ill-posed optimization procedures, consuming of less computational resources, ultra-wide
+                                            working frequency bands, and high average accuracy paves the way for our approach to become beneficial for
+                                            those engineers who are not specialists in the field of electromagnetics; thus, they can focus on their practical
+                                            necessitates, boosting the speed of the engineering projects.
+
+                                            Methodologies
+                                            Metasurface design. Figure 1 shows the schematic representation of the proposed metasurface structure
+                                            consisting of three layers, from top to bottom, as a copper ring-shaped pattern layer, a dielectric layer, and a
+                                            ground layer to impede the backward transmission of EM energy. FR4 is chosen as the substrate with permittiv-
+                                            ity of 4.2+0.025i, and thickness of h = 1.5mm. The top metallic layer comprises 8 ring-shaped patterns distrib-
+                                            uted side by side, each of which can be divided into 8 × 8 lattices labeled as “1” and “0” which denote the areas
+                                            with and without the copper. Each metasurface is composed of an infinite array of unit-cells. Each unit-cell con-
+                                            sists of 4 × 4 randomly distributed 8 × 8 ring-shaped patterns. Therefore, each unit cell comprises 32 × 32 lat-
+                                            tices. The length of the lattices, periodicity of unit cells, and thickness of the copper metallic patterns are l = 0.2
+                                            mm, p = 6.4 mm, and t = 0.018 mm, respectively. Unlike previous ­works31,34, defining 8 ring-shaped patterns
+                                            to train the DNN is the novelty employed here to generate the desired resonance notches in a wide frequency
+                                            band. We designed 8-ring shaped patterns in such a way that the unit-cells generated in the dataset for training
+                                            the network can generate single or multiple resonances at different frequencies from 4 to 45 GHz, thus, we can
+                                            import the data set of S-parameters to train the network for our specified targets. It is almost impossible to obtain
+
+
+          Scientific Reports |   (2021) 11:7102 |                https://doi.org/10.1038/s41598-021-86588-2                                                      2
+
+Vol:.(1234567890)
+www.nature.com/scientificreports/
+
+
+
+
+                                  Figure 2.  An overview of an artificial neuron.
+
+
+                                  the relationship between the metasurface matrices and S-parameters. Due to the close connection between the
+                                  metasurface pattern matrix and its corresponding reflection characteristics, the deep learning algorithm is used
+                                  to reduce the computational burden for obtaining the optimal solution.
+
+                                  Deep learning. Artificial neural networks have emerged in the last two decades with many applications,
+                                  especially in optimization and artificial intelligence. Figure 2 shows an overview of an artificial neuron, with X1,
+                                  X2, ... as its inputs (input neurons). In neural networks, each X has a weight, denoted by W. Observe that each
+                                  input is connected to a weight; thus, each input must be multiplied by its weight. Then, in the neural network, the
+                                  sum function (sigma) adds the products of Xi ’s by Wi’s. Finally, an activation function determines the output of
+                                  these operations. Then, the output of neurons by the activation function φ(u), with b as a bias value is:
+                                                                                        n               
+                                                                                          
+                                                                                Y =φ          Wi Xi + bi                                           (1)
+                                                                                        i=1
+
+
+                                     The neural network is made up of neurons in different layers. In general, a neural network consists of three
+                                  layers: input, hidden, and output. A greater the number of layers and neurons in each hidden layer increases the
+                                  complexity of the model. When the number of hidden layers and the number of neurons increase, our neural
+                                  network becomes a deep neural network. In this work, we use a DNN to design the desired metasurface.
+
+                                  A. Non‑restricted output. The inverse design of the metasurface is anticipated to determine the intrinsic rela-
+                                  tionships between the final metasurface structure and its geometrical dimensions by DNN. We have generated
+                                  2000 sets of random matrices that represent the metasurface structures using the “RAND” function in MATLAB
+                                  software. In the next step, we have linked the MATLAB with CST MWS to calculate the S-parameters of the
+                                  metasurface. To calculate the reflection characteristics of the infinite arrays of the unit cells, we have conducted
+                                  simulations in which the unit-cell boundary conditions are employed in x and y directions and open boundary
+                                  conditions in the z-direction. Finally, when it comes to the design procedure, we only need to enter the prede-
+                                  termined EM reflection properties, and our model can generate the output metasurface based on the learned
+                                  data during the training step. The dataset is established to generate 16 random numbers between 1 and 8 to
+                                  form 4 × 4 matrices where each number represents one of the 8 ring-shaped patterns. In the step of “Training of
+                                  machine learning”, to form our datasets, we have generated two thousand pairs of S-parameter and metasurface
+                                  pattern matrices (70% as a training set and 30% as a testing set), and the output of the training model is a matrix
+                                  of 32 × 32. Each unit-cell can generate 8 notches in the frequency band of 4 to 45 GHz. By defining three features
+                                  for each resonance (namely, notch frequency, notch depth, and notch bandwidth), the input of our proposed
+                                  DNN is a vector with dimension 24, and the output is a vector of dimension 1024, which represents a unit cell of
+                                  32 × 32 pixels. The details of the designed network are summarized in Table 1.
+                                       In the proposed model, dense and dropout layers are used one after the other (see second step in Fig. 1). In
+                                  the fully connected (dense) layer, each neuron in the input layer is connected to all the neurons in the previous
+                                  layers. In the dropout layer, some neurons are accidentally ignored in the training process in order to avoid
+                                  the misleading of the learning process, as well as increasing the learning speed and reducing the risk of over-
+                                  fitting. By selecting relevant features from the input data, the performance of the machine learning algorithms
+                                  is efficiently enhanced. In the proposed model, the values of batch size and learning rate are set to 30 and 0.001,
+                                  respectively. In addition, the Adam optimization algorithm is used for tuning the weighting values (Wi ). During
+                                  the training process, the difference between original and generated data is calculated repeatedly by tuning and
+                                  optimizing the weight values for each layer. When the difference reaches the satisfying predetermined criterion
+                                  which is defined as loss function, then the training process stops. The Mean Square Error (MSE) is used as a
+                                  loss function defined as:
+                                                                                              N
+                                                                                        1 
+                                                                               MSE =        (fi − yi )2                                           (2)
+                                                                                        N
+                                                                                           i=1
+
+
+
+
+Scientific Reports |   (2021) 11:7102 |                https://doi.org/10.1038/s41598-021-86588-2                                                   3
+
+                                                                                                                                               Vol.:(0123456789)
+          www.nature.com/scientificreports/
+
+
+                                             Layer number   Layer                 Output shape   Number of parameter   Activation function
+                                             1              dense_1 (Dense)       (None, 24)     600                   Relu
+                                             2              dropout_1 (Dropout)   (None, 24)     0                     –
+                                             3              dense_2 (Dense)       (None, 300)    90300                 Relu
+                                             4              dropout_2 (Dropout)   (None, 300)    0                     –
+                                             5              dense_3 (Dense)       (None, 300)    90300                 Relu
+                                             6              dropout_3 (Dropout)   (None, 300)    0                     –
+                                             7              dense_4 (Dense)       (None, 300)    90300                 Relu
+                                             8              dropout_4 (Dropout)   (None, 300)    0                     –
+                                             9              dense_5 (Dense)       (None, 300)    90300                 Relu
+                                             10             dropout_5 (Dropout)   (None, 300)    0                     –
+                                             11             dense_6 (Dense)       (None, 1024)   308224                Sigmoid
+
+
+                                            Table 1.  Detailed information of the non-restricted output network architecture.
+
+
+
+
+                                            Figure 3.  The simulated reflection coefficient of non-restricted output network architecture (a) metasurface
+                                            with three notches under −10 dB. (b) metasurface with a single notch under −10 dB.
+
+
+                                            where fi and yi denote the anticipated value and the actual value, respectively. Since our desired output in the
+                                            neural network is 0 or 1, we used the sigmoid function in the last layer, while using other activation functions
+                                            reduced the accuracy. Formulation of the activation of relu and sigmoid functions are given in Eqs. (3) and (4),
+                                            respectively:
+                                                                                                  
+                                                                                                    0 x≤0
+                                                                                          φ(x) =
+                                                                                                    x x>0                                                (3)
+
+
+                                                                                                             1
+                                                                                                 φ(x) =                                                      (4)
+                                                                                                          1 + e−x
+                                            In the step of “Evaluation of the model”, for validation, several design goals of S-parameters are suggested, antici-
+                                            pating that our proposed DNN is capable of producing equivalent unit-cell structures. The DNN algorithm is
+                                            realized by Python version 3.8, and the Tensorflow and Keras f­ ramework36 are used to establish the model (see
+                                            the last step in Fig. 1). As an example, a metasurface structure is designed with three notches using the DNN
+                                            method. The specified reflection information is as follows: [number of resonances; resonance frequencies; reso-
+                                            nance depth; and the bandwidth of each resonance] = [ 3; 17.5, 23.5, 25.3 GHz; −30, −20, −20 dB; 0.5, 0.5, 0.4
+                                            GHz]. Observe in Fig. 3a, that the output full-wave results achieve the design goals.
+                                                For the next example, a uni-cell is designed with one resonance frequency (-15 dB) at 15 GHz. The simulation
+                                            results show good conformity with our design target (see Fig. 3b). Furthermore, the curves of the mean square
+                                            error and the accuracy of the presented non-restricted output DNN method are proposed in Fig. 4, where we
+                                            see that the accuracy rate is higher than 92%.
+
+                                            B. Restricted output. In order to increase the learning speed, reduce the number of calculations, and improve
+                                            the efficiency of a design process, the network architecture output is restricted in such a way that the DNN
+                                            should generate the metasurface structure by using the proposed 8 ring-shaped patterns. Unlike the previous
+                                            approach, in which the output generates a 1024 size vector to form the 32 × 32 metasurface pixels, in this case
+                                            the output will generate a 48 size vector. More specifically, each unit-cell consists of 4 × 4 matrices of these
+                                            8 ring-shaped patterns, where each ring-shaped pattern consists of 8 × 8 pixels. To form the output vector,
+                                            ring-shaped patterns are denoted by eight digital codes (3-bit) of “000” to “111”. Therefore, the output of the
+                                            DNN generates a 16 × 3 = 48 size vector. By restricting the output to produce a 48 size vector, the amount of
+                                            calculations will be reduced. It will be shown that the accuracy of the network reaches up to 91%. The details
+
+
+          Scientific Reports |   (2021) 11:7102 |                   https://doi.org/10.1038/s41598-021-86588-2                                                 4
+
+Vol:.(1234567890)
+www.nature.com/scientificreports/
+
+
+
+
+                                  Figure 4.  Curves of (a) accuracy and, (b) loss function relative to 10,000 Epochs for non-restricted network
+                                  architecture.
+
+
+                                   Layer number   Layer                 Output shape   Number of parameter   Activation function
+                                   1              dense_1 (Dense)       (None, 24)     600                   Relu
+                                   2              dropout_1 (Dropout)   (None, 24)     0                     –
+                                   3              dense_2 (Dense)       (None, 500)    12,500                Relu
+                                   4              dropout_2 (Dropout)   (None, 500)    0                     –
+                                   5              dense_3 (Dense)       (None, 500)    250,500               Relu
+                                   6              dropout_3 (Dropout)   (None, 500)    0                     –
+                                   7              dense_4 (Dense)       (None, 500)    250,500               Relu
+                                   8              dropout_4 (Dropout)   (None, 500)    0                     –
+                                   9              dense_5 (Dense)       (None, 500)    250,500               Relu
+                                   10             dense_6 (Dense)       (None, 48)     24,048                Sigmoid
+
+
+                                  Table 2.  Detailed information of the restricted output network architecture.
+
+
+
+
+                                  Figure 5.  Curves of (a) accuracy and, (b) loss function relative to 10,000 Epochs for restricted network
+                                  architecture.
+
+                                  of the designed DNN are summarized in Table 2. The other parameters are similar to the non-restricted output
+                                  network. Figure 5 shows the curves of the loss function and accuracy.
+                                      To further validate the effectiveness of the proposed DNN method for restricted output, four different exam-
+                                  ples are presented. The specified S-parameters are provided in our network, and the matrix of unit cells are
+                                  generated through the input S-parameters. We re-enter these matrices into CST MWS to simulate the reflection
+                                  coefficient of the metasurface. The simulated results are in good accordance with our desired design target (See
+                                  Table 3 and Fig. 6).
+                                      To illustrate the advantages of our DNN approach, as detailed in Table 4, we show the information of train-
+                                  ing time, time to generate a unit-cell, and the model size for both restricted and non-restricted structures. The
+                                  results of Table 4 are obtained using Google Colab and with a fixed GPU whose model is Tesla k80 with 13MB
+
+
+Scientific Reports |   (2021) 11:7102 |                   https://doi.org/10.1038/s41598-021-86588-2                                               5
+
+                                                                                                                                              Vol.:(0123456789)
+          www.nature.com/scientificreports/
+
+
+                                             Examples        Number of notches    Notches frequency (GHz)   Notches depth (dB)   Notches bandwidth (GHz)
+                                             Fig. 6a         1                    42                        −35                  0.7
+                                             Fig. 6b         1                    5.8                       −25                  0.2
+                                             Fig. 6c         2                    5.5, 10.5                 −12.5, −24.5         0.1, 1.8
+                                             Fig. 6d         3                    28, 33.5, 41.5            −14, −25, −13.5      0.3, 0.5, 0.7
+
+
+                                            Table 3.  Desired input targets for four S-parameters, which are presented in Fig. 6.
+
+
+
+
+                                            Figure 6.  Metasurface design examples through restricted output network architecture.
+
+
+                                                                                                                    Restricted                   Non-restricted
+                                             Training time                                                          81 min                       84 min
+                                             Time to generate a unit-cell with pre-trained model                    0.052 s                      0.055 s
+                                             Model size                                                             9 MB                         7 MB
+
+
+                                            Table 4.  Information of training time, time to generate a unit-cell, and the model size for both restricted and
+                                            non-restricted structures.
+
+
+
+
+                                            of RAM. The design time of our method is about 0.05 sec which is much faster than conventional methods that
+                                            take about 700 to 800 minutes and even compared to other inverse design methods that used deep learning. Also,
+                                            our DNN-based approach takes less volume than the conventional method which certifies that our method is
+                                            more efficient and effective.
+                                                Consequently, it has been amply demonstrated that the proposed DNN method is superior to other inverse
+                                            design algorithms of metasurface structure, from the perspective of computational repetitions, teaching time con-
+                                            sumption, and network accuracy. The conformity between the simulated results and design targets promises that
+                                            the proposed DNN approach is an effective method of metasurface design for a variety of practical applications.
+
+                                            Discussion
+                                            Herein, we have proposed an inverse metasurface design method based on a deep neural network, whereby
+                                            metasurface structures may be computed directly by merely specifying the design targets. After training the deep
+                                            learning model by a set of samples, our proposed model can automatically generate the metasurface pattern as
+                                            the output by four specified reflection criteria (namely, number of resonances, resonance frequencies, resonance
+                                            depths, and resonance bandwidths) as the input in an ultra-wide operating frequency. Comparing the numeri-
+                                            cal simulations with the desired design target illustrates that our proposed approach successfully generates the
+                                            required metasurface structures with an accuracy of more than 90%. By using 8 ring-shaped patterns during
+                                            the training process and restricting the output of the network to generate a 48 size vector, our presented method
+                                            serves as a fast and effective approach in terms of computational iterations, design time consumption, and
+
+
+
+          Scientific Reports |   (2021) 11:7102 |                     https://doi.org/10.1038/s41598-021-86588-2                                                  6
+
+Vol:.(1234567890)
+www.nature.com/scientificreports/
+
+
+                                  network accuracy. The presented DNN-based method can pave the way for new research avenues in automatic
+                                  metasurface realization and highly complicated wave manipulations.
+
+                                  Received: 29 January 2021; Accepted: 17 March 2021
+
+
+                                  References
+                                   1. Pendry, J. B. Negative refraction makes a perfect lens. Phys. Rev. Lett. 85, 3966 (2000).
+                                   2. Rajabalipanah, H., Abdolali, A., Shabanpour, J., Momeni, A. & Cheldavi, A. Asymmetric spatial power dividers using phase-
+                                      amplitude metasurfaces driven by huygens principle. ACS Omega 4, 14340–14352 (2019).
+                                   3. Shabanpour, J. Full manipulation of the power intensity pattern in a large space-time digital metasurface: from arbitrary multibeam
+                                      generation to harmonic beam steering scheme. Ann. Phys. 532, 2000321 (2020).
+                                   4. Smith, D. R., Padilla, W. J., Vier, D. C., Nemat-Nasser, S. C. & Schultz, S. Composite medium with simultaneously negative perme-
+                                      ability and permittivity. Phys. Rev. Lett. 84, 4184 (2000).
+                                   5. Veselago, V. G. Electrodynamics of substances with simultaneously negative and. Usp. Fiz. Nauk. 92, 517 (1967).
+                                   6. Grady, N. K. et al. Terahertz metamaterials for linear polarization conversion and anomalous refraction. Science 340, 1304–1307
+                                      (2013).
+                                   7. Shabanpour, J., Beyraghi, S., Ghorbani, F., & Oraizi, H. Implementation of conformal digital metasurfaces for THz polarimetric
+                                      sensing. arXiv:​2101.​02298 (arXiv preprint) (2021).
+                                   8. Shabanpour, J. Programmable anisotropic digital metasurface for independent manipulation of dual-polarized THz waves based
+                                      on a voltage-controlled phase transition of VO 2 microwires. J. Mater. Chem. 8, 7189–7199 (2020).
+                                   9. Hashemi, M. R. M., Yang, S. H., Wang, T., Sepúlveda, N. & Jarrahi, M. Electronically-controlled beam-steering through vanadium
+                                      dioxide metasurfaces. Sci. Rep. 6, 35439 (2016).
+                                  10. Yang, Y. et al. Dielectric meta-reflectarray for broadband linear polarization conversion and optical vortex generation. Nano Lett.
+                                      14, 1394–1399 (2014).
+                                  11. Shabanpour, J., Beyraghi, S. & Cheldavi, A. Ultrafast reprogrammable multifunctional vanadium-dioxide-assisted metasurface
+                                      for dynamic THz wavefront engineering. Sci. Rep. 10, 1–14 (2020).
+                                  12. Landy, N. I., Sajuyigbe, S., Mock, J. J., Smith, D. R. & Padilla, W. J. Perfect metamaterial absorber. Phys. Rev. Lett. 100, 207402
+                                      (2008).
+                                  13. Shabanpour, J., Beyraghi, S. & Oraizi, H. Reconfigurable honeycomb metamaterial absorber having incident angular stability. Sci.
+                                      Rep. 10, 1–8 (2020).
+                                  14. Li, L. et al. Intelligent metasurface imager and recognizer. Light Sci. Appl. 8, 1–9 (2019).
+                                  15. Ma, Q. et al. Smart metasurface with self-adaptively reprogrammable functions. Light Sci. Appl. 8, 1–12 (2019).
+                                  16. Ma, Q. et al. Smart sensing metasurface with self-defined functions in dual polarizations. Nanophotonics 9, 3271–3278 (2020).
+                                  17. Ma, Q. & Cui, T. J. Information Metamaterials: bridging the physical world and digital world. PhotoniX 1, 1–32 (2020).
+                                  18. Chen, L. et al. Dual-polarization programmable metasurface modulator for near-field information encoding and transmission.
+                                      Photon. Res. 9, 116–124 (2021).
+                                  19. Cui, T. J. et al. Information metamaterial systems. Iscience. 23, (2020).
+                                  20. Goi, E., Zhang, Q., Chen, X., Luan, H. & Gu, M. Perspective on photonic memristive neuromorphic computing. PhotoniX 1, 1–26
+                                      (2020).
+                                  21. Gu, M., & Goi, E. Holography enabled by artificial intelligence. In Holography, Diffractive Optics, and Applications X (Vol. 11551,
+                                      p. 1155102). International Society for Optics and Photonics (2020).
+                                  22. Ghorbani, F., Hashemi, S., Abdolali, A., & Soleimani, M. EEGsig machine learning-based toolbox for End-to-End EEG signal
+                                      processing. arXiv:​2010.​12877 (arXiv preprint) (2020).
+                                  23. Carleo, G. et al. Machine learning and the physical sciences. Rev. Mod. Phys. 91, 045002 (2019).
+                                  24. Medico, R. et al. Machine learning based error detection in transient susceptibility tests. IEEE Trans. Electromagn. Compat. 61,
+                                      352–360 (2018).
+                                  25. Shi, D., Wang, N., Zhang, F. & Fang, W. Intelligent electromagnetic compatibility diagnosis and management with collective
+                                      knowledge graphs and machine learning. IEEE Trans. Electromagn, Compat. (2020).
+                                  26. Cui, L., Zhang, Y., Zhang, R. & Liu, Q. H. A modified efficient KNN method for antenna optimization and design. IEEE Trans.
+                                      Antennas Propag. 68, 6858–6866 (2020).
+                                  27. Sharma, Y., Zhang, H. H. & Xin, H. Machine learning techniques for optimizing design of double T-shaped monopole antenna.
+                                      IEEE Trans. Antennas Propag. 68, 5658–5663 (2020).
+                                  28. An, S. et al. A deep learning approach for objective-driven all-dielectric metasurface design. ACS Photon. 6, 3196–3207 (2019).
+                                  29. So, S. & Rho, J. Designing nanophotonic structures using conditional deep convolutional generative adversarial networks. Nano‑
+                                      photonics 8, 1255–1261 (2019).
+                                  30. Malkiel, I. et al. Plasmonic nanostructure design and characterization via deep learning. Light Sci. Appl. 7, 1–8 (2018).
+                                  31. Qiu, T. et al. Deep learning: a rapid and efficient route to automatic metasurface design. Adv. Sci. 6, 1900128 (2019).
+                                  32. Zhang, Q. et al. Machine-learning designs of anisotropic digital coding metasurfaces. Adv. Theory Simul. 2, 1800132 (2019).
+                                  33. Shan, T., Pan, X., Li, M., Xu, S. & Yang, F. Coding programmable metasurfaces based on deep learning techniques. IEEE J. Emerg.
+                                      Sel. Topics Power Electron 10, 114–125 (2020).
+                                  34. Shi, X., Qiu, T., Wang, J., Zhao, X. & Qu, S. Metasurface inverse design using machine learning approaches. J. Phys. D. 53, 275105
+                                      (2020).
+                                  35. Sajedian, I., Lee, H. & Rho, J. Double-deep Q-learning to increase the efficiency of metasurface holograms. Sci. Rep. 9, 1–8 (2019).
+                                  36. Chollet, F. et al. Keras. https://​keras.​io, (2015).
+
+                                  Author contributions
+                                  F.G. and S.B. conceived the idea. F.G. set up the DNN model. J.S. and S.B designed the proposed unit cells and
+                                  conducted the simulations. Finally, J.S. wrote the manuscript based on the input from all authors. H.O., H.S.,
+                                  and M.S. supervised the project and reviewed the manuscript.
+
+                                  Competing interests
+                                  The authors declare no competing interests.
+
+                                  Additional information
+                                  Correspondence and requests for materials should be addressed to F.G. or J.S.
+
+
+
+Scientific Reports |   (2021) 11:7102 |                   https://doi.org/10.1038/s41598-021-86588-2                                                                    7
+
+                                                                                                                                                                  Vol.:(0123456789)
+          www.nature.com/scientificreports/
+
+
+                                            Reprints and permissions information is available at www.nature.com/reprints.
+                                            Publisher’s note Springer Nature remains neutral with regard to jurisdictional claims in published maps and
+                                            institutional affiliations.
+                                                          Open Access This article is licensed under a Creative Commons Attribution 4.0 International
+                                                          License, which permits use, sharing, adaptation, distribution and reproduction in any medium or
+                                            format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the
+                                            Creative Commons licence, and indicate if changes were made. The images or other third party material in this
+                                            article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the
+                                            material. If material is not included in the article’s Creative Commons licence and your intended use is not
+                                            permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from
+                                            the copyright holder. To view a copy of this licence, visit http://​creat​iveco​mmons.​org/​licen​ses/​by/4.​0/.
+
+                                            © The Author(s) 2021
+
+
+
+
+          Scientific Reports |   (2021) 11:7102 |                https://doi.org/10.1038/s41598-021-86588-2                                                 8
+
+Vol:.(1234567890)
+

@@ -1,0 +1,65 @@
+{
+  "backend": "synthetic",
+  "physical_validation": "not_run",
+  "test": {
+    "loss": 1.2762421369552612,
+    "position_accuracy": 0.38461539149284363,
+    "exact_accuracy": 0.05128205195069313
+  },
+  "test_sample_count": 39,
+  "training_complete": true,
+  "checkpoint_sha256": "64cf7e3b5f8857b445565b91a67ce31ddc32e798ec7ea8900a2974e6b0b3686a",
+  "nearest_neighbor": {
+    "position_accuracy": 0.7179487347602844,
+    "exact_accuracy": 0.0
+  },
+  "target_features": [
+    23.45,
+    -17.54999999999993,
+    0.35555555555555346,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "target_source": "held_out_row_193",
+  "predicted_codes": [
+    3,
+    0,
+    0,
+    3
+  ],
+  "class_probabilities": [
+    [
+      0.1941681206226349,
+      0.16914023458957672,
+      0.25434404611587524,
+      0.38234761357307434
+    ],
+    [
+      0.3383732736110687,
+      0.28120461106300354,
+      0.23017601668834686,
+      0.15024606883525848
+    ],
+    [
+      0.36524727940559387,
+      0.22872605919837952,
+      0.19419552385807037,
+      0.21183115243911743
+    ],
+    [
+      0.26783373951911926,
+      0.21393431723117828,
+      0.24831394851207733,
+      0.2699180543422699
+    ]
+  ],
+  "out_of_training_range": true,
+  "cached_descriptor_comparison": {
+    "notch_count_matches": false,
+    "reason": "ok"
+  },
+  "cached_spectrum_provenance": "synthetic"
+}

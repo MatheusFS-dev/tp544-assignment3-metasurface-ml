@@ -1,0 +1,5 @@
+# Install this for CPU software proof tests only.
+# torch is a direct CPU wheel-index requirement; other packages use normal PyPI.
+-r requirements.txt
+torch==2.14.1+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu

@@ -1,0 +1,5 @@
+*.pdf binary
+*.png binary
+*.csv text eol=lf
+# Preserve machine-extracted paper layout, including indentation and line endings.
+paper/paper.txt whitespace=-blank-at-eol

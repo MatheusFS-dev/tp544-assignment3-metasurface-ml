@@ -1,0 +1,9 @@
+{
+  "python": "3.12.14",
+  "torch": "2.14.1+cpu",
+  "cuda_available": false,
+  "cuda_build": null,
+  "proof_device": "cpu",
+  "physical_solver_run": false,
+  "paper_sha256": "e96678ab22dbe363f34c81b6a8a2444f09253a140b63083270324c81a51bd069"
+}
