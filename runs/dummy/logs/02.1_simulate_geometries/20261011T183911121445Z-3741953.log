@@ -1,0 +1,7 @@
+Stage 02.1_simulate_geometries: started 2026-10-11T18:39:11.121445+00:00
+SYNTHETIC SOFTWARE DEMONSTRATION: no electromagnetic solver is used.
+Simulations: starting with 256/256 saved, ETA unknown
+All requested saved geometries are already simulated.
+Part simulation: completed after 0.045s
+Part simulation_metrics_export: completed after 0.031s
+Stage 02.1_simulate_geometries: completed after 0.078s

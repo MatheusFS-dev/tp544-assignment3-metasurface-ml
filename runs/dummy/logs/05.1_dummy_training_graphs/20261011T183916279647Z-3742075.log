@@ -1,0 +1,7 @@
+Stage 05.1_dummy_training_graphs: started 2026-10-11T18:39:16.279647+00:00
+Training graph: saved /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/graphs/training_loss.png
+Training graph: saved /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/graphs/training_accuracy.png
+Training graph: saved /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/graphs/training_time.png
+Training graph: saved /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/graphs/graph_data.json
+Part training_graphs: completed after 0.271s
+Stage 05.1_dummy_training_graphs: completed after 0.502s

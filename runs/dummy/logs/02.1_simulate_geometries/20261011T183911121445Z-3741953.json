@@ -1,0 +1,20 @@
+{
+  "stage": "02.1_simulate_geometries",
+  "started_at_utc": "2026-10-11T18:39:11.121445+00:00",
+  "status": "completed",
+  "log": "logs/02.1_simulate_geometries/20261011T183911121445Z-3741953.log",
+  "parts": [
+    {
+      "name": "simulation",
+      "status": "completed",
+      "elapsed_seconds": 0.04525866359472275
+    },
+    {
+      "name": "simulation_metrics_export",
+      "status": "completed",
+      "elapsed_seconds": 0.030985333025455475
+    }
+  ],
+  "ended_at_utc": "2026-10-11T18:39:11.199315+00:00",
+  "elapsed_seconds": 0.07784968428313732
+}

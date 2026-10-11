@@ -1,0 +1,35 @@
+{
+  "stage": "03.1_dummy_train",
+  "started_at_utc": "2026-10-11T18:17:13.378660+00:00",
+  "status": "completed",
+  "log": "logs/03.1_dummy_train/20261011T181713378660Z-3740562.log",
+  "parts": [
+    {
+      "name": "dataset_preparation",
+      "status": "completed",
+      "elapsed_seconds": 0.08062818460166454
+    },
+    {
+      "name": "network_analysis",
+      "status": "completed",
+      "elapsed_seconds": 0.002468479797244072
+    },
+    {
+      "name": "dataset_metrics_export",
+      "status": "completed",
+      "elapsed_seconds": 0.027085205540060997
+    },
+    {
+      "name": "training",
+      "status": "completed",
+      "elapsed_seconds": 26.449051371775568
+    },
+    {
+      "name": "training_metrics_export",
+      "status": "completed",
+      "elapsed_seconds": 0.037344036623835564
+    }
+  ],
+  "ended_at_utc": "2026-10-11T18:17:40.840374+00:00",
+  "elapsed_seconds": 27.461694470606744
+}

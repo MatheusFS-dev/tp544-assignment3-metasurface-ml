@@ -1,0 +1,6 @@
+Stage 01_generate_geometries: started 2026-10-11T18:39:10.938760+00:00
+Geometries: starting with 256/256 saved, ETA unknown
+Geometries saved: 256/256. No solver was used. /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/geometries/geometry_checkpoint.npz
+Part geometry_generation: completed after 0.013s
+Part geometry_metrics_export: completed after 0.007s
+Stage 01_generate_geometries: completed after 0.021s

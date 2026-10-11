@@ -1,0 +1,2174 @@
+Stage 03.1_dummy_train: started 2026-10-11T18:17:13.378660+00:00
+Dataset preparation: starting with 0/256 saved, ETA unknown
+Dataset preparation: 16/256 extracted
+Dataset preparation: 32/256 extracted
+Dataset preparation: 48/256 extracted
+Dataset preparation: 64/256 extracted
+Dataset preparation: 80/256 extracted
+Dataset preparation: 96/256 extracted
+Dataset preparation: 112/256 extracted
+Dataset preparation: 128/256 extracted
+Dataset preparation: 144/256 extracted
+Dataset preparation: 160/256 extracted
+Dataset preparation: 176/256 extracted
+Dataset preparation: 192/256 extracted
+Dataset preparation: 208/256 extracted
+Dataset preparation: 224/256 extracted
+Dataset preparation: 240/256 extracted
+Dataset preparation: 256/256 extracted
+Dataset preparation: 256/256 saved, elapsed 0s, ETA 0s
+Prepared 256 eligible rows from 256 saved simulations: /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/data/training_dataset.npz
+Part dataset_preparation: completed after 0.081s
+/home/matheus/src/tp544-assignment3-metasurface-ml/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:228: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 804: forward compatibility was attempted on non supported HW (Triggered internally at /__w/pytorch/pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return torch._C._cuda_getDeviceCount() > 0
+SYNTHETIC SOFTWARE DEMONSTRATION: training on cpu.
+Network parameters: paper_unrestricted=587224, paper_restricted=788648, reduced=3440
+Part network_analysis: completed after 0.002s
+Part dataset_metrics_export: completed after 0.027s
+Training: resuming epoch 1, minibatch cursor 0, 0 saved steps
+Epoch 1: starting with 0/179 saved, ETA unknown
+Epoch 1: 16/179 saved (step 1), elapsed 0s, ETA 0s
+Epoch 1: 32/179 saved (step 2), elapsed 0s, ETA 0s
+Epoch 1: 48/179 saved (step 3), elapsed 0s, ETA 0s
+Epoch 1: 64/179 saved (step 4), elapsed 0s, ETA 0s
+Epoch 1: 80/179 saved (step 5), elapsed 0s, ETA 0s
+Epoch 1: 96/179 saved (step 6), elapsed 0s, ETA 0s
+Epoch 1: 112/179 saved (step 7), elapsed 0s, ETA 0s
+Epoch 1: 128/179 saved (step 8), elapsed 0s, ETA 0s
+Epoch 1: 144/179 saved (step 9), elapsed 0s, ETA 0s
+Epoch 1: 160/179 saved (step 10), elapsed 0s, ETA 0s
+Epoch 1: 176/179 saved (step 11), elapsed 0s, ETA 0s
+Epoch 1: 179/179 saved (step 12), elapsed 0s, ETA 0s
+Epoch 1: validation loss 1.35364, position accuracy 0.395
+Epoch 2: starting with 0/179 saved, ETA unknown
+Epoch 2: 16/179 saved (step 13), elapsed 0s, ETA 0s
+Epoch 2: 32/179 saved (step 14), elapsed 0s, ETA 0s
+Epoch 2: 48/179 saved (step 15), elapsed 0s, ETA 0s
+Epoch 2: 64/179 saved (step 16), elapsed 0s, ETA 0s
+Epoch 2: 80/179 saved (step 17), elapsed 0s, ETA 0s
+Epoch 2: 96/179 saved (step 18), elapsed 0s, ETA 0s
+Epoch 2: 112/179 saved (step 19), elapsed 0s, ETA 0s
+Epoch 2: 128/179 saved (step 20), elapsed 0s, ETA 0s
+Epoch 2: 144/179 saved (step 21), elapsed 0s, ETA 0s
+Epoch 2: 160/179 saved (step 22), elapsed 0s, ETA 0s
+Epoch 2: 176/179 saved (step 23), elapsed 0s, ETA 0s
+Epoch 2: 179/179 saved (step 24), elapsed 0s, ETA 0s
+Epoch 2: validation loss 1.32373, position accuracy 0.414
+Epoch 3: starting with 0/179 saved, ETA unknown
+Epoch 3: 16/179 saved (step 25), elapsed 0s, ETA 0s
+Epoch 3: 32/179 saved (step 26), elapsed 0s, ETA 0s
+Epoch 3: 48/179 saved (step 27), elapsed 0s, ETA 0s
+Epoch 3: 64/179 saved (step 28), elapsed 0s, ETA 0s
+Epoch 3: 80/179 saved (step 29), elapsed 0s, ETA 0s
+Epoch 3: 96/179 saved (step 30), elapsed 0s, ETA 0s
+Epoch 3: 112/179 saved (step 31), elapsed 0s, ETA 0s
+Epoch 3: 128/179 saved (step 32), elapsed 0s, ETA 0s
+Epoch 3: 144/179 saved (step 33), elapsed 0s, ETA 0s
+Epoch 3: 160/179 saved (step 34), elapsed 0s, ETA 0s
+Epoch 3: 176/179 saved (step 35), elapsed 0s, ETA 0s
+Epoch 3: 179/179 saved (step 36), elapsed 0s, ETA 0s
+Epoch 3: validation loss 1.28905, position accuracy 0.408
+Epoch 4: starting with 0/179 saved, ETA unknown
+Epoch 4: 16/179 saved (step 37), elapsed 0s, ETA 0s
+Epoch 4: 32/179 saved (step 38), elapsed 0s, ETA 0s
+Epoch 4: 48/179 saved (step 39), elapsed 0s, ETA 0s
+Epoch 4: 64/179 saved (step 40), elapsed 0s, ETA 0s
+Epoch 4: 80/179 saved (step 41), elapsed 0s, ETA 0s
+Epoch 4: 96/179 saved (step 42), elapsed 0s, ETA 0s
+Epoch 4: 112/179 saved (step 43), elapsed 0s, ETA 0s
+Epoch 4: 128/179 saved (step 44), elapsed 0s, ETA 0s
+Epoch 4: 144/179 saved (step 45), elapsed 0s, ETA 0s
+Epoch 4: 160/179 saved (step 46), elapsed 0s, ETA 0s
+Epoch 4: 176/179 saved (step 47), elapsed 0s, ETA 0s
+Epoch 4: 179/179 saved (step 48), elapsed 0s, ETA 0s
+Epoch 4: validation loss 1.25409, position accuracy 0.414
+Epoch 5: starting with 0/179 saved, ETA unknown
+Epoch 5: 16/179 saved (step 49), elapsed 0s, ETA 0s
+Epoch 5: 32/179 saved (step 50), elapsed 0s, ETA 0s
+Epoch 5: 48/179 saved (step 51), elapsed 0s, ETA 0s
+Epoch 5: 64/179 saved (step 52), elapsed 0s, ETA 0s
+Epoch 5: 80/179 saved (step 53), elapsed 0s, ETA 0s
+Epoch 5: 96/179 saved (step 54), elapsed 0s, ETA 0s
+Epoch 5: 112/179 saved (step 55), elapsed 0s, ETA 0s
+Epoch 5: 128/179 saved (step 56), elapsed 0s, ETA 0s
+Epoch 5: 144/179 saved (step 57), elapsed 0s, ETA 0s
+Epoch 5: 160/179 saved (step 58), elapsed 0s, ETA 0s
+Epoch 5: 176/179 saved (step 59), elapsed 0s, ETA 0s
+Epoch 5: 179/179 saved (step 60), elapsed 0s, ETA 0s
+Epoch 5: validation loss 1.21425, position accuracy 0.421
+Epoch 6: starting with 0/179 saved, ETA unknown
+Epoch 6: 16/179 saved (step 61), elapsed 0s, ETA 0s
+Epoch 6: 32/179 saved (step 62), elapsed 0s, ETA 0s
+Epoch 6: 48/179 saved (step 63), elapsed 0s, ETA 0s
+Epoch 6: 64/179 saved (step 64), elapsed 0s, ETA 0s
+Epoch 6: 80/179 saved (step 65), elapsed 0s, ETA 0s
+Epoch 6: 96/179 saved (step 66), elapsed 0s, ETA 0s
+Epoch 6: 112/179 saved (step 67), elapsed 0s, ETA 0s
+Epoch 6: 128/179 saved (step 68), elapsed 0s, ETA 0s
+Epoch 6: 144/179 saved (step 69), elapsed 0s, ETA 0s
+Epoch 6: 160/179 saved (step 70), elapsed 0s, ETA 0s
+Epoch 6: 176/179 saved (step 71), elapsed 0s, ETA 0s
+Epoch 6: 179/179 saved (step 72), elapsed 0s, ETA 0s
+Epoch 6: validation loss 1.17269, position accuracy 0.421
+Epoch 7: starting with 0/179 saved, ETA unknown
+Epoch 7: 16/179 saved (step 73), elapsed 0s, ETA 0s
+Epoch 7: 32/179 saved (step 74), elapsed 0s, ETA 0s
+Epoch 7: 48/179 saved (step 75), elapsed 0s, ETA 0s
+Epoch 7: 64/179 saved (step 76), elapsed 0s, ETA 0s
+Epoch 7: 80/179 saved (step 77), elapsed 0s, ETA 0s
+Epoch 7: 96/179 saved (step 78), elapsed 0s, ETA 0s
+Epoch 7: 112/179 saved (step 79), elapsed 0s, ETA 0s
+Epoch 7: 128/179 saved (step 80), elapsed 0s, ETA 0s
+Epoch 7: 144/179 saved (step 81), elapsed 0s, ETA 0s
+Epoch 7: 160/179 saved (step 82), elapsed 0s, ETA 0s
+Epoch 7: 176/179 saved (step 83), elapsed 0s, ETA 0s
+Epoch 7: 179/179 saved (step 84), elapsed 0s, ETA 0s
+Epoch 7: validation loss 1.13247, position accuracy 0.428
+Epoch 8: starting with 0/179 saved, ETA unknown
+Epoch 8: 16/179 saved (step 85), elapsed 0s, ETA 0s
+Epoch 8: 32/179 saved (step 86), elapsed 0s, ETA 0s
+Epoch 8: 48/179 saved (step 87), elapsed 0s, ETA 0s
+Epoch 8: 64/179 saved (step 88), elapsed 0s, ETA 0s
+Epoch 8: 80/179 saved (step 89), elapsed 0s, ETA 0s
+Epoch 8: 96/179 saved (step 90), elapsed 0s, ETA 0s
+Epoch 8: 112/179 saved (step 91), elapsed 0s, ETA 0s
+Epoch 8: 128/179 saved (step 92), elapsed 0s, ETA 0s
+Epoch 8: 144/179 saved (step 93), elapsed 0s, ETA 0s
+Epoch 8: 160/179 saved (step 94), elapsed 0s, ETA 0s
+Epoch 8: 176/179 saved (step 95), elapsed 0s, ETA 0s
+Epoch 8: 179/179 saved (step 96), elapsed 0s, ETA 0s
+Epoch 8: validation loss 1.09805, position accuracy 0.441
+Epoch 9: starting with 0/179 saved, ETA unknown
+Epoch 9: 16/179 saved (step 97), elapsed 0s, ETA 0s
+Epoch 9: 32/179 saved (step 98), elapsed 0s, ETA 0s
+Epoch 9: 48/179 saved (step 99), elapsed 0s, ETA 0s
+Epoch 9: 64/179 saved (step 100), elapsed 0s, ETA 0s
+Epoch 9: 80/179 saved (step 101), elapsed 0s, ETA 0s
+Epoch 9: 96/179 saved (step 102), elapsed 0s, ETA 0s
+Epoch 9: 112/179 saved (step 103), elapsed 0s, ETA 0s
+Epoch 9: 128/179 saved (step 104), elapsed 0s, ETA 0s
+Epoch 9: 144/179 saved (step 105), elapsed 0s, ETA 0s
+Epoch 9: 160/179 saved (step 106), elapsed 0s, ETA 0s
+Epoch 9: 176/179 saved (step 107), elapsed 0s, ETA 0s
+Epoch 9: 179/179 saved (step 108), elapsed 0s, ETA 0s
+Epoch 9: validation loss 1.06061, position accuracy 0.454
+Epoch 10: starting with 0/179 saved, ETA unknown
+Epoch 10: 16/179 saved (step 109), elapsed 0s, ETA 0s
+Epoch 10: 32/179 saved (step 110), elapsed 0s, ETA 0s
+Epoch 10: 48/179 saved (step 111), elapsed 0s, ETA 0s
+Epoch 10: 64/179 saved (step 112), elapsed 0s, ETA 0s
+Epoch 10: 80/179 saved (step 113), elapsed 0s, ETA 0s
+Epoch 10: 96/179 saved (step 114), elapsed 0s, ETA 0s
+Epoch 10: 112/179 saved (step 115), elapsed 0s, ETA 0s
+Epoch 10: 128/179 saved (step 116), elapsed 0s, ETA 0s
+Epoch 10: 144/179 saved (step 117), elapsed 0s, ETA 0s
+Epoch 10: 160/179 saved (step 118), elapsed 0s, ETA 0s
+Epoch 10: 176/179 saved (step 119), elapsed 0s, ETA 0s
+Epoch 10: 179/179 saved (step 120), elapsed 0s, ETA 0s
+Epoch 10: validation loss 1.02739, position accuracy 0.474
+Epoch 11: starting with 0/179 saved, ETA unknown
+Epoch 11: 16/179 saved (step 121), elapsed 0s, ETA 0s
+Epoch 11: 32/179 saved (step 122), elapsed 0s, ETA 0s
+Epoch 11: 48/179 saved (step 123), elapsed 0s, ETA 0s
+Epoch 11: 64/179 saved (step 124), elapsed 0s, ETA 0s
+Epoch 11: 80/179 saved (step 125), elapsed 0s, ETA 0s
+Epoch 11: 96/179 saved (step 126), elapsed 0s, ETA 0s
+Epoch 11: 112/179 saved (step 127), elapsed 0s, ETA 0s
+Epoch 11: 128/179 saved (step 128), elapsed 0s, ETA 0s
+Epoch 11: 144/179 saved (step 129), elapsed 0s, ETA 0s
+Epoch 11: 160/179 saved (step 130), elapsed 0s, ETA 0s
+Epoch 11: 176/179 saved (step 131), elapsed 0s, ETA 0s
+Epoch 11: 179/179 saved (step 132), elapsed 0s, ETA 0s
+Epoch 11: validation loss 0.99232, position accuracy 0.487
+Epoch 12: starting with 0/179 saved, ETA unknown
+Epoch 12: 16/179 saved (step 133), elapsed 0s, ETA 0s
+Epoch 12: 32/179 saved (step 134), elapsed 0s, ETA 0s
+Epoch 12: 48/179 saved (step 135), elapsed 0s, ETA 0s
+Epoch 12: 64/179 saved (step 136), elapsed 0s, ETA 0s
+Epoch 12: 80/179 saved (step 137), elapsed 0s, ETA 0s
+Epoch 12: 96/179 saved (step 138), elapsed 0s, ETA 0s
+Epoch 12: 112/179 saved (step 139), elapsed 0s, ETA 0s
+Epoch 12: 128/179 saved (step 140), elapsed 0s, ETA 0s
+Epoch 12: 144/179 saved (step 141), elapsed 0s, ETA 0s
+Epoch 12: 160/179 saved (step 142), elapsed 0s, ETA 0s
+Epoch 12: 176/179 saved (step 143), elapsed 0s, ETA 0s
+Epoch 12: 179/179 saved (step 144), elapsed 0s, ETA 0s
+Epoch 12: validation loss 0.95882, position accuracy 0.533
+Epoch 13: starting with 0/179 saved, ETA unknown
+Epoch 13: 16/179 saved (step 145), elapsed 0s, ETA 0s
+Epoch 13: 32/179 saved (step 146), elapsed 0s, ETA 0s
+Epoch 13: 48/179 saved (step 147), elapsed 0s, ETA 0s
+Epoch 13: 64/179 saved (step 148), elapsed 0s, ETA 0s
+Epoch 13: 80/179 saved (step 149), elapsed 0s, ETA 0s
+Epoch 13: 96/179 saved (step 150), elapsed 0s, ETA 0s
+Epoch 13: 112/179 saved (step 151), elapsed 0s, ETA 0s
+Epoch 13: 128/179 saved (step 152), elapsed 0s, ETA 0s
+Epoch 13: 144/179 saved (step 153), elapsed 0s, ETA 0s
+Epoch 13: 160/179 saved (step 154), elapsed 0s, ETA 0s
+Epoch 13: 176/179 saved (step 155), elapsed 0s, ETA 0s
+Epoch 13: 179/179 saved (step 156), elapsed 0s, ETA 0s
+Epoch 13: validation loss 0.92273, position accuracy 0.566
+Epoch 14: starting with 0/179 saved, ETA unknown
+Epoch 14: 16/179 saved (step 157), elapsed 0s, ETA 0s
+Epoch 14: 32/179 saved (step 158), elapsed 0s, ETA 0s
+Epoch 14: 48/179 saved (step 159), elapsed 0s, ETA 0s
+Epoch 14: 64/179 saved (step 160), elapsed 0s, ETA 0s
+Epoch 14: 80/179 saved (step 161), elapsed 0s, ETA 0s
+Epoch 14: 96/179 saved (step 162), elapsed 0s, ETA 0s
+Epoch 14: 112/179 saved (step 163), elapsed 0s, ETA 0s
+Epoch 14: 128/179 saved (step 164), elapsed 0s, ETA 0s
+Epoch 14: 144/179 saved (step 165), elapsed 0s, ETA 0s
+Epoch 14: 160/179 saved (step 166), elapsed 0s, ETA 0s
+Epoch 14: 176/179 saved (step 167), elapsed 0s, ETA 0s
+Epoch 14: 179/179 saved (step 168), elapsed 0s, ETA 0s
+Epoch 14: validation loss 0.89161, position accuracy 0.559
+Epoch 15: starting with 0/179 saved, ETA unknown
+Epoch 15: 16/179 saved (step 169), elapsed 0s, ETA 0s
+Epoch 15: 32/179 saved (step 170), elapsed 0s, ETA 0s
+Epoch 15: 48/179 saved (step 171), elapsed 0s, ETA 0s
+Epoch 15: 64/179 saved (step 172), elapsed 0s, ETA 0s
+Epoch 15: 80/179 saved (step 173), elapsed 0s, ETA 0s
+Epoch 15: 96/179 saved (step 174), elapsed 0s, ETA 0s
+Epoch 15: 112/179 saved (step 175), elapsed 0s, ETA 0s
+Epoch 15: 128/179 saved (step 176), elapsed 0s, ETA 0s
+Epoch 15: 144/179 saved (step 177), elapsed 0s, ETA 0s
+Epoch 15: 160/179 saved (step 178), elapsed 0s, ETA 0s
+Epoch 15: 176/179 saved (step 179), elapsed 0s, ETA 0s
+Epoch 15: 179/179 saved (step 180), elapsed 0s, ETA 0s
+Epoch 15: validation loss 0.86660, position accuracy 0.586
+Epoch 16: starting with 0/179 saved, ETA unknown
+Epoch 16: 16/179 saved (step 181), elapsed 0s, ETA 0s
+Epoch 16: 32/179 saved (step 182), elapsed 0s, ETA 0s
+Epoch 16: 48/179 saved (step 183), elapsed 0s, ETA 0s
+Epoch 16: 64/179 saved (step 184), elapsed 0s, ETA 0s
+Epoch 16: 80/179 saved (step 185), elapsed 0s, ETA 0s
+Epoch 16: 96/179 saved (step 186), elapsed 0s, ETA 0s
+Epoch 16: 112/179 saved (step 187), elapsed 0s, ETA 0s
+Epoch 16: 128/179 saved (step 188), elapsed 0s, ETA 0s
+Epoch 16: 144/179 saved (step 189), elapsed 0s, ETA 0s
+Epoch 16: 160/179 saved (step 190), elapsed 0s, ETA 0s
+Epoch 16: 176/179 saved (step 191), elapsed 0s, ETA 0s
+Epoch 16: 179/179 saved (step 192), elapsed 0s, ETA 0s
+Epoch 16: validation loss 0.83933, position accuracy 0.599
+Epoch 17: starting with 0/179 saved, ETA unknown
+Epoch 17: 16/179 saved (step 193), elapsed 0s, ETA 0s
+Epoch 17: 32/179 saved (step 194), elapsed 0s, ETA 0s
+Epoch 17: 48/179 saved (step 195), elapsed 0s, ETA 0s
+Epoch 17: 64/179 saved (step 196), elapsed 0s, ETA 0s
+Epoch 17: 80/179 saved (step 197), elapsed 0s, ETA 0s
+Epoch 17: 96/179 saved (step 198), elapsed 0s, ETA 0s
+Epoch 17: 112/179 saved (step 199), elapsed 0s, ETA 0s
+Epoch 17: 128/179 saved (step 200), elapsed 0s, ETA 0s
+Epoch 17: 144/179 saved (step 201), elapsed 0s, ETA 0s
+Epoch 17: 160/179 saved (step 202), elapsed 0s, ETA 0s
+Epoch 17: 176/179 saved (step 203), elapsed 0s, ETA 0s
+Epoch 17: 179/179 saved (step 204), elapsed 0s, ETA 0s
+Epoch 17: validation loss 0.79453, position accuracy 0.638
+Epoch 18: starting with 0/179 saved, ETA unknown
+Epoch 18: 16/179 saved (step 205), elapsed 0s, ETA 0s
+Epoch 18: 32/179 saved (step 206), elapsed 0s, ETA 0s
+Epoch 18: 48/179 saved (step 207), elapsed 0s, ETA 0s
+Epoch 18: 64/179 saved (step 208), elapsed 0s, ETA 0s
+Epoch 18: 80/179 saved (step 209), elapsed 0s, ETA 0s
+Epoch 18: 96/179 saved (step 210), elapsed 0s, ETA 0s
+Epoch 18: 112/179 saved (step 211), elapsed 0s, ETA 0s
+Epoch 18: 128/179 saved (step 212), elapsed 0s, ETA 0s
+Epoch 18: 144/179 saved (step 213), elapsed 0s, ETA 0s
+Epoch 18: 160/179 saved (step 214), elapsed 0s, ETA 0s
+Epoch 18: 176/179 saved (step 215), elapsed 0s, ETA 0s
+Epoch 18: 179/179 saved (step 216), elapsed 0s, ETA 0s
+Epoch 18: validation loss 0.77208, position accuracy 0.645
+Epoch 19: starting with 0/179 saved, ETA unknown
+Epoch 19: 16/179 saved (step 217), elapsed 0s, ETA 0s
+Epoch 19: 32/179 saved (step 218), elapsed 0s, ETA 0s
+Epoch 19: 48/179 saved (step 219), elapsed 0s, ETA 0s
+Epoch 19: 64/179 saved (step 220), elapsed 0s, ETA 0s
+Epoch 19: 80/179 saved (step 221), elapsed 0s, ETA 0s
+Epoch 19: 96/179 saved (step 222), elapsed 0s, ETA 0s
+Epoch 19: 112/179 saved (step 223), elapsed 0s, ETA 0s
+Epoch 19: 128/179 saved (step 224), elapsed 0s, ETA 0s
+Epoch 19: 144/179 saved (step 225), elapsed 0s, ETA 0s
+Epoch 19: 160/179 saved (step 226), elapsed 0s, ETA 0s
+Epoch 19: 176/179 saved (step 227), elapsed 0s, ETA 0s
+Epoch 19: 179/179 saved (step 228), elapsed 0s, ETA 0s
+Epoch 19: validation loss 0.73923, position accuracy 0.711
+Epoch 20: starting with 0/179 saved, ETA unknown
+Epoch 20: 16/179 saved (step 229), elapsed 0s, ETA 0s
+Epoch 20: 32/179 saved (step 230), elapsed 0s, ETA 0s
+Epoch 20: 48/179 saved (step 231), elapsed 0s, ETA 0s
+Epoch 20: 64/179 saved (step 232), elapsed 0s, ETA 0s
+Epoch 20: 80/179 saved (step 233), elapsed 0s, ETA 0s
+Epoch 20: 96/179 saved (step 234), elapsed 0s, ETA 0s
+Epoch 20: 112/179 saved (step 235), elapsed 0s, ETA 0s
+Epoch 20: 128/179 saved (step 236), elapsed 0s, ETA 0s
+Epoch 20: 144/179 saved (step 237), elapsed 0s, ETA 0s
+Epoch 20: 160/179 saved (step 238), elapsed 0s, ETA 0s
+Epoch 20: 176/179 saved (step 239), elapsed 0s, ETA 0s
+Epoch 20: 179/179 saved (step 240), elapsed 0s, ETA 0s
+Epoch 20: validation loss 0.71929, position accuracy 0.711
+Epoch 21: starting with 0/179 saved, ETA unknown
+Epoch 21: 16/179 saved (step 241), elapsed 0s, ETA 0s
+Epoch 21: 32/179 saved (step 242), elapsed 0s, ETA 0s
+Epoch 21: 48/179 saved (step 243), elapsed 0s, ETA 0s
+Epoch 21: 64/179 saved (step 244), elapsed 0s, ETA 0s
+Epoch 21: 80/179 saved (step 245), elapsed 0s, ETA 0s
+Epoch 21: 96/179 saved (step 246), elapsed 0s, ETA 0s
+Epoch 21: 112/179 saved (step 247), elapsed 0s, ETA 0s
+Epoch 21: 128/179 saved (step 248), elapsed 0s, ETA 0s
+Epoch 21: 144/179 saved (step 249), elapsed 0s, ETA 0s
+Epoch 21: 160/179 saved (step 250), elapsed 0s, ETA 0s
+Epoch 21: 176/179 saved (step 251), elapsed 0s, ETA 0s
+Epoch 21: 179/179 saved (step 252), elapsed 0s, ETA 0s
+Epoch 21: validation loss 0.68999, position accuracy 0.743
+Epoch 22: starting with 0/179 saved, ETA unknown
+Epoch 22: 16/179 saved (step 253), elapsed 0s, ETA 0s
+Epoch 22: 32/179 saved (step 254), elapsed 0s, ETA 0s
+Epoch 22: 48/179 saved (step 255), elapsed 0s, ETA 0s
+Epoch 22: 64/179 saved (step 256), elapsed 0s, ETA 0s
+Epoch 22: 80/179 saved (step 257), elapsed 0s, ETA 0s
+Epoch 22: 96/179 saved (step 258), elapsed 0s, ETA 0s
+Epoch 22: 112/179 saved (step 259), elapsed 0s, ETA 0s
+Epoch 22: 128/179 saved (step 260), elapsed 0s, ETA 0s
+Epoch 22: 144/179 saved (step 261), elapsed 0s, ETA 0s
+Epoch 22: 160/179 saved (step 262), elapsed 0s, ETA 0s
+Epoch 22: 176/179 saved (step 263), elapsed 0s, ETA 0s
+Epoch 22: 179/179 saved (step 264), elapsed 0s, ETA 0s
+Epoch 22: validation loss 0.66205, position accuracy 0.770
+Epoch 23: starting with 0/179 saved, ETA unknown
+Epoch 23: 16/179 saved (step 265), elapsed 0s, ETA 0s
+Epoch 23: 32/179 saved (step 266), elapsed 0s, ETA 0s
+Epoch 23: 48/179 saved (step 267), elapsed 0s, ETA 0s
+Epoch 23: 64/179 saved (step 268), elapsed 0s, ETA 0s
+Epoch 23: 80/179 saved (step 269), elapsed 0s, ETA 0s
+Epoch 23: 96/179 saved (step 270), elapsed 0s, ETA 0s
+Epoch 23: 112/179 saved (step 271), elapsed 0s, ETA 0s
+Epoch 23: 128/179 saved (step 272), elapsed 0s, ETA 0s
+Epoch 23: 144/179 saved (step 273), elapsed 0s, ETA 0s
+Epoch 23: 160/179 saved (step 274), elapsed 0s, ETA 0s
+Epoch 23: 176/179 saved (step 275), elapsed 0s, ETA 0s
+Epoch 23: 179/179 saved (step 276), elapsed 0s, ETA 0s
+Epoch 23: validation loss 0.64728, position accuracy 0.776
+Epoch 24: starting with 0/179 saved, ETA unknown
+Epoch 24: 16/179 saved (step 277), elapsed 0s, ETA 0s
+Epoch 24: 32/179 saved (step 278), elapsed 0s, ETA 0s
+Epoch 24: 48/179 saved (step 279), elapsed 0s, ETA 0s
+Epoch 24: 64/179 saved (step 280), elapsed 0s, ETA 0s
+Epoch 24: 80/179 saved (step 281), elapsed 0s, ETA 0s
+Epoch 24: 96/179 saved (step 282), elapsed 0s, ETA 0s
+Epoch 24: 112/179 saved (step 283), elapsed 0s, ETA 0s
+Epoch 24: 128/179 saved (step 284), elapsed 0s, ETA 0s
+Epoch 24: 144/179 saved (step 285), elapsed 0s, ETA 0s
+Epoch 24: 160/179 saved (step 286), elapsed 0s, ETA 0s
+Epoch 24: 176/179 saved (step 287), elapsed 0s, ETA 0s
+Epoch 24: 179/179 saved (step 288), elapsed 0s, ETA 0s
+Epoch 24: validation loss 0.63404, position accuracy 0.776
+Epoch 25: starting with 0/179 saved, ETA unknown
+Epoch 25: 16/179 saved (step 289), elapsed 0s, ETA 0s
+Epoch 25: 32/179 saved (step 290), elapsed 0s, ETA 0s
+Epoch 25: 48/179 saved (step 291), elapsed 0s, ETA 0s
+Epoch 25: 64/179 saved (step 292), elapsed 0s, ETA 0s
+Epoch 25: 80/179 saved (step 293), elapsed 0s, ETA 0s
+Epoch 25: 96/179 saved (step 294), elapsed 0s, ETA 0s
+Epoch 25: 112/179 saved (step 295), elapsed 0s, ETA 0s
+Epoch 25: 128/179 saved (step 296), elapsed 0s, ETA 0s
+Epoch 25: 144/179 saved (step 297), elapsed 0s, ETA 0s
+Epoch 25: 160/179 saved (step 298), elapsed 0s, ETA 0s
+Epoch 25: 176/179 saved (step 299), elapsed 0s, ETA 0s
+Epoch 25: 179/179 saved (step 300), elapsed 0s, ETA 0s
+Epoch 25: validation loss 0.59785, position accuracy 0.783
+Epoch 26: starting with 0/179 saved, ETA unknown
+Epoch 26: 16/179 saved (step 301), elapsed 0s, ETA 0s
+Epoch 26: 32/179 saved (step 302), elapsed 0s, ETA 0s
+Epoch 26: 48/179 saved (step 303), elapsed 0s, ETA 0s
+Epoch 26: 64/179 saved (step 304), elapsed 0s, ETA 0s
+Epoch 26: 80/179 saved (step 305), elapsed 0s, ETA 0s
+Epoch 26: 96/179 saved (step 306), elapsed 0s, ETA 0s
+Epoch 26: 112/179 saved (step 307), elapsed 0s, ETA 0s
+Epoch 26: 128/179 saved (step 308), elapsed 0s, ETA 0s
+Epoch 26: 144/179 saved (step 309), elapsed 0s, ETA 0s
+Epoch 26: 160/179 saved (step 310), elapsed 0s, ETA 0s
+Epoch 26: 176/179 saved (step 311), elapsed 0s, ETA 0s
+Epoch 26: 179/179 saved (step 312), elapsed 0s, ETA 0s
+Epoch 26: validation loss 0.57627, position accuracy 0.789
+Epoch 27: starting with 0/179 saved, ETA unknown
+Epoch 27: 16/179 saved (step 313), elapsed 0s, ETA 0s
+Epoch 27: 32/179 saved (step 314), elapsed 0s, ETA 0s
+Epoch 27: 48/179 saved (step 315), elapsed 0s, ETA 0s
+Epoch 27: 64/179 saved (step 316), elapsed 0s, ETA 0s
+Epoch 27: 80/179 saved (step 317), elapsed 0s, ETA 0s
+Epoch 27: 96/179 saved (step 318), elapsed 0s, ETA 0s
+Epoch 27: 112/179 saved (step 319), elapsed 0s, ETA 0s
+Epoch 27: 128/179 saved (step 320), elapsed 0s, ETA 0s
+Epoch 27: 144/179 saved (step 321), elapsed 0s, ETA 0s
+Epoch 27: 160/179 saved (step 322), elapsed 0s, ETA 0s
+Epoch 27: 176/179 saved (step 323), elapsed 0s, ETA 0s
+Epoch 27: 179/179 saved (step 324), elapsed 0s, ETA 0s
+Epoch 27: validation loss 0.55676, position accuracy 0.809
+Epoch 28: starting with 0/179 saved, ETA unknown
+Epoch 28: 16/179 saved (step 325), elapsed 0s, ETA 0s
+Epoch 28: 32/179 saved (step 326), elapsed 0s, ETA 0s
+Epoch 28: 48/179 saved (step 327), elapsed 0s, ETA 0s
+Epoch 28: 64/179 saved (step 328), elapsed 0s, ETA 0s
+Epoch 28: 80/179 saved (step 329), elapsed 0s, ETA 0s
+Epoch 28: 96/179 saved (step 330), elapsed 0s, ETA 0s
+Epoch 28: 112/179 saved (step 331), elapsed 0s, ETA 0s
+Epoch 28: 128/179 saved (step 332), elapsed 0s, ETA 0s
+Epoch 28: 144/179 saved (step 333), elapsed 0s, ETA 0s
+Epoch 28: 160/179 saved (step 334), elapsed 0s, ETA 0s
+Epoch 28: 176/179 saved (step 335), elapsed 0s, ETA 0s
+Epoch 28: 179/179 saved (step 336), elapsed 0s, ETA 0s
+Epoch 28: validation loss 0.54153, position accuracy 0.822
+Epoch 29: starting with 0/179 saved, ETA unknown
+Epoch 29: 16/179 saved (step 337), elapsed 0s, ETA 0s
+Epoch 29: 32/179 saved (step 338), elapsed 0s, ETA 0s
+Epoch 29: 48/179 saved (step 339), elapsed 0s, ETA 0s
+Epoch 29: 64/179 saved (step 340), elapsed 0s, ETA 0s
+Epoch 29: 80/179 saved (step 341), elapsed 0s, ETA 0s
+Epoch 29: 96/179 saved (step 342), elapsed 0s, ETA 0s
+Epoch 29: 112/179 saved (step 343), elapsed 0s, ETA 0s
+Epoch 29: 128/179 saved (step 344), elapsed 0s, ETA 0s
+Epoch 29: 144/179 saved (step 345), elapsed 0s, ETA 0s
+Epoch 29: 160/179 saved (step 346), elapsed 0s, ETA 0s
+Epoch 29: 176/179 saved (step 347), elapsed 0s, ETA 0s
+Epoch 29: 179/179 saved (step 348), elapsed 0s, ETA 0s
+Epoch 29: validation loss 0.51838, position accuracy 0.836
+Epoch 30: starting with 0/179 saved, ETA unknown
+Epoch 30: 16/179 saved (step 349), elapsed 0s, ETA 0s
+Epoch 30: 32/179 saved (step 350), elapsed 0s, ETA 0s
+Epoch 30: 48/179 saved (step 351), elapsed 0s, ETA 0s
+Epoch 30: 64/179 saved (step 352), elapsed 0s, ETA 0s
+Epoch 30: 80/179 saved (step 353), elapsed 0s, ETA 0s
+Epoch 30: 96/179 saved (step 354), elapsed 0s, ETA 0s
+Epoch 30: 112/179 saved (step 355), elapsed 0s, ETA 0s
+Epoch 30: 128/179 saved (step 356), elapsed 0s, ETA 0s
+Epoch 30: 144/179 saved (step 357), elapsed 0s, ETA 0s
+Epoch 30: 160/179 saved (step 358), elapsed 0s, ETA 0s
+Epoch 30: 176/179 saved (step 359), elapsed 0s, ETA 0s
+Epoch 30: 179/179 saved (step 360), elapsed 0s, ETA 0s
+Epoch 30: validation loss 0.50376, position accuracy 0.836
+Epoch 31: starting with 0/179 saved, ETA unknown
+Epoch 31: 16/179 saved (step 361), elapsed 0s, ETA 0s
+Epoch 31: 32/179 saved (step 362), elapsed 0s, ETA 0s
+Epoch 31: 48/179 saved (step 363), elapsed 0s, ETA 0s
+Epoch 31: 64/179 saved (step 364), elapsed 0s, ETA 0s
+Epoch 31: 80/179 saved (step 365), elapsed 0s, ETA 0s
+Epoch 31: 96/179 saved (step 366), elapsed 0s, ETA 0s
+Epoch 31: 112/179 saved (step 367), elapsed 0s, ETA 0s
+Epoch 31: 128/179 saved (step 368), elapsed 0s, ETA 0s
+Epoch 31: 144/179 saved (step 369), elapsed 0s, ETA 0s
+Epoch 31: 160/179 saved (step 370), elapsed 0s, ETA 0s
+Epoch 31: 176/179 saved (step 371), elapsed 0s, ETA 0s
+Epoch 31: 179/179 saved (step 372), elapsed 0s, ETA 0s
+Epoch 31: validation loss 0.48020, position accuracy 0.836
+Epoch 32: starting with 0/179 saved, ETA unknown
+Epoch 32: 16/179 saved (step 373), elapsed 0s, ETA 0s
+Epoch 32: 32/179 saved (step 374), elapsed 0s, ETA 0s
+Epoch 32: 48/179 saved (step 375), elapsed 0s, ETA 0s
+Epoch 32: 64/179 saved (step 376), elapsed 0s, ETA 0s
+Epoch 32: 80/179 saved (step 377), elapsed 0s, ETA 0s
+Epoch 32: 96/179 saved (step 378), elapsed 0s, ETA 0s
+Epoch 32: 112/179 saved (step 379), elapsed 0s, ETA 0s
+Epoch 32: 128/179 saved (step 380), elapsed 0s, ETA 0s
+Epoch 32: 144/179 saved (step 381), elapsed 0s, ETA 0s
+Epoch 32: 160/179 saved (step 382), elapsed 0s, ETA 0s
+Epoch 32: 176/179 saved (step 383), elapsed 0s, ETA 0s
+Epoch 32: 179/179 saved (step 384), elapsed 0s, ETA 0s
+Epoch 32: validation loss 0.46391, position accuracy 0.849
+Epoch 33: starting with 0/179 saved, ETA unknown
+Epoch 33: 16/179 saved (step 385), elapsed 0s, ETA 0s
+Epoch 33: 32/179 saved (step 386), elapsed 0s, ETA 0s
+Epoch 33: 48/179 saved (step 387), elapsed 0s, ETA 0s
+Epoch 33: 64/179 saved (step 388), elapsed 0s, ETA 0s
+Epoch 33: 80/179 saved (step 389), elapsed 0s, ETA 0s
+Epoch 33: 96/179 saved (step 390), elapsed 0s, ETA 0s
+Epoch 33: 112/179 saved (step 391), elapsed 0s, ETA 0s
+Epoch 33: 128/179 saved (step 392), elapsed 0s, ETA 0s
+Epoch 33: 144/179 saved (step 393), elapsed 0s, ETA 0s
+Epoch 33: 160/179 saved (step 394), elapsed 0s, ETA 0s
+Epoch 33: 176/179 saved (step 395), elapsed 0s, ETA 0s
+Epoch 33: 179/179 saved (step 396), elapsed 0s, ETA 0s
+Epoch 33: validation loss 0.45955, position accuracy 0.849
+Epoch 34: starting with 0/179 saved, ETA unknown
+Epoch 34: 16/179 saved (step 397), elapsed 0s, ETA 0s
+Epoch 34: 32/179 saved (step 398), elapsed 0s, ETA 0s
+Epoch 34: 48/179 saved (step 399), elapsed 0s, ETA 0s
+Epoch 34: 64/179 saved (step 400), elapsed 0s, ETA 0s
+Epoch 34: 80/179 saved (step 401), elapsed 0s, ETA 0s
+Epoch 34: 96/179 saved (step 402), elapsed 0s, ETA 0s
+Epoch 34: 112/179 saved (step 403), elapsed 0s, ETA 0s
+Epoch 34: 128/179 saved (step 404), elapsed 0s, ETA 0s
+Epoch 34: 144/179 saved (step 405), elapsed 0s, ETA 0s
+Epoch 34: 160/179 saved (step 406), elapsed 0s, ETA 0s
+Epoch 34: 176/179 saved (step 407), elapsed 0s, ETA 0s
+Epoch 34: 179/179 saved (step 408), elapsed 0s, ETA 0s
+Epoch 34: validation loss 0.43893, position accuracy 0.849
+Epoch 35: starting with 0/179 saved, ETA unknown
+Epoch 35: 16/179 saved (step 409), elapsed 0s, ETA 0s
+Epoch 35: 32/179 saved (step 410), elapsed 0s, ETA 0s
+Epoch 35: 48/179 saved (step 411), elapsed 0s, ETA 0s
+Epoch 35: 64/179 saved (step 412), elapsed 0s, ETA 0s
+Epoch 35: 80/179 saved (step 413), elapsed 0s, ETA 0s
+Epoch 35: 96/179 saved (step 414), elapsed 0s, ETA 0s
+Epoch 35: 112/179 saved (step 415), elapsed 0s, ETA 0s
+Epoch 35: 128/179 saved (step 416), elapsed 0s, ETA 0s
+Epoch 35: 144/179 saved (step 417), elapsed 0s, ETA 0s
+Epoch 35: 160/179 saved (step 418), elapsed 0s, ETA 0s
+Epoch 35: 176/179 saved (step 419), elapsed 0s, ETA 0s
+Epoch 35: 179/179 saved (step 420), elapsed 0s, ETA 0s
+Epoch 35: validation loss 0.42907, position accuracy 0.849
+Epoch 36: starting with 0/179 saved, ETA unknown
+Epoch 36: 16/179 saved (step 421), elapsed 0s, ETA 0s
+Epoch 36: 32/179 saved (step 422), elapsed 0s, ETA 0s
+Epoch 36: 48/179 saved (step 423), elapsed 0s, ETA 0s
+Epoch 36: 64/179 saved (step 424), elapsed 0s, ETA 0s
+Epoch 36: 80/179 saved (step 425), elapsed 0s, ETA 0s
+Epoch 36: 96/179 saved (step 426), elapsed 0s, ETA 0s
+Epoch 36: 112/179 saved (step 427), elapsed 0s, ETA 0s
+Epoch 36: 128/179 saved (step 428), elapsed 0s, ETA 0s
+Epoch 36: 144/179 saved (step 429), elapsed 0s, ETA 0s
+Epoch 36: 160/179 saved (step 430), elapsed 0s, ETA 0s
+Epoch 36: 176/179 saved (step 431), elapsed 0s, ETA 0s
+Epoch 36: 179/179 saved (step 432), elapsed 0s, ETA 0s
+Epoch 36: validation loss 0.42274, position accuracy 0.868
+Epoch 37: starting with 0/179 saved, ETA unknown
+Epoch 37: 16/179 saved (step 433), elapsed 0s, ETA 0s
+Epoch 37: 32/179 saved (step 434), elapsed 0s, ETA 0s
+Epoch 37: 48/179 saved (step 435), elapsed 0s, ETA 0s
+Epoch 37: 64/179 saved (step 436), elapsed 0s, ETA 0s
+Epoch 37: 80/179 saved (step 437), elapsed 0s, ETA 0s
+Epoch 37: 96/179 saved (step 438), elapsed 0s, ETA 0s
+Epoch 37: 112/179 saved (step 439), elapsed 0s, ETA 0s
+Epoch 37: 128/179 saved (step 440), elapsed 0s, ETA 0s
+Epoch 37: 144/179 saved (step 441), elapsed 0s, ETA 0s
+Epoch 37: 160/179 saved (step 442), elapsed 0s, ETA 0s
+Epoch 37: 176/179 saved (step 443), elapsed 0s, ETA 0s
+Epoch 37: 179/179 saved (step 444), elapsed 0s, ETA 0s
+Epoch 37: validation loss 0.40823, position accuracy 0.855
+Epoch 38: starting with 0/179 saved, ETA unknown
+Epoch 38: 16/179 saved (step 445), elapsed 0s, ETA 0s
+Epoch 38: 32/179 saved (step 446), elapsed 0s, ETA 0s
+Epoch 38: 48/179 saved (step 447), elapsed 0s, ETA 0s
+Epoch 38: 64/179 saved (step 448), elapsed 0s, ETA 0s
+Epoch 38: 80/179 saved (step 449), elapsed 0s, ETA 0s
+Epoch 38: 96/179 saved (step 450), elapsed 0s, ETA 0s
+Epoch 38: 112/179 saved (step 451), elapsed 0s, ETA 0s
+Epoch 38: 128/179 saved (step 452), elapsed 0s, ETA 0s
+Epoch 38: 144/179 saved (step 453), elapsed 0s, ETA 0s
+Epoch 38: 160/179 saved (step 454), elapsed 0s, ETA 0s
+Epoch 38: 176/179 saved (step 455), elapsed 0s, ETA 0s
+Epoch 38: 179/179 saved (step 456), elapsed 0s, ETA 0s
+Epoch 38: validation loss 0.39437, position accuracy 0.855
+Epoch 39: starting with 0/179 saved, ETA unknown
+Epoch 39: 16/179 saved (step 457), elapsed 0s, ETA 0s
+Epoch 39: 32/179 saved (step 458), elapsed 0s, ETA 0s
+Epoch 39: 48/179 saved (step 459), elapsed 0s, ETA 0s
+Epoch 39: 64/179 saved (step 460), elapsed 0s, ETA 0s
+Epoch 39: 80/179 saved (step 461), elapsed 0s, ETA 0s
+Epoch 39: 96/179 saved (step 462), elapsed 0s, ETA 0s
+Epoch 39: 112/179 saved (step 463), elapsed 0s, ETA 0s
+Epoch 39: 128/179 saved (step 464), elapsed 0s, ETA 0s
+Epoch 39: 144/179 saved (step 465), elapsed 0s, ETA 0s
+Epoch 39: 160/179 saved (step 466), elapsed 0s, ETA 0s
+Epoch 39: 176/179 saved (step 467), elapsed 0s, ETA 0s
+Epoch 39: 179/179 saved (step 468), elapsed 0s, ETA 0s
+Epoch 39: validation loss 0.38801, position accuracy 0.842
+Epoch 40: starting with 0/179 saved, ETA unknown
+Epoch 40: 16/179 saved (step 469), elapsed 0s, ETA 0s
+Epoch 40: 32/179 saved (step 470), elapsed 0s, ETA 0s
+Epoch 40: 48/179 saved (step 471), elapsed 0s, ETA 0s
+Epoch 40: 64/179 saved (step 472), elapsed 0s, ETA 0s
+Epoch 40: 80/179 saved (step 473), elapsed 0s, ETA 0s
+Epoch 40: 96/179 saved (step 474), elapsed 0s, ETA 0s
+Epoch 40: 112/179 saved (step 475), elapsed 0s, ETA 0s
+Epoch 40: 128/179 saved (step 476), elapsed 0s, ETA 0s
+Epoch 40: 144/179 saved (step 477), elapsed 0s, ETA 0s
+Epoch 40: 160/179 saved (step 478), elapsed 0s, ETA 0s
+Epoch 40: 176/179 saved (step 479), elapsed 0s, ETA 0s
+Epoch 40: 179/179 saved (step 480), elapsed 0s, ETA 0s
+Epoch 40: validation loss 0.38188, position accuracy 0.862
+Epoch 41: starting with 0/179 saved, ETA unknown
+Epoch 41: 16/179 saved (step 481), elapsed 0s, ETA 0s
+Epoch 41: 32/179 saved (step 482), elapsed 0s, ETA 0s
+Epoch 41: 48/179 saved (step 483), elapsed 0s, ETA 0s
+Epoch 41: 64/179 saved (step 484), elapsed 0s, ETA 0s
+Epoch 41: 80/179 saved (step 485), elapsed 0s, ETA 0s
+Epoch 41: 96/179 saved (step 486), elapsed 0s, ETA 0s
+Epoch 41: 112/179 saved (step 487), elapsed 0s, ETA 0s
+Epoch 41: 128/179 saved (step 488), elapsed 0s, ETA 0s
+Epoch 41: 144/179 saved (step 489), elapsed 0s, ETA 0s
+Epoch 41: 160/179 saved (step 490), elapsed 0s, ETA 0s
+Epoch 41: 176/179 saved (step 491), elapsed 0s, ETA 0s
+Epoch 41: 179/179 saved (step 492), elapsed 0s, ETA 0s
+Epoch 41: validation loss 0.36688, position accuracy 0.868
+Epoch 42: starting with 0/179 saved, ETA unknown
+Epoch 42: 16/179 saved (step 493), elapsed 0s, ETA 0s
+Epoch 42: 32/179 saved (step 494), elapsed 0s, ETA 0s
+Epoch 42: 48/179 saved (step 495), elapsed 0s, ETA 0s
+Epoch 42: 64/179 saved (step 496), elapsed 0s, ETA 0s
+Epoch 42: 80/179 saved (step 497), elapsed 0s, ETA 0s
+Epoch 42: 96/179 saved (step 498), elapsed 0s, ETA 0s
+Epoch 42: 112/179 saved (step 499), elapsed 0s, ETA 0s
+Epoch 42: 128/179 saved (step 500), elapsed 0s, ETA 0s
+Epoch 42: 144/179 saved (step 501), elapsed 0s, ETA 0s
+Epoch 42: 160/179 saved (step 502), elapsed 0s, ETA 0s
+Epoch 42: 176/179 saved (step 503), elapsed 0s, ETA 0s
+Epoch 42: 179/179 saved (step 504), elapsed 0s, ETA 0s
+Epoch 42: validation loss 0.37097, position accuracy 0.842
+Epoch 43: starting with 0/179 saved, ETA unknown
+Epoch 43: 16/179 saved (step 505), elapsed 0s, ETA 0s
+Epoch 43: 32/179 saved (step 506), elapsed 0s, ETA 0s
+Epoch 43: 48/179 saved (step 507), elapsed 0s, ETA 0s
+Epoch 43: 64/179 saved (step 508), elapsed 0s, ETA 0s
+Epoch 43: 80/179 saved (step 509), elapsed 0s, ETA 0s
+Epoch 43: 96/179 saved (step 510), elapsed 0s, ETA 0s
+Epoch 43: 112/179 saved (step 511), elapsed 0s, ETA 0s
+Epoch 43: 128/179 saved (step 512), elapsed 0s, ETA 0s
+Epoch 43: 144/179 saved (step 513), elapsed 0s, ETA 0s
+Epoch 43: 160/179 saved (step 514), elapsed 0s, ETA 0s
+Epoch 43: 176/179 saved (step 515), elapsed 0s, ETA 0s
+Epoch 43: 179/179 saved (step 516), elapsed 0s, ETA 0s
+Epoch 43: validation loss 0.35488, position accuracy 0.849
+Epoch 44: starting with 0/179 saved, ETA unknown
+Epoch 44: 16/179 saved (step 517), elapsed 0s, ETA 0s
+Epoch 44: 32/179 saved (step 518), elapsed 0s, ETA 0s
+Epoch 44: 48/179 saved (step 519), elapsed 0s, ETA 0s
+Epoch 44: 64/179 saved (step 520), elapsed 0s, ETA 0s
+Epoch 44: 80/179 saved (step 521), elapsed 0s, ETA 0s
+Epoch 44: 96/179 saved (step 522), elapsed 0s, ETA 0s
+Epoch 44: 112/179 saved (step 523), elapsed 0s, ETA 0s
+Epoch 44: 128/179 saved (step 524), elapsed 0s, ETA 0s
+Epoch 44: 144/179 saved (step 525), elapsed 0s, ETA 0s
+Epoch 44: 160/179 saved (step 526), elapsed 0s, ETA 0s
+Epoch 44: 176/179 saved (step 527), elapsed 0s, ETA 0s
+Epoch 44: 179/179 saved (step 528), elapsed 0s, ETA 0s
+Epoch 44: validation loss 0.34819, position accuracy 0.855
+Epoch 45: starting with 0/179 saved, ETA unknown
+Epoch 45: 16/179 saved (step 529), elapsed 0s, ETA 0s
+Epoch 45: 32/179 saved (step 530), elapsed 0s, ETA 0s
+Epoch 45: 48/179 saved (step 531), elapsed 0s, ETA 0s
+Epoch 45: 64/179 saved (step 532), elapsed 0s, ETA 0s
+Epoch 45: 80/179 saved (step 533), elapsed 0s, ETA 0s
+Epoch 45: 96/179 saved (step 534), elapsed 0s, ETA 0s
+Epoch 45: 112/179 saved (step 535), elapsed 0s, ETA 0s
+Epoch 45: 128/179 saved (step 536), elapsed 0s, ETA 0s
+Epoch 45: 144/179 saved (step 537), elapsed 0s, ETA 0s
+Epoch 45: 160/179 saved (step 538), elapsed 0s, ETA 0s
+Epoch 45: 176/179 saved (step 539), elapsed 0s, ETA 0s
+Epoch 45: 179/179 saved (step 540), elapsed 0s, ETA 0s
+Epoch 45: validation loss 0.34940, position accuracy 0.855
+Epoch 46: starting with 0/179 saved, ETA unknown
+Epoch 46: 16/179 saved (step 541), elapsed 0s, ETA 0s
+Epoch 46: 32/179 saved (step 542), elapsed 0s, ETA 0s
+Epoch 46: 48/179 saved (step 543), elapsed 0s, ETA 0s
+Epoch 46: 64/179 saved (step 544), elapsed 0s, ETA 0s
+Epoch 46: 80/179 saved (step 545), elapsed 0s, ETA 0s
+Epoch 46: 96/179 saved (step 546), elapsed 0s, ETA 0s
+Epoch 46: 112/179 saved (step 547), elapsed 0s, ETA 0s
+Epoch 46: 128/179 saved (step 548), elapsed 0s, ETA 0s
+Epoch 46: 144/179 saved (step 549), elapsed 0s, ETA 0s
+Epoch 46: 160/179 saved (step 550), elapsed 0s, ETA 0s
+Epoch 46: 176/179 saved (step 551), elapsed 0s, ETA 0s
+Epoch 46: 179/179 saved (step 552), elapsed 0s, ETA 0s
+Epoch 46: validation loss 0.33710, position accuracy 0.855
+Epoch 47: starting with 0/179 saved, ETA unknown
+Epoch 47: 16/179 saved (step 553), elapsed 0s, ETA 0s
+Epoch 47: 32/179 saved (step 554), elapsed 0s, ETA 0s
+Epoch 47: 48/179 saved (step 555), elapsed 0s, ETA 0s
+Epoch 47: 64/179 saved (step 556), elapsed 0s, ETA 0s
+Epoch 47: 80/179 saved (step 557), elapsed 0s, ETA 0s
+Epoch 47: 96/179 saved (step 558), elapsed 0s, ETA 0s
+Epoch 47: 112/179 saved (step 559), elapsed 0s, ETA 0s
+Epoch 47: 128/179 saved (step 560), elapsed 0s, ETA 0s
+Epoch 47: 144/179 saved (step 561), elapsed 0s, ETA 0s
+Epoch 47: 160/179 saved (step 562), elapsed 0s, ETA 0s
+Epoch 47: 176/179 saved (step 563), elapsed 0s, ETA 0s
+Epoch 47: 179/179 saved (step 564), elapsed 0s, ETA 0s
+Epoch 47: validation loss 0.32570, position accuracy 0.862
+Epoch 48: starting with 0/179 saved, ETA unknown
+Epoch 48: 16/179 saved (step 565), elapsed 0s, ETA 0s
+Epoch 48: 32/179 saved (step 566), elapsed 0s, ETA 0s
+Epoch 48: 48/179 saved (step 567), elapsed 0s, ETA 0s
+Epoch 48: 64/179 saved (step 568), elapsed 0s, ETA 0s
+Epoch 48: 80/179 saved (step 569), elapsed 0s, ETA 0s
+Epoch 48: 96/179 saved (step 570), elapsed 0s, ETA 0s
+Epoch 48: 112/179 saved (step 571), elapsed 0s, ETA 0s
+Epoch 48: 128/179 saved (step 572), elapsed 0s, ETA 0s
+Epoch 48: 144/179 saved (step 573), elapsed 0s, ETA 0s
+Epoch 48: 160/179 saved (step 574), elapsed 0s, ETA 0s
+Epoch 48: 176/179 saved (step 575), elapsed 0s, ETA 0s
+Epoch 48: 179/179 saved (step 576), elapsed 0s, ETA 0s
+Epoch 48: validation loss 0.32900, position accuracy 0.855
+Epoch 49: starting with 0/179 saved, ETA unknown
+Epoch 49: 16/179 saved (step 577), elapsed 0s, ETA 0s
+Epoch 49: 32/179 saved (step 578), elapsed 0s, ETA 0s
+Epoch 49: 48/179 saved (step 579), elapsed 0s, ETA 0s
+Epoch 49: 64/179 saved (step 580), elapsed 0s, ETA 0s
+Epoch 49: 80/179 saved (step 581), elapsed 0s, ETA 0s
+Epoch 49: 96/179 saved (step 582), elapsed 0s, ETA 0s
+Epoch 49: 112/179 saved (step 583), elapsed 0s, ETA 0s
+Epoch 49: 128/179 saved (step 584), elapsed 0s, ETA 0s
+Epoch 49: 144/179 saved (step 585), elapsed 0s, ETA 0s
+Epoch 49: 160/179 saved (step 586), elapsed 0s, ETA 0s
+Epoch 49: 176/179 saved (step 587), elapsed 0s, ETA 0s
+Epoch 49: 179/179 saved (step 588), elapsed 0s, ETA 0s
+Epoch 49: validation loss 0.31896, position accuracy 0.862
+Epoch 50: starting with 0/179 saved, ETA unknown
+Epoch 50: 16/179 saved (step 589), elapsed 0s, ETA 0s
+Epoch 50: 32/179 saved (step 590), elapsed 0s, ETA 0s
+Epoch 50: 48/179 saved (step 591), elapsed 0s, ETA 0s
+Epoch 50: 64/179 saved (step 592), elapsed 0s, ETA 0s
+Epoch 50: 80/179 saved (step 593), elapsed 0s, ETA 0s
+Epoch 50: 96/179 saved (step 594), elapsed 0s, ETA 0s
+Epoch 50: 112/179 saved (step 595), elapsed 0s, ETA 0s
+Epoch 50: 128/179 saved (step 596), elapsed 0s, ETA 0s
+Epoch 50: 144/179 saved (step 597), elapsed 0s, ETA 0s
+Epoch 50: 160/179 saved (step 598), elapsed 0s, ETA 0s
+Epoch 50: 176/179 saved (step 599), elapsed 0s, ETA 0s
+Epoch 50: 179/179 saved (step 600), elapsed 0s, ETA 0s
+Epoch 50: validation loss 0.31998, position accuracy 0.842
+Epoch 51: starting with 0/179 saved, ETA unknown
+Epoch 51: 16/179 saved (step 601), elapsed 0s, ETA 0s
+Epoch 51: 32/179 saved (step 602), elapsed 0s, ETA 0s
+Epoch 51: 48/179 saved (step 603), elapsed 0s, ETA 0s
+Epoch 51: 64/179 saved (step 604), elapsed 0s, ETA 0s
+Epoch 51: 80/179 saved (step 605), elapsed 0s, ETA 0s
+Epoch 51: 96/179 saved (step 606), elapsed 0s, ETA 0s
+Epoch 51: 112/179 saved (step 607), elapsed 0s, ETA 0s
+Epoch 51: 128/179 saved (step 608), elapsed 0s, ETA 0s
+Epoch 51: 144/179 saved (step 609), elapsed 0s, ETA 0s
+Epoch 51: 160/179 saved (step 610), elapsed 0s, ETA 0s
+Epoch 51: 176/179 saved (step 611), elapsed 0s, ETA 0s
+Epoch 51: 179/179 saved (step 612), elapsed 0s, ETA 0s
+Epoch 51: validation loss 0.31627, position accuracy 0.849
+Epoch 52: starting with 0/179 saved, ETA unknown
+Epoch 52: 16/179 saved (step 613), elapsed 0s, ETA 0s
+Epoch 52: 32/179 saved (step 614), elapsed 0s, ETA 0s
+Epoch 52: 48/179 saved (step 615), elapsed 0s, ETA 0s
+Epoch 52: 64/179 saved (step 616), elapsed 0s, ETA 0s
+Epoch 52: 80/179 saved (step 617), elapsed 0s, ETA 0s
+Epoch 52: 96/179 saved (step 618), elapsed 0s, ETA 0s
+Epoch 52: 112/179 saved (step 619), elapsed 0s, ETA 0s
+Epoch 52: 128/179 saved (step 620), elapsed 0s, ETA 0s
+Epoch 52: 144/179 saved (step 621), elapsed 0s, ETA 0s
+Epoch 52: 160/179 saved (step 622), elapsed 0s, ETA 0s
+Epoch 52: 176/179 saved (step 623), elapsed 0s, ETA 0s
+Epoch 52: 179/179 saved (step 624), elapsed 0s, ETA 0s
+Epoch 52: validation loss 0.30525, position accuracy 0.862
+Epoch 53: starting with 0/179 saved, ETA unknown
+Epoch 53: 16/179 saved (step 625), elapsed 0s, ETA 0s
+Epoch 53: 32/179 saved (step 626), elapsed 0s, ETA 0s
+Epoch 53: 48/179 saved (step 627), elapsed 0s, ETA 0s
+Epoch 53: 64/179 saved (step 628), elapsed 0s, ETA 0s
+Epoch 53: 80/179 saved (step 629), elapsed 0s, ETA 0s
+Epoch 53: 96/179 saved (step 630), elapsed 0s, ETA 0s
+Epoch 53: 112/179 saved (step 631), elapsed 0s, ETA 0s
+Epoch 53: 128/179 saved (step 632), elapsed 0s, ETA 0s
+Epoch 53: 144/179 saved (step 633), elapsed 0s, ETA 0s
+Epoch 53: 160/179 saved (step 634), elapsed 0s, ETA 0s
+Epoch 53: 176/179 saved (step 635), elapsed 0s, ETA 0s
+Epoch 53: 179/179 saved (step 636), elapsed 0s, ETA 0s
+Epoch 53: validation loss 0.30960, position accuracy 0.855
+Epoch 54: starting with 0/179 saved, ETA unknown
+Epoch 54: 16/179 saved (step 637), elapsed 0s, ETA 0s
+Epoch 54: 32/179 saved (step 638), elapsed 0s, ETA 0s
+Epoch 54: 48/179 saved (step 639), elapsed 0s, ETA 0s
+Epoch 54: 64/179 saved (step 640), elapsed 0s, ETA 0s
+Epoch 54: 80/179 saved (step 641), elapsed 0s, ETA 0s
+Epoch 54: 96/179 saved (step 642), elapsed 0s, ETA 0s
+Epoch 54: 112/179 saved (step 643), elapsed 0s, ETA 0s
+Epoch 54: 128/179 saved (step 644), elapsed 0s, ETA 0s
+Epoch 54: 144/179 saved (step 645), elapsed 0s, ETA 0s
+Epoch 54: 160/179 saved (step 646), elapsed 0s, ETA 0s
+Epoch 54: 176/179 saved (step 647), elapsed 0s, ETA 0s
+Epoch 54: 179/179 saved (step 648), elapsed 0s, ETA 0s
+Epoch 54: validation loss 0.30188, position accuracy 0.855
+Epoch 55: starting with 0/179 saved, ETA unknown
+Epoch 55: 16/179 saved (step 649), elapsed 0s, ETA 0s
+Epoch 55: 32/179 saved (step 650), elapsed 0s, ETA 0s
+Epoch 55: 48/179 saved (step 651), elapsed 0s, ETA 0s
+Epoch 55: 64/179 saved (step 652), elapsed 0s, ETA 0s
+Epoch 55: 80/179 saved (step 653), elapsed 0s, ETA 0s
+Epoch 55: 96/179 saved (step 654), elapsed 0s, ETA 0s
+Epoch 55: 112/179 saved (step 655), elapsed 0s, ETA 0s
+Epoch 55: 128/179 saved (step 656), elapsed 0s, ETA 0s
+Epoch 55: 144/179 saved (step 657), elapsed 0s, ETA 0s
+Epoch 55: 160/179 saved (step 658), elapsed 0s, ETA 0s
+Epoch 55: 176/179 saved (step 659), elapsed 0s, ETA 0s
+Epoch 55: 179/179 saved (step 660), elapsed 0s, ETA 0s
+Epoch 55: validation loss 0.29303, position accuracy 0.849
+Epoch 56: starting with 0/179 saved, ETA unknown
+Epoch 56: 16/179 saved (step 661), elapsed 0s, ETA 0s
+Epoch 56: 32/179 saved (step 662), elapsed 0s, ETA 0s
+Epoch 56: 48/179 saved (step 663), elapsed 0s, ETA 0s
+Epoch 56: 64/179 saved (step 664), elapsed 0s, ETA 0s
+Epoch 56: 80/179 saved (step 665), elapsed 0s, ETA 0s
+Epoch 56: 96/179 saved (step 666), elapsed 0s, ETA 0s
+Epoch 56: 112/179 saved (step 667), elapsed 0s, ETA 0s
+Epoch 56: 128/179 saved (step 668), elapsed 0s, ETA 0s
+Epoch 56: 144/179 saved (step 669), elapsed 0s, ETA 0s
+Epoch 56: 160/179 saved (step 670), elapsed 0s, ETA 0s
+Epoch 56: 176/179 saved (step 671), elapsed 0s, ETA 0s
+Epoch 56: 179/179 saved (step 672), elapsed 0s, ETA 0s
+Epoch 56: validation loss 0.29925, position accuracy 0.836
+Epoch 57: starting with 0/179 saved, ETA unknown
+Epoch 57: 16/179 saved (step 673), elapsed 0s, ETA 0s
+Epoch 57: 32/179 saved (step 674), elapsed 0s, ETA 0s
+Epoch 57: 48/179 saved (step 675), elapsed 0s, ETA 0s
+Epoch 57: 64/179 saved (step 676), elapsed 0s, ETA 0s
+Epoch 57: 80/179 saved (step 677), elapsed 0s, ETA 0s
+Epoch 57: 96/179 saved (step 678), elapsed 0s, ETA 0s
+Epoch 57: 112/179 saved (step 679), elapsed 0s, ETA 0s
+Epoch 57: 128/179 saved (step 680), elapsed 0s, ETA 0s
+Epoch 57: 144/179 saved (step 681), elapsed 0s, ETA 0s
+Epoch 57: 160/179 saved (step 682), elapsed 0s, ETA 0s
+Epoch 57: 176/179 saved (step 683), elapsed 0s, ETA 0s
+Epoch 57: 179/179 saved (step 684), elapsed 0s, ETA 0s
+Epoch 57: validation loss 0.28724, position accuracy 0.855
+Epoch 58: starting with 0/179 saved, ETA unknown
+Epoch 58: 16/179 saved (step 685), elapsed 0s, ETA 0s
+Epoch 58: 32/179 saved (step 686), elapsed 0s, ETA 0s
+Epoch 58: 48/179 saved (step 687), elapsed 0s, ETA 0s
+Epoch 58: 64/179 saved (step 688), elapsed 0s, ETA 0s
+Epoch 58: 80/179 saved (step 689), elapsed 0s, ETA 0s
+Epoch 58: 96/179 saved (step 690), elapsed 0s, ETA 0s
+Epoch 58: 112/179 saved (step 691), elapsed 0s, ETA 0s
+Epoch 58: 128/179 saved (step 692), elapsed 0s, ETA 0s
+Epoch 58: 144/179 saved (step 693), elapsed 0s, ETA 0s
+Epoch 58: 160/179 saved (step 694), elapsed 0s, ETA 0s
+Epoch 58: 176/179 saved (step 695), elapsed 0s, ETA 0s
+Epoch 58: 179/179 saved (step 696), elapsed 0s, ETA 0s
+Epoch 58: validation loss 0.29581, position accuracy 0.849
+Epoch 59: starting with 0/179 saved, ETA unknown
+Epoch 59: 16/179 saved (step 697), elapsed 0s, ETA 0s
+Epoch 59: 32/179 saved (step 698), elapsed 0s, ETA 0s
+Epoch 59: 48/179 saved (step 699), elapsed 0s, ETA 0s
+Epoch 59: 64/179 saved (step 700), elapsed 0s, ETA 0s
+Epoch 59: 80/179 saved (step 701), elapsed 0s, ETA 0s
+Epoch 59: 96/179 saved (step 702), elapsed 0s, ETA 0s
+Epoch 59: 112/179 saved (step 703), elapsed 0s, ETA 0s
+Epoch 59: 128/179 saved (step 704), elapsed 0s, ETA 0s
+Epoch 59: 144/179 saved (step 705), elapsed 0s, ETA 0s
+Epoch 59: 160/179 saved (step 706), elapsed 0s, ETA 0s
+Epoch 59: 176/179 saved (step 707), elapsed 0s, ETA 0s
+Epoch 59: 179/179 saved (step 708), elapsed 0s, ETA 0s
+Epoch 59: validation loss 0.29656, position accuracy 0.842
+Epoch 60: starting with 0/179 saved, ETA unknown
+Epoch 60: 16/179 saved (step 709), elapsed 0s, ETA 0s
+Epoch 60: 32/179 saved (step 710), elapsed 0s, ETA 0s
+Epoch 60: 48/179 saved (step 711), elapsed 0s, ETA 0s
+Epoch 60: 64/179 saved (step 712), elapsed 0s, ETA 0s
+Epoch 60: 80/179 saved (step 713), elapsed 0s, ETA 0s
+Epoch 60: 96/179 saved (step 714), elapsed 0s, ETA 0s
+Epoch 60: 112/179 saved (step 715), elapsed 0s, ETA 0s
+Epoch 60: 128/179 saved (step 716), elapsed 0s, ETA 0s
+Epoch 60: 144/179 saved (step 717), elapsed 0s, ETA 0s
+Epoch 60: 160/179 saved (step 718), elapsed 0s, ETA 0s
+Epoch 60: 176/179 saved (step 719), elapsed 0s, ETA 0s
+Epoch 60: 179/179 saved (step 720), elapsed 0s, ETA 0s
+Epoch 60: validation loss 0.28609, position accuracy 0.842
+Epoch 61: starting with 0/179 saved, ETA unknown
+Epoch 61: 16/179 saved (step 721), elapsed 0s, ETA 0s
+Epoch 61: 32/179 saved (step 722), elapsed 0s, ETA 0s
+Epoch 61: 48/179 saved (step 723), elapsed 0s, ETA 0s
+Epoch 61: 64/179 saved (step 724), elapsed 0s, ETA 0s
+Epoch 61: 80/179 saved (step 725), elapsed 0s, ETA 0s
+Epoch 61: 96/179 saved (step 726), elapsed 0s, ETA 0s
+Epoch 61: 112/179 saved (step 727), elapsed 0s, ETA 0s
+Epoch 61: 128/179 saved (step 728), elapsed 0s, ETA 0s
+Epoch 61: 144/179 saved (step 729), elapsed 0s, ETA 0s
+Epoch 61: 160/179 saved (step 730), elapsed 0s, ETA 0s
+Epoch 61: 176/179 saved (step 731), elapsed 0s, ETA 0s
+Epoch 61: 179/179 saved (step 732), elapsed 0s, ETA 0s
+Epoch 61: validation loss 0.27662, position accuracy 0.862
+Epoch 62: starting with 0/179 saved, ETA unknown
+Epoch 62: 16/179 saved (step 733), elapsed 0s, ETA 0s
+Epoch 62: 32/179 saved (step 734), elapsed 0s, ETA 0s
+Epoch 62: 48/179 saved (step 735), elapsed 0s, ETA 0s
+Epoch 62: 64/179 saved (step 736), elapsed 0s, ETA 0s
+Epoch 62: 80/179 saved (step 737), elapsed 0s, ETA 0s
+Epoch 62: 96/179 saved (step 738), elapsed 0s, ETA 0s
+Epoch 62: 112/179 saved (step 739), elapsed 0s, ETA 0s
+Epoch 62: 128/179 saved (step 740), elapsed 0s, ETA 0s
+Epoch 62: 144/179 saved (step 741), elapsed 0s, ETA 0s
+Epoch 62: 160/179 saved (step 742), elapsed 0s, ETA 0s
+Epoch 62: 176/179 saved (step 743), elapsed 0s, ETA 0s
+Epoch 62: 179/179 saved (step 744), elapsed 0s, ETA 0s
+Epoch 62: validation loss 0.28239, position accuracy 0.849
+Epoch 63: starting with 0/179 saved, ETA unknown
+Epoch 63: 16/179 saved (step 745), elapsed 0s, ETA 0s
+Epoch 63: 32/179 saved (step 746), elapsed 0s, ETA 0s
+Epoch 63: 48/179 saved (step 747), elapsed 0s, ETA 0s
+Epoch 63: 64/179 saved (step 748), elapsed 0s, ETA 0s
+Epoch 63: 80/179 saved (step 749), elapsed 0s, ETA 0s
+Epoch 63: 96/179 saved (step 750), elapsed 0s, ETA 0s
+Epoch 63: 112/179 saved (step 751), elapsed 0s, ETA 0s
+Epoch 63: 128/179 saved (step 752), elapsed 0s, ETA 0s
+Epoch 63: 144/179 saved (step 753), elapsed 0s, ETA 0s
+Epoch 63: 160/179 saved (step 754), elapsed 0s, ETA 0s
+Epoch 63: 176/179 saved (step 755), elapsed 0s, ETA 0s
+Epoch 63: 179/179 saved (step 756), elapsed 0s, ETA 0s
+Epoch 63: validation loss 0.27352, position accuracy 0.849
+Epoch 64: starting with 0/179 saved, ETA unknown
+Epoch 64: 16/179 saved (step 757), elapsed 0s, ETA 0s
+Epoch 64: 32/179 saved (step 758), elapsed 0s, ETA 0s
+Epoch 64: 48/179 saved (step 759), elapsed 0s, ETA 0s
+Epoch 64: 64/179 saved (step 760), elapsed 0s, ETA 0s
+Epoch 64: 80/179 saved (step 761), elapsed 0s, ETA 0s
+Epoch 64: 96/179 saved (step 762), elapsed 0s, ETA 0s
+Epoch 64: 112/179 saved (step 763), elapsed 0s, ETA 0s
+Epoch 64: 128/179 saved (step 764), elapsed 0s, ETA 0s
+Epoch 64: 144/179 saved (step 765), elapsed 0s, ETA 0s
+Epoch 64: 160/179 saved (step 766), elapsed 0s, ETA 0s
+Epoch 64: 176/179 saved (step 767), elapsed 0s, ETA 0s
+Epoch 64: 179/179 saved (step 768), elapsed 0s, ETA 0s
+Epoch 64: validation loss 0.27847, position accuracy 0.855
+Epoch 65: starting with 0/179 saved, ETA unknown
+Epoch 65: 16/179 saved (step 769), elapsed 0s, ETA 0s
+Epoch 65: 32/179 saved (step 770), elapsed 0s, ETA 0s
+Epoch 65: 48/179 saved (step 771), elapsed 0s, ETA 0s
+Epoch 65: 64/179 saved (step 772), elapsed 0s, ETA 0s
+Epoch 65: 80/179 saved (step 773), elapsed 0s, ETA 0s
+Epoch 65: 96/179 saved (step 774), elapsed 0s, ETA 0s
+Epoch 65: 112/179 saved (step 775), elapsed 0s, ETA 0s
+Epoch 65: 128/179 saved (step 776), elapsed 0s, ETA 0s
+Epoch 65: 144/179 saved (step 777), elapsed 0s, ETA 0s
+Epoch 65: 160/179 saved (step 778), elapsed 0s, ETA 0s
+Epoch 65: 176/179 saved (step 779), elapsed 0s, ETA 0s
+Epoch 65: 179/179 saved (step 780), elapsed 0s, ETA 0s
+Epoch 65: validation loss 0.27308, position accuracy 0.855
+Epoch 66: starting with 0/179 saved, ETA unknown
+Epoch 66: 16/179 saved (step 781), elapsed 0s, ETA 0s
+Epoch 66: 32/179 saved (step 782), elapsed 0s, ETA 0s
+Epoch 66: 48/179 saved (step 783), elapsed 0s, ETA 0s
+Epoch 66: 64/179 saved (step 784), elapsed 0s, ETA 0s
+Epoch 66: 80/179 saved (step 785), elapsed 0s, ETA 0s
+Epoch 66: 96/179 saved (step 786), elapsed 0s, ETA 0s
+Epoch 66: 112/179 saved (step 787), elapsed 0s, ETA 0s
+Epoch 66: 128/179 saved (step 788), elapsed 0s, ETA 0s
+Epoch 66: 144/179 saved (step 789), elapsed 0s, ETA 0s
+Epoch 66: 160/179 saved (step 790), elapsed 0s, ETA 0s
+Epoch 66: 176/179 saved (step 791), elapsed 0s, ETA 0s
+Epoch 66: 179/179 saved (step 792), elapsed 0s, ETA 0s
+Epoch 66: validation loss 0.27921, position accuracy 0.842
+Epoch 67: starting with 0/179 saved, ETA unknown
+Epoch 67: 16/179 saved (step 793), elapsed 0s, ETA 0s
+Epoch 67: 32/179 saved (step 794), elapsed 0s, ETA 0s
+Epoch 67: 48/179 saved (step 795), elapsed 0s, ETA 0s
+Epoch 67: 64/179 saved (step 796), elapsed 0s, ETA 0s
+Epoch 67: 80/179 saved (step 797), elapsed 0s, ETA 0s
+Epoch 67: 96/179 saved (step 798), elapsed 0s, ETA 0s
+Epoch 67: 112/179 saved (step 799), elapsed 0s, ETA 0s
+Epoch 67: 128/179 saved (step 800), elapsed 0s, ETA 0s
+Epoch 67: 144/179 saved (step 801), elapsed 0s, ETA 0s
+Epoch 67: 160/179 saved (step 802), elapsed 0s, ETA 0s
+Epoch 67: 176/179 saved (step 803), elapsed 0s, ETA 0s
+Epoch 67: 179/179 saved (step 804), elapsed 0s, ETA 0s
+Epoch 67: validation loss 0.27154, position accuracy 0.842
+Epoch 68: starting with 0/179 saved, ETA unknown
+Epoch 68: 16/179 saved (step 805), elapsed 0s, ETA 0s
+Epoch 68: 32/179 saved (step 806), elapsed 0s, ETA 0s
+Epoch 68: 48/179 saved (step 807), elapsed 0s, ETA 0s
+Epoch 68: 64/179 saved (step 808), elapsed 0s, ETA 0s
+Epoch 68: 80/179 saved (step 809), elapsed 0s, ETA 0s
+Epoch 68: 96/179 saved (step 810), elapsed 0s, ETA 0s
+Epoch 68: 112/179 saved (step 811), elapsed 0s, ETA 0s
+Epoch 68: 128/179 saved (step 812), elapsed 0s, ETA 0s
+Epoch 68: 144/179 saved (step 813), elapsed 0s, ETA 0s
+Epoch 68: 160/179 saved (step 814), elapsed 0s, ETA 0s
+Epoch 68: 176/179 saved (step 815), elapsed 0s, ETA 0s
+Epoch 68: 179/179 saved (step 816), elapsed 0s, ETA 0s
+Epoch 68: validation loss 0.28226, position accuracy 0.836
+Epoch 69: starting with 0/179 saved, ETA unknown
+Epoch 69: 16/179 saved (step 817), elapsed 0s, ETA 0s
+Epoch 69: 32/179 saved (step 818), elapsed 0s, ETA 0s
+Epoch 69: 48/179 saved (step 819), elapsed 0s, ETA 0s
+Epoch 69: 64/179 saved (step 820), elapsed 0s, ETA 0s
+Epoch 69: 80/179 saved (step 821), elapsed 0s, ETA 0s
+Epoch 69: 96/179 saved (step 822), elapsed 0s, ETA 0s
+Epoch 69: 112/179 saved (step 823), elapsed 0s, ETA 0s
+Epoch 69: 128/179 saved (step 824), elapsed 0s, ETA 0s
+Epoch 69: 144/179 saved (step 825), elapsed 0s, ETA 0s
+Epoch 69: 160/179 saved (step 826), elapsed 0s, ETA 0s
+Epoch 69: 176/179 saved (step 827), elapsed 0s, ETA 0s
+Epoch 69: 179/179 saved (step 828), elapsed 0s, ETA 0s
+Epoch 69: validation loss 0.27049, position accuracy 0.842
+Epoch 70: starting with 0/179 saved, ETA unknown
+Epoch 70: 16/179 saved (step 829), elapsed 0s, ETA 0s
+Epoch 70: 32/179 saved (step 830), elapsed 0s, ETA 0s
+Epoch 70: 48/179 saved (step 831), elapsed 0s, ETA 0s
+Epoch 70: 64/179 saved (step 832), elapsed 0s, ETA 0s
+Epoch 70: 80/179 saved (step 833), elapsed 0s, ETA 0s
+Epoch 70: 96/179 saved (step 834), elapsed 0s, ETA 0s
+Epoch 70: 112/179 saved (step 835), elapsed 0s, ETA 0s
+Epoch 70: 128/179 saved (step 836), elapsed 0s, ETA 0s
+Epoch 70: 144/179 saved (step 837), elapsed 0s, ETA 0s
+Epoch 70: 160/179 saved (step 838), elapsed 0s, ETA 0s
+Epoch 70: 176/179 saved (step 839), elapsed 0s, ETA 0s
+Epoch 70: 179/179 saved (step 840), elapsed 0s, ETA 0s
+Epoch 70: validation loss 0.26693, position accuracy 0.836
+Epoch 71: starting with 0/179 saved, ETA unknown
+Epoch 71: 16/179 saved (step 841), elapsed 0s, ETA 0s
+Epoch 71: 32/179 saved (step 842), elapsed 0s, ETA 0s
+Epoch 71: 48/179 saved (step 843), elapsed 0s, ETA 0s
+Epoch 71: 64/179 saved (step 844), elapsed 0s, ETA 0s
+Epoch 71: 80/179 saved (step 845), elapsed 0s, ETA 0s
+Epoch 71: 96/179 saved (step 846), elapsed 0s, ETA 0s
+Epoch 71: 112/179 saved (step 847), elapsed 0s, ETA 0s
+Epoch 71: 128/179 saved (step 848), elapsed 0s, ETA 0s
+Epoch 71: 144/179 saved (step 849), elapsed 0s, ETA 0s
+Epoch 71: 160/179 saved (step 850), elapsed 0s, ETA 0s
+Epoch 71: 176/179 saved (step 851), elapsed 0s, ETA 0s
+Epoch 71: 179/179 saved (step 852), elapsed 0s, ETA 0s
+Epoch 71: validation loss 0.26179, position accuracy 0.836
+Epoch 72: starting with 0/179 saved, ETA unknown
+Epoch 72: 16/179 saved (step 853), elapsed 0s, ETA 0s
+Epoch 72: 32/179 saved (step 854), elapsed 0s, ETA 0s
+Epoch 72: 48/179 saved (step 855), elapsed 0s, ETA 0s
+Epoch 72: 64/179 saved (step 856), elapsed 0s, ETA 0s
+Epoch 72: 80/179 saved (step 857), elapsed 0s, ETA 0s
+Epoch 72: 96/179 saved (step 858), elapsed 0s, ETA 0s
+Epoch 72: 112/179 saved (step 859), elapsed 0s, ETA 0s
+Epoch 72: 128/179 saved (step 860), elapsed 0s, ETA 0s
+Epoch 72: 144/179 saved (step 861), elapsed 0s, ETA 0s
+Epoch 72: 160/179 saved (step 862), elapsed 0s, ETA 0s
+Epoch 72: 176/179 saved (step 863), elapsed 0s, ETA 0s
+Epoch 72: 179/179 saved (step 864), elapsed 0s, ETA 0s
+Epoch 72: validation loss 0.26033, position accuracy 0.842
+Epoch 73: starting with 0/179 saved, ETA unknown
+Epoch 73: 16/179 saved (step 865), elapsed 0s, ETA 0s
+Epoch 73: 32/179 saved (step 866), elapsed 0s, ETA 0s
+Epoch 73: 48/179 saved (step 867), elapsed 0s, ETA 0s
+Epoch 73: 64/179 saved (step 868), elapsed 0s, ETA 0s
+Epoch 73: 80/179 saved (step 869), elapsed 0s, ETA 0s
+Epoch 73: 96/179 saved (step 870), elapsed 0s, ETA 0s
+Epoch 73: 112/179 saved (step 871), elapsed 0s, ETA 0s
+Epoch 73: 128/179 saved (step 872), elapsed 0s, ETA 0s
+Epoch 73: 144/179 saved (step 873), elapsed 0s, ETA 0s
+Epoch 73: 160/179 saved (step 874), elapsed 0s, ETA 0s
+Epoch 73: 176/179 saved (step 875), elapsed 0s, ETA 0s
+Epoch 73: 179/179 saved (step 876), elapsed 0s, ETA 0s
+Epoch 73: validation loss 0.26929, position accuracy 0.849
+Epoch 74: starting with 0/179 saved, ETA unknown
+Epoch 74: 16/179 saved (step 877), elapsed 0s, ETA 0s
+Epoch 74: 32/179 saved (step 878), elapsed 0s, ETA 0s
+Epoch 74: 48/179 saved (step 879), elapsed 0s, ETA 0s
+Epoch 74: 64/179 saved (step 880), elapsed 0s, ETA 0s
+Epoch 74: 80/179 saved (step 881), elapsed 0s, ETA 0s
+Epoch 74: 96/179 saved (step 882), elapsed 0s, ETA 0s
+Epoch 74: 112/179 saved (step 883), elapsed 0s, ETA 0s
+Epoch 74: 128/179 saved (step 884), elapsed 0s, ETA 0s
+Epoch 74: 144/179 saved (step 885), elapsed 0s, ETA 0s
+Epoch 74: 160/179 saved (step 886), elapsed 0s, ETA 0s
+Epoch 74: 176/179 saved (step 887), elapsed 0s, ETA 0s
+Epoch 74: 179/179 saved (step 888), elapsed 0s, ETA 0s
+Epoch 74: validation loss 0.26447, position accuracy 0.849
+Epoch 75: starting with 0/179 saved, ETA unknown
+Epoch 75: 16/179 saved (step 889), elapsed 0s, ETA 0s
+Epoch 75: 32/179 saved (step 890), elapsed 0s, ETA 0s
+Epoch 75: 48/179 saved (step 891), elapsed 0s, ETA 0s
+Epoch 75: 64/179 saved (step 892), elapsed 0s, ETA 0s
+Epoch 75: 80/179 saved (step 893), elapsed 0s, ETA 0s
+Epoch 75: 96/179 saved (step 894), elapsed 0s, ETA 0s
+Epoch 75: 112/179 saved (step 895), elapsed 0s, ETA 0s
+Epoch 75: 128/179 saved (step 896), elapsed 0s, ETA 0s
+Epoch 75: 144/179 saved (step 897), elapsed 0s, ETA 0s
+Epoch 75: 160/179 saved (step 898), elapsed 0s, ETA 0s
+Epoch 75: 176/179 saved (step 899), elapsed 0s, ETA 0s
+Epoch 75: 179/179 saved (step 900), elapsed 0s, ETA 0s
+Epoch 75: validation loss 0.26933, position accuracy 0.842
+Epoch 76: starting with 0/179 saved, ETA unknown
+Epoch 76: 16/179 saved (step 901), elapsed 0s, ETA 0s
+Epoch 76: 32/179 saved (step 902), elapsed 0s, ETA 0s
+Epoch 76: 48/179 saved (step 903), elapsed 0s, ETA 0s
+Epoch 76: 64/179 saved (step 904), elapsed 0s, ETA 0s
+Epoch 76: 80/179 saved (step 905), elapsed 0s, ETA 0s
+Epoch 76: 96/179 saved (step 906), elapsed 0s, ETA 0s
+Epoch 76: 112/179 saved (step 907), elapsed 0s, ETA 0s
+Epoch 76: 128/179 saved (step 908), elapsed 0s, ETA 0s
+Epoch 76: 144/179 saved (step 909), elapsed 0s, ETA 0s
+Epoch 76: 160/179 saved (step 910), elapsed 0s, ETA 0s
+Epoch 76: 176/179 saved (step 911), elapsed 0s, ETA 0s
+Epoch 76: 179/179 saved (step 912), elapsed 0s, ETA 0s
+Epoch 76: validation loss 0.26263, position accuracy 0.842
+Epoch 77: starting with 0/179 saved, ETA unknown
+Epoch 77: 16/179 saved (step 913), elapsed 0s, ETA 0s
+Epoch 77: 32/179 saved (step 914), elapsed 0s, ETA 0s
+Epoch 77: 48/179 saved (step 915), elapsed 0s, ETA 0s
+Epoch 77: 64/179 saved (step 916), elapsed 0s, ETA 0s
+Epoch 77: 80/179 saved (step 917), elapsed 0s, ETA 0s
+Epoch 77: 96/179 saved (step 918), elapsed 0s, ETA 0s
+Epoch 77: 112/179 saved (step 919), elapsed 0s, ETA 0s
+Epoch 77: 128/179 saved (step 920), elapsed 0s, ETA 0s
+Epoch 77: 144/179 saved (step 921), elapsed 0s, ETA 0s
+Epoch 77: 160/179 saved (step 922), elapsed 0s, ETA 0s
+Epoch 77: 176/179 saved (step 923), elapsed 0s, ETA 0s
+Epoch 77: 179/179 saved (step 924), elapsed 0s, ETA 0s
+Epoch 77: validation loss 0.25660, position accuracy 0.842
+Epoch 78: starting with 0/179 saved, ETA unknown
+Epoch 78: 16/179 saved (step 925), elapsed 0s, ETA 0s
+Epoch 78: 32/179 saved (step 926), elapsed 0s, ETA 0s
+Epoch 78: 48/179 saved (step 927), elapsed 0s, ETA 0s
+Epoch 78: 64/179 saved (step 928), elapsed 0s, ETA 0s
+Epoch 78: 80/179 saved (step 929), elapsed 0s, ETA 0s
+Epoch 78: 96/179 saved (step 930), elapsed 0s, ETA 0s
+Epoch 78: 112/179 saved (step 931), elapsed 0s, ETA 0s
+Epoch 78: 128/179 saved (step 932), elapsed 0s, ETA 0s
+Epoch 78: 144/179 saved (step 933), elapsed 0s, ETA 0s
+Epoch 78: 160/179 saved (step 934), elapsed 0s, ETA 0s
+Epoch 78: 176/179 saved (step 935), elapsed 0s, ETA 0s
+Epoch 78: 179/179 saved (step 936), elapsed 0s, ETA 0s
+Epoch 78: validation loss 0.26549, position accuracy 0.855
+Epoch 79: starting with 0/179 saved, ETA unknown
+Epoch 79: 16/179 saved (step 937), elapsed 0s, ETA 0s
+Epoch 79: 32/179 saved (step 938), elapsed 0s, ETA 0s
+Epoch 79: 48/179 saved (step 939), elapsed 0s, ETA 0s
+Epoch 79: 64/179 saved (step 940), elapsed 0s, ETA 0s
+Epoch 79: 80/179 saved (step 941), elapsed 0s, ETA 0s
+Epoch 79: 96/179 saved (step 942), elapsed 0s, ETA 0s
+Epoch 79: 112/179 saved (step 943), elapsed 0s, ETA 0s
+Epoch 79: 128/179 saved (step 944), elapsed 0s, ETA 0s
+Epoch 79: 144/179 saved (step 945), elapsed 0s, ETA 0s
+Epoch 79: 160/179 saved (step 946), elapsed 0s, ETA 0s
+Epoch 79: 176/179 saved (step 947), elapsed 0s, ETA 0s
+Epoch 79: 179/179 saved (step 948), elapsed 0s, ETA 0s
+Epoch 79: validation loss 0.25464, position accuracy 0.855
+Epoch 80: starting with 0/179 saved, ETA unknown
+Epoch 80: 16/179 saved (step 949), elapsed 0s, ETA 0s
+Epoch 80: 32/179 saved (step 950), elapsed 0s, ETA 0s
+Epoch 80: 48/179 saved (step 951), elapsed 0s, ETA 0s
+Epoch 80: 64/179 saved (step 952), elapsed 0s, ETA 0s
+Epoch 80: 80/179 saved (step 953), elapsed 0s, ETA 0s
+Epoch 80: 96/179 saved (step 954), elapsed 0s, ETA 0s
+Epoch 80: 112/179 saved (step 955), elapsed 0s, ETA 0s
+Epoch 80: 128/179 saved (step 956), elapsed 0s, ETA 0s
+Epoch 80: 144/179 saved (step 957), elapsed 0s, ETA 0s
+Epoch 80: 160/179 saved (step 958), elapsed 0s, ETA 0s
+Epoch 80: 176/179 saved (step 959), elapsed 0s, ETA 0s
+Epoch 80: 179/179 saved (step 960), elapsed 0s, ETA 0s
+Epoch 80: validation loss 0.25848, position accuracy 0.849
+Epoch 81: starting with 0/179 saved, ETA unknown
+Epoch 81: 16/179 saved (step 961), elapsed 0s, ETA 0s
+Epoch 81: 32/179 saved (step 962), elapsed 0s, ETA 0s
+Epoch 81: 48/179 saved (step 963), elapsed 0s, ETA 0s
+Epoch 81: 64/179 saved (step 964), elapsed 0s, ETA 0s
+Epoch 81: 80/179 saved (step 965), elapsed 0s, ETA 0s
+Epoch 81: 96/179 saved (step 966), elapsed 0s, ETA 0s
+Epoch 81: 112/179 saved (step 967), elapsed 0s, ETA 0s
+Epoch 81: 128/179 saved (step 968), elapsed 0s, ETA 0s
+Epoch 81: 144/179 saved (step 969), elapsed 0s, ETA 0s
+Epoch 81: 160/179 saved (step 970), elapsed 0s, ETA 0s
+Epoch 81: 176/179 saved (step 971), elapsed 0s, ETA 0s
+Epoch 81: 179/179 saved (step 972), elapsed 0s, ETA 0s
+Epoch 81: validation loss 0.26484, position accuracy 0.822
+Epoch 82: starting with 0/179 saved, ETA unknown
+Epoch 82: 16/179 saved (step 973), elapsed 0s, ETA 0s
+Epoch 82: 32/179 saved (step 974), elapsed 0s, ETA 0s
+Epoch 82: 48/179 saved (step 975), elapsed 0s, ETA 0s
+Epoch 82: 64/179 saved (step 976), elapsed 0s, ETA 0s
+Epoch 82: 80/179 saved (step 977), elapsed 0s, ETA 0s
+Epoch 82: 96/179 saved (step 978), elapsed 0s, ETA 0s
+Epoch 82: 112/179 saved (step 979), elapsed 0s, ETA 0s
+Epoch 82: 128/179 saved (step 980), elapsed 0s, ETA 0s
+Epoch 82: 144/179 saved (step 981), elapsed 0s, ETA 0s
+Epoch 82: 160/179 saved (step 982), elapsed 0s, ETA 0s
+Epoch 82: 176/179 saved (step 983), elapsed 0s, ETA 0s
+Epoch 82: 179/179 saved (step 984), elapsed 0s, ETA 0s
+Epoch 82: validation loss 0.25642, position accuracy 0.849
+Epoch 83: starting with 0/179 saved, ETA unknown
+Epoch 83: 16/179 saved (step 985), elapsed 0s, ETA 0s
+Epoch 83: 32/179 saved (step 986), elapsed 0s, ETA 0s
+Epoch 83: 48/179 saved (step 987), elapsed 0s, ETA 0s
+Epoch 83: 64/179 saved (step 988), elapsed 0s, ETA 0s
+Epoch 83: 80/179 saved (step 989), elapsed 0s, ETA 0s
+Epoch 83: 96/179 saved (step 990), elapsed 0s, ETA 0s
+Epoch 83: 112/179 saved (step 991), elapsed 0s, ETA 0s
+Epoch 83: 128/179 saved (step 992), elapsed 0s, ETA 0s
+Epoch 83: 144/179 saved (step 993), elapsed 0s, ETA 0s
+Epoch 83: 160/179 saved (step 994), elapsed 0s, ETA 0s
+Epoch 83: 176/179 saved (step 995), elapsed 0s, ETA 0s
+Epoch 83: 179/179 saved (step 996), elapsed 0s, ETA 0s
+Epoch 83: validation loss 0.26086, position accuracy 0.842
+Epoch 84: starting with 0/179 saved, ETA unknown
+Epoch 84: 16/179 saved (step 997), elapsed 0s, ETA 0s
+Epoch 84: 32/179 saved (step 998), elapsed 0s, ETA 0s
+Epoch 84: 48/179 saved (step 999), elapsed 0s, ETA 0s
+Epoch 84: 64/179 saved (step 1000), elapsed 0s, ETA 0s
+Epoch 84: 80/179 saved (step 1001), elapsed 0s, ETA 0s
+Epoch 84: 96/179 saved (step 1002), elapsed 0s, ETA 0s
+Epoch 84: 112/179 saved (step 1003), elapsed 0s, ETA 0s
+Epoch 84: 128/179 saved (step 1004), elapsed 0s, ETA 0s
+Epoch 84: 144/179 saved (step 1005), elapsed 0s, ETA 0s
+Epoch 84: 160/179 saved (step 1006), elapsed 0s, ETA 0s
+Epoch 84: 176/179 saved (step 1007), elapsed 0s, ETA 0s
+Epoch 84: 179/179 saved (step 1008), elapsed 0s, ETA 0s
+Epoch 84: validation loss 0.25961, position accuracy 0.842
+Epoch 85: starting with 0/179 saved, ETA unknown
+Epoch 85: 16/179 saved (step 1009), elapsed 0s, ETA 0s
+Epoch 85: 32/179 saved (step 1010), elapsed 0s, ETA 0s
+Epoch 85: 48/179 saved (step 1011), elapsed 0s, ETA 0s
+Epoch 85: 64/179 saved (step 1012), elapsed 0s, ETA 0s
+Epoch 85: 80/179 saved (step 1013), elapsed 0s, ETA 0s
+Epoch 85: 96/179 saved (step 1014), elapsed 0s, ETA 0s
+Epoch 85: 112/179 saved (step 1015), elapsed 0s, ETA 0s
+Epoch 85: 128/179 saved (step 1016), elapsed 0s, ETA 0s
+Epoch 85: 144/179 saved (step 1017), elapsed 0s, ETA 0s
+Epoch 85: 160/179 saved (step 1018), elapsed 0s, ETA 0s
+Epoch 85: 176/179 saved (step 1019), elapsed 0s, ETA 0s
+Epoch 85: 179/179 saved (step 1020), elapsed 0s, ETA 0s
+Epoch 85: validation loss 0.25612, position accuracy 0.842
+Epoch 86: starting with 0/179 saved, ETA unknown
+Epoch 86: 16/179 saved (step 1021), elapsed 0s, ETA 0s
+Epoch 86: 32/179 saved (step 1022), elapsed 0s, ETA 0s
+Epoch 86: 48/179 saved (step 1023), elapsed 0s, ETA 0s
+Epoch 86: 64/179 saved (step 1024), elapsed 0s, ETA 0s
+Epoch 86: 80/179 saved (step 1025), elapsed 0s, ETA 0s
+Epoch 86: 96/179 saved (step 1026), elapsed 0s, ETA 0s
+Epoch 86: 112/179 saved (step 1027), elapsed 0s, ETA 0s
+Epoch 86: 128/179 saved (step 1028), elapsed 0s, ETA 0s
+Epoch 86: 144/179 saved (step 1029), elapsed 0s, ETA 0s
+Epoch 86: 160/179 saved (step 1030), elapsed 0s, ETA 0s
+Epoch 86: 176/179 saved (step 1031), elapsed 0s, ETA 0s
+Epoch 86: 179/179 saved (step 1032), elapsed 0s, ETA 0s
+Epoch 86: validation loss 0.26325, position accuracy 0.829
+Epoch 87: starting with 0/179 saved, ETA unknown
+Epoch 87: 16/179 saved (step 1033), elapsed 0s, ETA 0s
+Epoch 87: 32/179 saved (step 1034), elapsed 0s, ETA 0s
+Epoch 87: 48/179 saved (step 1035), elapsed 0s, ETA 0s
+Epoch 87: 64/179 saved (step 1036), elapsed 0s, ETA 0s
+Epoch 87: 80/179 saved (step 1037), elapsed 0s, ETA 0s
+Epoch 87: 96/179 saved (step 1038), elapsed 0s, ETA 0s
+Epoch 87: 112/179 saved (step 1039), elapsed 0s, ETA 0s
+Epoch 87: 128/179 saved (step 1040), elapsed 0s, ETA 0s
+Epoch 87: 144/179 saved (step 1041), elapsed 0s, ETA 0s
+Epoch 87: 160/179 saved (step 1042), elapsed 0s, ETA 0s
+Epoch 87: 176/179 saved (step 1043), elapsed 0s, ETA 0s
+Epoch 87: 179/179 saved (step 1044), elapsed 0s, ETA 0s
+Epoch 87: validation loss 0.24834, position accuracy 0.849
+Epoch 88: starting with 0/179 saved, ETA unknown
+Epoch 88: 16/179 saved (step 1045), elapsed 0s, ETA 0s
+Epoch 88: 32/179 saved (step 1046), elapsed 0s, ETA 0s
+Epoch 88: 48/179 saved (step 1047), elapsed 0s, ETA 0s
+Epoch 88: 64/179 saved (step 1048), elapsed 0s, ETA 0s
+Epoch 88: 80/179 saved (step 1049), elapsed 0s, ETA 0s
+Epoch 88: 96/179 saved (step 1050), elapsed 0s, ETA 0s
+Epoch 88: 112/179 saved (step 1051), elapsed 0s, ETA 0s
+Epoch 88: 128/179 saved (step 1052), elapsed 0s, ETA 0s
+Epoch 88: 144/179 saved (step 1053), elapsed 0s, ETA 0s
+Epoch 88: 160/179 saved (step 1054), elapsed 0s, ETA 0s
+Epoch 88: 176/179 saved (step 1055), elapsed 0s, ETA 0s
+Epoch 88: 179/179 saved (step 1056), elapsed 0s, ETA 0s
+Epoch 88: validation loss 0.26257, position accuracy 0.836
+Epoch 89: starting with 0/179 saved, ETA unknown
+Epoch 89: 16/179 saved (step 1057), elapsed 0s, ETA 0s
+Epoch 89: 32/179 saved (step 1058), elapsed 0s, ETA 0s
+Epoch 89: 48/179 saved (step 1059), elapsed 0s, ETA 0s
+Epoch 89: 64/179 saved (step 1060), elapsed 0s, ETA 0s
+Epoch 89: 80/179 saved (step 1061), elapsed 0s, ETA 0s
+Epoch 89: 96/179 saved (step 1062), elapsed 0s, ETA 0s
+Epoch 89: 112/179 saved (step 1063), elapsed 0s, ETA 0s
+Epoch 89: 128/179 saved (step 1064), elapsed 0s, ETA 0s
+Epoch 89: 144/179 saved (step 1065), elapsed 0s, ETA 0s
+Epoch 89: 160/179 saved (step 1066), elapsed 0s, ETA 0s
+Epoch 89: 176/179 saved (step 1067), elapsed 0s, ETA 0s
+Epoch 89: 179/179 saved (step 1068), elapsed 0s, ETA 0s
+Epoch 89: validation loss 0.25290, position accuracy 0.855
+Epoch 90: starting with 0/179 saved, ETA unknown
+Epoch 90: 16/179 saved (step 1069), elapsed 0s, ETA 0s
+Epoch 90: 32/179 saved (step 1070), elapsed 0s, ETA 0s
+Epoch 90: 48/179 saved (step 1071), elapsed 0s, ETA 0s
+Epoch 90: 64/179 saved (step 1072), elapsed 0s, ETA 0s
+Epoch 90: 80/179 saved (step 1073), elapsed 0s, ETA 0s
+Epoch 90: 96/179 saved (step 1074), elapsed 0s, ETA 0s
+Epoch 90: 112/179 saved (step 1075), elapsed 0s, ETA 0s
+Epoch 90: 128/179 saved (step 1076), elapsed 0s, ETA 0s
+Epoch 90: 144/179 saved (step 1077), elapsed 0s, ETA 0s
+Epoch 90: 160/179 saved (step 1078), elapsed 0s, ETA 0s
+Epoch 90: 176/179 saved (step 1079), elapsed 0s, ETA 0s
+Epoch 90: 179/179 saved (step 1080), elapsed 0s, ETA 0s
+Epoch 90: validation loss 0.25615, position accuracy 0.836
+Epoch 91: starting with 0/179 saved, ETA unknown
+Epoch 91: 16/179 saved (step 1081), elapsed 0s, ETA 0s
+Epoch 91: 32/179 saved (step 1082), elapsed 0s, ETA 0s
+Epoch 91: 48/179 saved (step 1083), elapsed 0s, ETA 0s
+Epoch 91: 64/179 saved (step 1084), elapsed 0s, ETA 0s
+Epoch 91: 80/179 saved (step 1085), elapsed 0s, ETA 0s
+Epoch 91: 96/179 saved (step 1086), elapsed 0s, ETA 0s
+Epoch 91: 112/179 saved (step 1087), elapsed 0s, ETA 0s
+Epoch 91: 128/179 saved (step 1088), elapsed 0s, ETA 0s
+Epoch 91: 144/179 saved (step 1089), elapsed 0s, ETA 0s
+Epoch 91: 160/179 saved (step 1090), elapsed 0s, ETA 0s
+Epoch 91: 176/179 saved (step 1091), elapsed 0s, ETA 0s
+Epoch 91: 179/179 saved (step 1092), elapsed 0s, ETA 0s
+Epoch 91: validation loss 0.26000, position accuracy 0.829
+Epoch 92: starting with 0/179 saved, ETA unknown
+Epoch 92: 16/179 saved (step 1093), elapsed 0s, ETA 0s
+Epoch 92: 32/179 saved (step 1094), elapsed 0s, ETA 0s
+Epoch 92: 48/179 saved (step 1095), elapsed 0s, ETA 0s
+Epoch 92: 64/179 saved (step 1096), elapsed 0s, ETA 0s
+Epoch 92: 80/179 saved (step 1097), elapsed 0s, ETA 0s
+Epoch 92: 96/179 saved (step 1098), elapsed 0s, ETA 0s
+Epoch 92: 112/179 saved (step 1099), elapsed 0s, ETA 0s
+Epoch 92: 128/179 saved (step 1100), elapsed 0s, ETA 0s
+Epoch 92: 144/179 saved (step 1101), elapsed 0s, ETA 0s
+Epoch 92: 160/179 saved (step 1102), elapsed 0s, ETA 0s
+Epoch 92: 176/179 saved (step 1103), elapsed 0s, ETA 0s
+Epoch 92: 179/179 saved (step 1104), elapsed 0s, ETA 0s
+Epoch 92: validation loss 0.25435, position accuracy 0.849
+Epoch 93: starting with 0/179 saved, ETA unknown
+Epoch 93: 16/179 saved (step 1105), elapsed 0s, ETA 0s
+Epoch 93: 32/179 saved (step 1106), elapsed 0s, ETA 0s
+Epoch 93: 48/179 saved (step 1107), elapsed 0s, ETA 0s
+Epoch 93: 64/179 saved (step 1108), elapsed 0s, ETA 0s
+Epoch 93: 80/179 saved (step 1109), elapsed 0s, ETA 0s
+Epoch 93: 96/179 saved (step 1110), elapsed 0s, ETA 0s
+Epoch 93: 112/179 saved (step 1111), elapsed 0s, ETA 0s
+Epoch 93: 128/179 saved (step 1112), elapsed 0s, ETA 0s
+Epoch 93: 144/179 saved (step 1113), elapsed 0s, ETA 0s
+Epoch 93: 160/179 saved (step 1114), elapsed 0s, ETA 0s
+Epoch 93: 176/179 saved (step 1115), elapsed 0s, ETA 0s
+Epoch 93: 179/179 saved (step 1116), elapsed 0s, ETA 0s
+Epoch 93: validation loss 0.24726, position accuracy 0.836
+Epoch 94: starting with 0/179 saved, ETA unknown
+Epoch 94: 16/179 saved (step 1117), elapsed 0s, ETA 0s
+Epoch 94: 32/179 saved (step 1118), elapsed 0s, ETA 0s
+Epoch 94: 48/179 saved (step 1119), elapsed 0s, ETA 0s
+Epoch 94: 64/179 saved (step 1120), elapsed 0s, ETA 0s
+Epoch 94: 80/179 saved (step 1121), elapsed 0s, ETA 0s
+Epoch 94: 96/179 saved (step 1122), elapsed 0s, ETA 0s
+Epoch 94: 112/179 saved (step 1123), elapsed 0s, ETA 0s
+Epoch 94: 128/179 saved (step 1124), elapsed 0s, ETA 0s
+Epoch 94: 144/179 saved (step 1125), elapsed 0s, ETA 0s
+Epoch 94: 160/179 saved (step 1126), elapsed 0s, ETA 0s
+Epoch 94: 176/179 saved (step 1127), elapsed 0s, ETA 0s
+Epoch 94: 179/179 saved (step 1128), elapsed 0s, ETA 0s
+Epoch 94: validation loss 0.24437, position accuracy 0.855
+Epoch 95: starting with 0/179 saved, ETA unknown
+Epoch 95: 16/179 saved (step 1129), elapsed 0s, ETA 0s
+Epoch 95: 32/179 saved (step 1130), elapsed 0s, ETA 0s
+Epoch 95: 48/179 saved (step 1131), elapsed 0s, ETA 0s
+Epoch 95: 64/179 saved (step 1132), elapsed 0s, ETA 0s
+Epoch 95: 80/179 saved (step 1133), elapsed 0s, ETA 0s
+Epoch 95: 96/179 saved (step 1134), elapsed 0s, ETA 0s
+Epoch 95: 112/179 saved (step 1135), elapsed 0s, ETA 0s
+Epoch 95: 128/179 saved (step 1136), elapsed 0s, ETA 0s
+Epoch 95: 144/179 saved (step 1137), elapsed 0s, ETA 0s
+Epoch 95: 160/179 saved (step 1138), elapsed 0s, ETA 0s
+Epoch 95: 176/179 saved (step 1139), elapsed 0s, ETA 0s
+Epoch 95: 179/179 saved (step 1140), elapsed 0s, ETA 0s
+Epoch 95: validation loss 0.25738, position accuracy 0.829
+Epoch 96: starting with 0/179 saved, ETA unknown
+Epoch 96: 16/179 saved (step 1141), elapsed 0s, ETA 0s
+Epoch 96: 32/179 saved (step 1142), elapsed 0s, ETA 0s
+Epoch 96: 48/179 saved (step 1143), elapsed 0s, ETA 0s
+Epoch 96: 64/179 saved (step 1144), elapsed 0s, ETA 0s
+Epoch 96: 80/179 saved (step 1145), elapsed 0s, ETA 0s
+Epoch 96: 96/179 saved (step 1146), elapsed 0s, ETA 0s
+Epoch 96: 112/179 saved (step 1147), elapsed 0s, ETA 0s
+Epoch 96: 128/179 saved (step 1148), elapsed 0s, ETA 0s
+Epoch 96: 144/179 saved (step 1149), elapsed 0s, ETA 0s
+Epoch 96: 160/179 saved (step 1150), elapsed 0s, ETA 0s
+Epoch 96: 176/179 saved (step 1151), elapsed 0s, ETA 0s
+Epoch 96: 179/179 saved (step 1152), elapsed 0s, ETA 0s
+Epoch 96: validation loss 0.25177, position accuracy 0.829
+Epoch 97: starting with 0/179 saved, ETA unknown
+Epoch 97: 16/179 saved (step 1153), elapsed 0s, ETA 0s
+Epoch 97: 32/179 saved (step 1154), elapsed 0s, ETA 0s
+Epoch 97: 48/179 saved (step 1155), elapsed 0s, ETA 0s
+Epoch 97: 64/179 saved (step 1156), elapsed 0s, ETA 0s
+Epoch 97: 80/179 saved (step 1157), elapsed 0s, ETA 0s
+Epoch 97: 96/179 saved (step 1158), elapsed 0s, ETA 0s
+Epoch 97: 112/179 saved (step 1159), elapsed 0s, ETA 0s
+Epoch 97: 128/179 saved (step 1160), elapsed 0s, ETA 0s
+Epoch 97: 144/179 saved (step 1161), elapsed 0s, ETA 0s
+Epoch 97: 160/179 saved (step 1162), elapsed 0s, ETA 0s
+Epoch 97: 176/179 saved (step 1163), elapsed 0s, ETA 0s
+Epoch 97: 179/179 saved (step 1164), elapsed 0s, ETA 0s
+Epoch 97: validation loss 0.24638, position accuracy 0.836
+Epoch 98: starting with 0/179 saved, ETA unknown
+Epoch 98: 16/179 saved (step 1165), elapsed 0s, ETA 0s
+Epoch 98: 32/179 saved (step 1166), elapsed 0s, ETA 0s
+Epoch 98: 48/179 saved (step 1167), elapsed 0s, ETA 0s
+Epoch 98: 64/179 saved (step 1168), elapsed 0s, ETA 0s
+Epoch 98: 80/179 saved (step 1169), elapsed 0s, ETA 0s
+Epoch 98: 96/179 saved (step 1170), elapsed 0s, ETA 0s
+Epoch 98: 112/179 saved (step 1171), elapsed 0s, ETA 0s
+Epoch 98: 128/179 saved (step 1172), elapsed 0s, ETA 0s
+Epoch 98: 144/179 saved (step 1173), elapsed 0s, ETA 0s
+Epoch 98: 160/179 saved (step 1174), elapsed 0s, ETA 0s
+Epoch 98: 176/179 saved (step 1175), elapsed 0s, ETA 0s
+Epoch 98: 179/179 saved (step 1176), elapsed 0s, ETA 0s
+Epoch 98: validation loss 0.26039, position accuracy 0.849
+Epoch 99: starting with 0/179 saved, ETA unknown
+Epoch 99: 16/179 saved (step 1177), elapsed 0s, ETA 0s
+Epoch 99: 32/179 saved (step 1178), elapsed 0s, ETA 0s
+Epoch 99: 48/179 saved (step 1179), elapsed 0s, ETA 0s
+Epoch 99: 64/179 saved (step 1180), elapsed 0s, ETA 0s
+Epoch 99: 80/179 saved (step 1181), elapsed 0s, ETA 0s
+Epoch 99: 96/179 saved (step 1182), elapsed 0s, ETA 0s
+Epoch 99: 112/179 saved (step 1183), elapsed 0s, ETA 0s
+Epoch 99: 128/179 saved (step 1184), elapsed 0s, ETA 0s
+Epoch 99: 144/179 saved (step 1185), elapsed 0s, ETA 0s
+Epoch 99: 160/179 saved (step 1186), elapsed 0s, ETA 0s
+Epoch 99: 176/179 saved (step 1187), elapsed 0s, ETA 0s
+Epoch 99: 179/179 saved (step 1188), elapsed 0s, ETA 0s
+Epoch 99: validation loss 0.25235, position accuracy 0.836
+Epoch 100: starting with 0/179 saved, ETA unknown
+Epoch 100: 16/179 saved (step 1189), elapsed 0s, ETA 0s
+Epoch 100: 32/179 saved (step 1190), elapsed 0s, ETA 0s
+Epoch 100: 48/179 saved (step 1191), elapsed 0s, ETA 0s
+Epoch 100: 64/179 saved (step 1192), elapsed 0s, ETA 0s
+Epoch 100: 80/179 saved (step 1193), elapsed 0s, ETA 0s
+Epoch 100: 96/179 saved (step 1194), elapsed 0s, ETA 0s
+Epoch 100: 112/179 saved (step 1195), elapsed 0s, ETA 0s
+Epoch 100: 128/179 saved (step 1196), elapsed 0s, ETA 0s
+Epoch 100: 144/179 saved (step 1197), elapsed 0s, ETA 0s
+Epoch 100: 160/179 saved (step 1198), elapsed 0s, ETA 0s
+Epoch 100: 176/179 saved (step 1199), elapsed 0s, ETA 0s
+Epoch 100: 179/179 saved (step 1200), elapsed 0s, ETA 0s
+Epoch 100: validation loss 0.25371, position accuracy 0.842
+Epoch 101: starting with 0/179 saved, ETA unknown
+Epoch 101: 16/179 saved (step 1201), elapsed 0s, ETA 0s
+Epoch 101: 32/179 saved (step 1202), elapsed 0s, ETA 0s
+Epoch 101: 48/179 saved (step 1203), elapsed 0s, ETA 0s
+Epoch 101: 64/179 saved (step 1204), elapsed 0s, ETA 0s
+Epoch 101: 80/179 saved (step 1205), elapsed 0s, ETA 0s
+Epoch 101: 96/179 saved (step 1206), elapsed 0s, ETA 0s
+Epoch 101: 112/179 saved (step 1207), elapsed 0s, ETA 0s
+Epoch 101: 128/179 saved (step 1208), elapsed 0s, ETA 0s
+Epoch 101: 144/179 saved (step 1209), elapsed 0s, ETA 0s
+Epoch 101: 160/179 saved (step 1210), elapsed 0s, ETA 0s
+Epoch 101: 176/179 saved (step 1211), elapsed 0s, ETA 0s
+Epoch 101: 179/179 saved (step 1212), elapsed 0s, ETA 0s
+Epoch 101: validation loss 0.26304, position accuracy 0.836
+Epoch 102: starting with 0/179 saved, ETA unknown
+Epoch 102: 16/179 saved (step 1213), elapsed 0s, ETA 0s
+Epoch 102: 32/179 saved (step 1214), elapsed 0s, ETA 0s
+Epoch 102: 48/179 saved (step 1215), elapsed 0s, ETA 0s
+Epoch 102: 64/179 saved (step 1216), elapsed 0s, ETA 0s
+Epoch 102: 80/179 saved (step 1217), elapsed 0s, ETA 0s
+Epoch 102: 96/179 saved (step 1218), elapsed 0s, ETA 0s
+Epoch 102: 112/179 saved (step 1219), elapsed 0s, ETA 0s
+Epoch 102: 128/179 saved (step 1220), elapsed 0s, ETA 0s
+Epoch 102: 144/179 saved (step 1221), elapsed 0s, ETA 0s
+Epoch 102: 160/179 saved (step 1222), elapsed 0s, ETA 0s
+Epoch 102: 176/179 saved (step 1223), elapsed 0s, ETA 0s
+Epoch 102: 179/179 saved (step 1224), elapsed 0s, ETA 0s
+Epoch 102: validation loss 0.25338, position accuracy 0.829
+Epoch 103: starting with 0/179 saved, ETA unknown
+Epoch 103: 16/179 saved (step 1225), elapsed 0s, ETA 0s
+Epoch 103: 32/179 saved (step 1226), elapsed 0s, ETA 0s
+Epoch 103: 48/179 saved (step 1227), elapsed 0s, ETA 0s
+Epoch 103: 64/179 saved (step 1228), elapsed 0s, ETA 0s
+Epoch 103: 80/179 saved (step 1229), elapsed 0s, ETA 0s
+Epoch 103: 96/179 saved (step 1230), elapsed 0s, ETA 0s
+Epoch 103: 112/179 saved (step 1231), elapsed 0s, ETA 0s
+Epoch 103: 128/179 saved (step 1232), elapsed 0s, ETA 0s
+Epoch 103: 144/179 saved (step 1233), elapsed 0s, ETA 0s
+Epoch 103: 160/179 saved (step 1234), elapsed 0s, ETA 0s
+Epoch 103: 176/179 saved (step 1235), elapsed 0s, ETA 0s
+Epoch 103: 179/179 saved (step 1236), elapsed 0s, ETA 0s
+Epoch 103: validation loss 0.25217, position accuracy 0.849
+Epoch 104: starting with 0/179 saved, ETA unknown
+Epoch 104: 16/179 saved (step 1237), elapsed 0s, ETA 0s
+Epoch 104: 32/179 saved (step 1238), elapsed 0s, ETA 0s
+Epoch 104: 48/179 saved (step 1239), elapsed 0s, ETA 0s
+Epoch 104: 64/179 saved (step 1240), elapsed 0s, ETA 0s
+Epoch 104: 80/179 saved (step 1241), elapsed 0s, ETA 0s
+Epoch 104: 96/179 saved (step 1242), elapsed 0s, ETA 0s
+Epoch 104: 112/179 saved (step 1243), elapsed 0s, ETA 0s
+Epoch 104: 128/179 saved (step 1244), elapsed 0s, ETA 0s
+Epoch 104: 144/179 saved (step 1245), elapsed 0s, ETA 0s
+Epoch 104: 160/179 saved (step 1246), elapsed 0s, ETA 0s
+Epoch 104: 176/179 saved (step 1247), elapsed 0s, ETA 0s
+Epoch 104: 179/179 saved (step 1248), elapsed 0s, ETA 0s
+Epoch 104: validation loss 0.25426, position accuracy 0.842
+Epoch 105: starting with 0/179 saved, ETA unknown
+Epoch 105: 16/179 saved (step 1249), elapsed 0s, ETA 0s
+Epoch 105: 32/179 saved (step 1250), elapsed 0s, ETA 0s
+Epoch 105: 48/179 saved (step 1251), elapsed 0s, ETA 0s
+Epoch 105: 64/179 saved (step 1252), elapsed 0s, ETA 0s
+Epoch 105: 80/179 saved (step 1253), elapsed 0s, ETA 0s
+Epoch 105: 96/179 saved (step 1254), elapsed 0s, ETA 0s
+Epoch 105: 112/179 saved (step 1255), elapsed 0s, ETA 0s
+Epoch 105: 128/179 saved (step 1256), elapsed 0s, ETA 0s
+Epoch 105: 144/179 saved (step 1257), elapsed 0s, ETA 0s
+Epoch 105: 160/179 saved (step 1258), elapsed 0s, ETA 0s
+Epoch 105: 176/179 saved (step 1259), elapsed 0s, ETA 0s
+Epoch 105: 179/179 saved (step 1260), elapsed 0s, ETA 0s
+Epoch 105: validation loss 0.25461, position accuracy 0.855
+Epoch 106: starting with 0/179 saved, ETA unknown
+Epoch 106: 16/179 saved (step 1261), elapsed 0s, ETA 0s
+Epoch 106: 32/179 saved (step 1262), elapsed 0s, ETA 0s
+Epoch 106: 48/179 saved (step 1263), elapsed 0s, ETA 0s
+Epoch 106: 64/179 saved (step 1264), elapsed 0s, ETA 0s
+Epoch 106: 80/179 saved (step 1265), elapsed 0s, ETA 0s
+Epoch 106: 96/179 saved (step 1266), elapsed 0s, ETA 0s
+Epoch 106: 112/179 saved (step 1267), elapsed 0s, ETA 0s
+Epoch 106: 128/179 saved (step 1268), elapsed 0s, ETA 0s
+Epoch 106: 144/179 saved (step 1269), elapsed 0s, ETA 0s
+Epoch 106: 160/179 saved (step 1270), elapsed 0s, ETA 0s
+Epoch 106: 176/179 saved (step 1271), elapsed 0s, ETA 0s
+Epoch 106: 179/179 saved (step 1272), elapsed 0s, ETA 0s
+Epoch 106: validation loss 0.24943, position accuracy 0.836
+Epoch 107: starting with 0/179 saved, ETA unknown
+Epoch 107: 16/179 saved (step 1273), elapsed 0s, ETA 0s
+Epoch 107: 32/179 saved (step 1274), elapsed 0s, ETA 0s
+Epoch 107: 48/179 saved (step 1275), elapsed 0s, ETA 0s
+Epoch 107: 64/179 saved (step 1276), elapsed 0s, ETA 0s
+Epoch 107: 80/179 saved (step 1277), elapsed 0s, ETA 0s
+Epoch 107: 96/179 saved (step 1278), elapsed 0s, ETA 0s
+Epoch 107: 112/179 saved (step 1279), elapsed 0s, ETA 0s
+Epoch 107: 128/179 saved (step 1280), elapsed 0s, ETA 0s
+Epoch 107: 144/179 saved (step 1281), elapsed 0s, ETA 0s
+Epoch 107: 160/179 saved (step 1282), elapsed 0s, ETA 0s
+Epoch 107: 176/179 saved (step 1283), elapsed 0s, ETA 0s
+Epoch 107: 179/179 saved (step 1284), elapsed 0s, ETA 0s
+Epoch 107: validation loss 0.24750, position accuracy 0.836
+Epoch 108: starting with 0/179 saved, ETA unknown
+Epoch 108: 16/179 saved (step 1285), elapsed 0s, ETA 0s
+Epoch 108: 32/179 saved (step 1286), elapsed 0s, ETA 0s
+Epoch 108: 48/179 saved (step 1287), elapsed 0s, ETA 0s
+Epoch 108: 64/179 saved (step 1288), elapsed 0s, ETA 0s
+Epoch 108: 80/179 saved (step 1289), elapsed 0s, ETA 0s
+Epoch 108: 96/179 saved (step 1290), elapsed 0s, ETA 0s
+Epoch 108: 112/179 saved (step 1291), elapsed 0s, ETA 0s
+Epoch 108: 128/179 saved (step 1292), elapsed 0s, ETA 0s
+Epoch 108: 144/179 saved (step 1293), elapsed 0s, ETA 0s
+Epoch 108: 160/179 saved (step 1294), elapsed 0s, ETA 0s
+Epoch 108: 176/179 saved (step 1295), elapsed 0s, ETA 0s
+Epoch 108: 179/179 saved (step 1296), elapsed 0s, ETA 0s
+Epoch 108: validation loss 0.24517, position accuracy 0.842
+Epoch 109: starting with 0/179 saved, ETA unknown
+Epoch 109: 16/179 saved (step 1297), elapsed 0s, ETA 0s
+Epoch 109: 32/179 saved (step 1298), elapsed 0s, ETA 0s
+Epoch 109: 48/179 saved (step 1299), elapsed 0s, ETA 0s
+Epoch 109: 64/179 saved (step 1300), elapsed 0s, ETA 0s
+Epoch 109: 80/179 saved (step 1301), elapsed 0s, ETA 0s
+Epoch 109: 96/179 saved (step 1302), elapsed 0s, ETA 0s
+Epoch 109: 112/179 saved (step 1303), elapsed 0s, ETA 0s
+Epoch 109: 128/179 saved (step 1304), elapsed 0s, ETA 0s
+Epoch 109: 144/179 saved (step 1305), elapsed 0s, ETA 0s
+Epoch 109: 160/179 saved (step 1306), elapsed 0s, ETA 0s
+Epoch 109: 176/179 saved (step 1307), elapsed 0s, ETA 0s
+Epoch 109: 179/179 saved (step 1308), elapsed 0s, ETA 0s
+Epoch 109: validation loss 0.25831, position accuracy 0.836
+Epoch 110: starting with 0/179 saved, ETA unknown
+Epoch 110: 16/179 saved (step 1309), elapsed 0s, ETA 0s
+Epoch 110: 32/179 saved (step 1310), elapsed 0s, ETA 0s
+Epoch 110: 48/179 saved (step 1311), elapsed 0s, ETA 0s
+Epoch 110: 64/179 saved (step 1312), elapsed 0s, ETA 0s
+Epoch 110: 80/179 saved (step 1313), elapsed 0s, ETA 0s
+Epoch 110: 96/179 saved (step 1314), elapsed 0s, ETA 0s
+Epoch 110: 112/179 saved (step 1315), elapsed 0s, ETA 0s
+Epoch 110: 128/179 saved (step 1316), elapsed 0s, ETA 0s
+Epoch 110: 144/179 saved (step 1317), elapsed 0s, ETA 0s
+Epoch 110: 160/179 saved (step 1318), elapsed 0s, ETA 0s
+Epoch 110: 176/179 saved (step 1319), elapsed 0s, ETA 0s
+Epoch 110: 179/179 saved (step 1320), elapsed 0s, ETA 0s
+Epoch 110: validation loss 0.26453, position accuracy 0.836
+Epoch 111: starting with 0/179 saved, ETA unknown
+Epoch 111: 16/179 saved (step 1321), elapsed 0s, ETA 0s
+Epoch 111: 32/179 saved (step 1322), elapsed 0s, ETA 0s
+Epoch 111: 48/179 saved (step 1323), elapsed 0s, ETA 0s
+Epoch 111: 64/179 saved (step 1324), elapsed 0s, ETA 0s
+Epoch 111: 80/179 saved (step 1325), elapsed 0s, ETA 0s
+Epoch 111: 96/179 saved (step 1326), elapsed 0s, ETA 0s
+Epoch 111: 112/179 saved (step 1327), elapsed 0s, ETA 0s
+Epoch 111: 128/179 saved (step 1328), elapsed 0s, ETA 0s
+Epoch 111: 144/179 saved (step 1329), elapsed 0s, ETA 0s
+Epoch 111: 160/179 saved (step 1330), elapsed 0s, ETA 0s
+Epoch 111: 176/179 saved (step 1331), elapsed 0s, ETA 0s
+Epoch 111: 179/179 saved (step 1332), elapsed 0s, ETA 0s
+Epoch 111: validation loss 0.25151, position accuracy 0.842
+Epoch 112: starting with 0/179 saved, ETA unknown
+Epoch 112: 16/179 saved (step 1333), elapsed 0s, ETA 0s
+Epoch 112: 32/179 saved (step 1334), elapsed 0s, ETA 0s
+Epoch 112: 48/179 saved (step 1335), elapsed 0s, ETA 0s
+Epoch 112: 64/179 saved (step 1336), elapsed 0s, ETA 0s
+Epoch 112: 80/179 saved (step 1337), elapsed 0s, ETA 0s
+Epoch 112: 96/179 saved (step 1338), elapsed 0s, ETA 0s
+Epoch 112: 112/179 saved (step 1339), elapsed 0s, ETA 0s
+Epoch 112: 128/179 saved (step 1340), elapsed 0s, ETA 0s
+Epoch 112: 144/179 saved (step 1341), elapsed 0s, ETA 0s
+Epoch 112: 160/179 saved (step 1342), elapsed 0s, ETA 0s
+Epoch 112: 176/179 saved (step 1343), elapsed 0s, ETA 0s
+Epoch 112: 179/179 saved (step 1344), elapsed 0s, ETA 0s
+Epoch 112: validation loss 0.25061, position accuracy 0.836
+Epoch 113: starting with 0/179 saved, ETA unknown
+Epoch 113: 16/179 saved (step 1345), elapsed 0s, ETA 0s
+Epoch 113: 32/179 saved (step 1346), elapsed 0s, ETA 0s
+Epoch 113: 48/179 saved (step 1347), elapsed 0s, ETA 0s
+Epoch 113: 64/179 saved (step 1348), elapsed 0s, ETA 0s
+Epoch 113: 80/179 saved (step 1349), elapsed 0s, ETA 0s
+Epoch 113: 96/179 saved (step 1350), elapsed 0s, ETA 0s
+Epoch 113: 112/179 saved (step 1351), elapsed 0s, ETA 0s
+Epoch 113: 128/179 saved (step 1352), elapsed 0s, ETA 0s
+Epoch 113: 144/179 saved (step 1353), elapsed 0s, ETA 0s
+Epoch 113: 160/179 saved (step 1354), elapsed 0s, ETA 0s
+Epoch 113: 176/179 saved (step 1355), elapsed 0s, ETA 0s
+Epoch 113: 179/179 saved (step 1356), elapsed 0s, ETA 0s
+Epoch 113: validation loss 0.25300, position accuracy 0.842
+Epoch 114: starting with 0/179 saved, ETA unknown
+Epoch 114: 16/179 saved (step 1357), elapsed 0s, ETA 0s
+Epoch 114: 32/179 saved (step 1358), elapsed 0s, ETA 0s
+Epoch 114: 48/179 saved (step 1359), elapsed 0s, ETA 0s
+Epoch 114: 64/179 saved (step 1360), elapsed 0s, ETA 0s
+Epoch 114: 80/179 saved (step 1361), elapsed 0s, ETA 0s
+Epoch 114: 96/179 saved (step 1362), elapsed 0s, ETA 0s
+Epoch 114: 112/179 saved (step 1363), elapsed 0s, ETA 0s
+Epoch 114: 128/179 saved (step 1364), elapsed 0s, ETA 0s
+Epoch 114: 144/179 saved (step 1365), elapsed 0s, ETA 0s
+Epoch 114: 160/179 saved (step 1366), elapsed 0s, ETA 0s
+Epoch 114: 176/179 saved (step 1367), elapsed 0s, ETA 0s
+Epoch 114: 179/179 saved (step 1368), elapsed 0s, ETA 0s
+Epoch 114: validation loss 0.24324, position accuracy 0.849
+Epoch 115: starting with 0/179 saved, ETA unknown
+Epoch 115: 16/179 saved (step 1369), elapsed 0s, ETA 0s
+Epoch 115: 32/179 saved (step 1370), elapsed 0s, ETA 0s
+Epoch 115: 48/179 saved (step 1371), elapsed 0s, ETA 0s
+Epoch 115: 64/179 saved (step 1372), elapsed 0s, ETA 0s
+Epoch 115: 80/179 saved (step 1373), elapsed 0s, ETA 0s
+Epoch 115: 96/179 saved (step 1374), elapsed 0s, ETA 0s
+Epoch 115: 112/179 saved (step 1375), elapsed 0s, ETA 0s
+Epoch 115: 128/179 saved (step 1376), elapsed 0s, ETA 0s
+Epoch 115: 144/179 saved (step 1377), elapsed 0s, ETA 0s
+Epoch 115: 160/179 saved (step 1378), elapsed 0s, ETA 0s
+Epoch 115: 176/179 saved (step 1379), elapsed 0s, ETA 0s
+Epoch 115: 179/179 saved (step 1380), elapsed 0s, ETA 0s
+Epoch 115: validation loss 0.25845, position accuracy 0.822
+Epoch 116: starting with 0/179 saved, ETA unknown
+Epoch 116: 16/179 saved (step 1381), elapsed 0s, ETA 0s
+Epoch 116: 32/179 saved (step 1382), elapsed 0s, ETA 0s
+Epoch 116: 48/179 saved (step 1383), elapsed 0s, ETA 0s
+Epoch 116: 64/179 saved (step 1384), elapsed 0s, ETA 0s
+Epoch 116: 80/179 saved (step 1385), elapsed 0s, ETA 0s
+Epoch 116: 96/179 saved (step 1386), elapsed 0s, ETA 0s
+Epoch 116: 112/179 saved (step 1387), elapsed 0s, ETA 0s
+Epoch 116: 128/179 saved (step 1388), elapsed 0s, ETA 0s
+Epoch 116: 144/179 saved (step 1389), elapsed 0s, ETA 0s
+Epoch 116: 160/179 saved (step 1390), elapsed 0s, ETA 0s
+Epoch 116: 176/179 saved (step 1391), elapsed 0s, ETA 0s
+Epoch 116: 179/179 saved (step 1392), elapsed 0s, ETA 0s
+Epoch 116: validation loss 0.25541, position accuracy 0.829
+Epoch 117: starting with 0/179 saved, ETA unknown
+Epoch 117: 16/179 saved (step 1393), elapsed 0s, ETA 0s
+Epoch 117: 32/179 saved (step 1394), elapsed 0s, ETA 0s
+Epoch 117: 48/179 saved (step 1395), elapsed 0s, ETA 0s
+Epoch 117: 64/179 saved (step 1396), elapsed 0s, ETA 0s
+Epoch 117: 80/179 saved (step 1397), elapsed 0s, ETA 0s
+Epoch 117: 96/179 saved (step 1398), elapsed 0s, ETA 0s
+Epoch 117: 112/179 saved (step 1399), elapsed 0s, ETA 0s
+Epoch 117: 128/179 saved (step 1400), elapsed 0s, ETA 0s
+Epoch 117: 144/179 saved (step 1401), elapsed 0s, ETA 0s
+Epoch 117: 160/179 saved (step 1402), elapsed 0s, ETA 0s
+Epoch 117: 176/179 saved (step 1403), elapsed 0s, ETA 0s
+Epoch 117: 179/179 saved (step 1404), elapsed 0s, ETA 0s
+Epoch 117: validation loss 0.25067, position accuracy 0.836
+Epoch 118: starting with 0/179 saved, ETA unknown
+Epoch 118: 16/179 saved (step 1405), elapsed 0s, ETA 0s
+Epoch 118: 32/179 saved (step 1406), elapsed 0s, ETA 0s
+Epoch 118: 48/179 saved (step 1407), elapsed 0s, ETA 0s
+Epoch 118: 64/179 saved (step 1408), elapsed 0s, ETA 0s
+Epoch 118: 80/179 saved (step 1409), elapsed 0s, ETA 0s
+Epoch 118: 96/179 saved (step 1410), elapsed 0s, ETA 0s
+Epoch 118: 112/179 saved (step 1411), elapsed 0s, ETA 0s
+Epoch 118: 128/179 saved (step 1412), elapsed 0s, ETA 0s
+Epoch 118: 144/179 saved (step 1413), elapsed 0s, ETA 0s
+Epoch 118: 160/179 saved (step 1414), elapsed 0s, ETA 0s
+Epoch 118: 176/179 saved (step 1415), elapsed 0s, ETA 0s
+Epoch 118: 179/179 saved (step 1416), elapsed 0s, ETA 0s
+Epoch 118: validation loss 0.26872, position accuracy 0.842
+Epoch 119: starting with 0/179 saved, ETA unknown
+Epoch 119: 16/179 saved (step 1417), elapsed 0s, ETA 0s
+Epoch 119: 32/179 saved (step 1418), elapsed 0s, ETA 0s
+Epoch 119: 48/179 saved (step 1419), elapsed 0s, ETA 0s
+Epoch 119: 64/179 saved (step 1420), elapsed 0s, ETA 0s
+Epoch 119: 80/179 saved (step 1421), elapsed 0s, ETA 0s
+Epoch 119: 96/179 saved (step 1422), elapsed 0s, ETA 0s
+Epoch 119: 112/179 saved (step 1423), elapsed 0s, ETA 0s
+Epoch 119: 128/179 saved (step 1424), elapsed 0s, ETA 0s
+Epoch 119: 144/179 saved (step 1425), elapsed 0s, ETA 0s
+Epoch 119: 160/179 saved (step 1426), elapsed 0s, ETA 0s
+Epoch 119: 176/179 saved (step 1427), elapsed 0s, ETA 0s
+Epoch 119: 179/179 saved (step 1428), elapsed 0s, ETA 0s
+Epoch 119: validation loss 0.24786, position accuracy 0.829
+Epoch 120: starting with 0/179 saved, ETA unknown
+Epoch 120: 16/179 saved (step 1429), elapsed 0s, ETA 0s
+Epoch 120: 32/179 saved (step 1430), elapsed 0s, ETA 0s
+Epoch 120: 48/179 saved (step 1431), elapsed 0s, ETA 0s
+Epoch 120: 64/179 saved (step 1432), elapsed 0s, ETA 0s
+Epoch 120: 80/179 saved (step 1433), elapsed 0s, ETA 0s
+Epoch 120: 96/179 saved (step 1434), elapsed 0s, ETA 0s
+Epoch 120: 112/179 saved (step 1435), elapsed 0s, ETA 0s
+Epoch 120: 128/179 saved (step 1436), elapsed 0s, ETA 0s
+Epoch 120: 144/179 saved (step 1437), elapsed 0s, ETA 0s
+Epoch 120: 160/179 saved (step 1438), elapsed 0s, ETA 0s
+Epoch 120: 176/179 saved (step 1439), elapsed 0s, ETA 0s
+Epoch 120: 179/179 saved (step 1440), elapsed 0s, ETA 0s
+Epoch 120: validation loss 0.25572, position accuracy 0.829
+Epoch 121: starting with 0/179 saved, ETA unknown
+Epoch 121: 16/179 saved (step 1441), elapsed 0s, ETA 0s
+Epoch 121: 32/179 saved (step 1442), elapsed 0s, ETA 0s
+Epoch 121: 48/179 saved (step 1443), elapsed 0s, ETA 0s
+Epoch 121: 64/179 saved (step 1444), elapsed 0s, ETA 0s
+Epoch 121: 80/179 saved (step 1445), elapsed 0s, ETA 0s
+Epoch 121: 96/179 saved (step 1446), elapsed 0s, ETA 0s
+Epoch 121: 112/179 saved (step 1447), elapsed 0s, ETA 0s
+Epoch 121: 128/179 saved (step 1448), elapsed 0s, ETA 0s
+Epoch 121: 144/179 saved (step 1449), elapsed 0s, ETA 0s
+Epoch 121: 160/179 saved (step 1450), elapsed 0s, ETA 0s
+Epoch 121: 176/179 saved (step 1451), elapsed 0s, ETA 0s
+Epoch 121: 179/179 saved (step 1452), elapsed 0s, ETA 0s
+Epoch 121: validation loss 0.25206, position accuracy 0.836
+Epoch 122: starting with 0/179 saved, ETA unknown
+Epoch 122: 16/179 saved (step 1453), elapsed 0s, ETA 0s
+Epoch 122: 32/179 saved (step 1454), elapsed 0s, ETA 0s
+Epoch 122: 48/179 saved (step 1455), elapsed 0s, ETA 0s
+Epoch 122: 64/179 saved (step 1456), elapsed 0s, ETA 0s
+Epoch 122: 80/179 saved (step 1457), elapsed 0s, ETA 0s
+Epoch 122: 96/179 saved (step 1458), elapsed 0s, ETA 0s
+Epoch 122: 112/179 saved (step 1459), elapsed 0s, ETA 0s
+Epoch 122: 128/179 saved (step 1460), elapsed 0s, ETA 0s
+Epoch 122: 144/179 saved (step 1461), elapsed 0s, ETA 0s
+Epoch 122: 160/179 saved (step 1462), elapsed 0s, ETA 0s
+Epoch 122: 176/179 saved (step 1463), elapsed 0s, ETA 0s
+Epoch 122: 179/179 saved (step 1464), elapsed 0s, ETA 0s
+Epoch 122: validation loss 0.25236, position accuracy 0.836
+Epoch 123: starting with 0/179 saved, ETA unknown
+Epoch 123: 16/179 saved (step 1465), elapsed 0s, ETA 0s
+Epoch 123: 32/179 saved (step 1466), elapsed 0s, ETA 0s
+Epoch 123: 48/179 saved (step 1467), elapsed 0s, ETA 0s
+Epoch 123: 64/179 saved (step 1468), elapsed 0s, ETA 0s
+Epoch 123: 80/179 saved (step 1469), elapsed 0s, ETA 0s
+Epoch 123: 96/179 saved (step 1470), elapsed 0s, ETA 0s
+Epoch 123: 112/179 saved (step 1471), elapsed 0s, ETA 0s
+Epoch 123: 128/179 saved (step 1472), elapsed 0s, ETA 0s
+Epoch 123: 144/179 saved (step 1473), elapsed 0s, ETA 0s
+Epoch 123: 160/179 saved (step 1474), elapsed 0s, ETA 0s
+Epoch 123: 176/179 saved (step 1475), elapsed 0s, ETA 0s
+Epoch 123: 179/179 saved (step 1476), elapsed 0s, ETA 0s
+Epoch 123: validation loss 0.24258, position accuracy 0.855
+Epoch 124: starting with 0/179 saved, ETA unknown
+Epoch 124: 16/179 saved (step 1477), elapsed 0s, ETA 0s
+Epoch 124: 32/179 saved (step 1478), elapsed 0s, ETA 0s
+Epoch 124: 48/179 saved (step 1479), elapsed 0s, ETA 0s
+Epoch 124: 64/179 saved (step 1480), elapsed 0s, ETA 0s
+Epoch 124: 80/179 saved (step 1481), elapsed 0s, ETA 0s
+Epoch 124: 96/179 saved (step 1482), elapsed 0s, ETA 0s
+Epoch 124: 112/179 saved (step 1483), elapsed 0s, ETA 0s
+Epoch 124: 128/179 saved (step 1484), elapsed 0s, ETA 0s
+Epoch 124: 144/179 saved (step 1485), elapsed 0s, ETA 0s
+Epoch 124: 160/179 saved (step 1486), elapsed 0s, ETA 0s
+Epoch 124: 176/179 saved (step 1487), elapsed 0s, ETA 0s
+Epoch 124: 179/179 saved (step 1488), elapsed 0s, ETA 0s
+Epoch 124: validation loss 0.26972, position accuracy 0.829
+Epoch 125: starting with 0/179 saved, ETA unknown
+Epoch 125: 16/179 saved (step 1489), elapsed 0s, ETA 0s
+Epoch 125: 32/179 saved (step 1490), elapsed 0s, ETA 0s
+Epoch 125: 48/179 saved (step 1491), elapsed 0s, ETA 0s
+Epoch 125: 64/179 saved (step 1492), elapsed 0s, ETA 0s
+Epoch 125: 80/179 saved (step 1493), elapsed 0s, ETA 0s
+Epoch 125: 96/179 saved (step 1494), elapsed 0s, ETA 0s
+Epoch 125: 112/179 saved (step 1495), elapsed 0s, ETA 0s
+Epoch 125: 128/179 saved (step 1496), elapsed 0s, ETA 0s
+Epoch 125: 144/179 saved (step 1497), elapsed 0s, ETA 0s
+Epoch 125: 160/179 saved (step 1498), elapsed 0s, ETA 0s
+Epoch 125: 176/179 saved (step 1499), elapsed 0s, ETA 0s
+Epoch 125: 179/179 saved (step 1500), elapsed 0s, ETA 0s
+Epoch 125: validation loss 0.24294, position accuracy 0.862
+Epoch 126: starting with 0/179 saved, ETA unknown
+Epoch 126: 16/179 saved (step 1501), elapsed 0s, ETA 0s
+Epoch 126: 32/179 saved (step 1502), elapsed 0s, ETA 0s
+Epoch 126: 48/179 saved (step 1503), elapsed 0s, ETA 0s
+Epoch 126: 64/179 saved (step 1504), elapsed 0s, ETA 0s
+Epoch 126: 80/179 saved (step 1505), elapsed 0s, ETA 0s
+Epoch 126: 96/179 saved (step 1506), elapsed 0s, ETA 0s
+Epoch 126: 112/179 saved (step 1507), elapsed 0s, ETA 0s
+Epoch 126: 128/179 saved (step 1508), elapsed 0s, ETA 0s
+Epoch 126: 144/179 saved (step 1509), elapsed 0s, ETA 0s
+Epoch 126: 160/179 saved (step 1510), elapsed 0s, ETA 0s
+Epoch 126: 176/179 saved (step 1511), elapsed 0s, ETA 0s
+Epoch 126: 179/179 saved (step 1512), elapsed 0s, ETA 0s
+Epoch 126: validation loss 0.25176, position accuracy 0.829
+Epoch 127: starting with 0/179 saved, ETA unknown
+Epoch 127: 16/179 saved (step 1513), elapsed 0s, ETA 0s
+Epoch 127: 32/179 saved (step 1514), elapsed 0s, ETA 0s
+Epoch 127: 48/179 saved (step 1515), elapsed 0s, ETA 0s
+Epoch 127: 64/179 saved (step 1516), elapsed 0s, ETA 0s
+Epoch 127: 80/179 saved (step 1517), elapsed 0s, ETA 0s
+Epoch 127: 96/179 saved (step 1518), elapsed 0s, ETA 0s
+Epoch 127: 112/179 saved (step 1519), elapsed 0s, ETA 0s
+Epoch 127: 128/179 saved (step 1520), elapsed 0s, ETA 0s
+Epoch 127: 144/179 saved (step 1521), elapsed 0s, ETA 0s
+Epoch 127: 160/179 saved (step 1522), elapsed 0s, ETA 0s
+Epoch 127: 176/179 saved (step 1523), elapsed 0s, ETA 0s
+Epoch 127: 179/179 saved (step 1524), elapsed 0s, ETA 0s
+Epoch 127: validation loss 0.24973, position accuracy 0.829
+Epoch 128: starting with 0/179 saved, ETA unknown
+Epoch 128: 16/179 saved (step 1525), elapsed 0s, ETA 0s
+Epoch 128: 32/179 saved (step 1526), elapsed 0s, ETA 0s
+Epoch 128: 48/179 saved (step 1527), elapsed 0s, ETA 0s
+Epoch 128: 64/179 saved (step 1528), elapsed 0s, ETA 0s
+Epoch 128: 80/179 saved (step 1529), elapsed 0s, ETA 0s
+Epoch 128: 96/179 saved (step 1530), elapsed 0s, ETA 0s
+Epoch 128: 112/179 saved (step 1531), elapsed 0s, ETA 0s
+Epoch 128: 128/179 saved (step 1532), elapsed 0s, ETA 0s
+Epoch 128: 144/179 saved (step 1533), elapsed 0s, ETA 0s
+Epoch 128: 160/179 saved (step 1534), elapsed 0s, ETA 0s
+Epoch 128: 176/179 saved (step 1535), elapsed 0s, ETA 0s
+Epoch 128: 179/179 saved (step 1536), elapsed 0s, ETA 0s
+Epoch 128: validation loss 0.26228, position accuracy 0.836
+Epoch 129: starting with 0/179 saved, ETA unknown
+Epoch 129: 16/179 saved (step 1537), elapsed 0s, ETA 0s
+Epoch 129: 32/179 saved (step 1538), elapsed 0s, ETA 0s
+Epoch 129: 48/179 saved (step 1539), elapsed 0s, ETA 0s
+Epoch 129: 64/179 saved (step 1540), elapsed 0s, ETA 0s
+Epoch 129: 80/179 saved (step 1541), elapsed 0s, ETA 0s
+Epoch 129: 96/179 saved (step 1542), elapsed 0s, ETA 0s
+Epoch 129: 112/179 saved (step 1543), elapsed 0s, ETA 0s
+Epoch 129: 128/179 saved (step 1544), elapsed 0s, ETA 0s
+Epoch 129: 144/179 saved (step 1545), elapsed 0s, ETA 0s
+Epoch 129: 160/179 saved (step 1546), elapsed 0s, ETA 0s
+Epoch 129: 176/179 saved (step 1547), elapsed 0s, ETA 0s
+Epoch 129: 179/179 saved (step 1548), elapsed 0s, ETA 0s
+Epoch 129: validation loss 0.25006, position accuracy 0.842
+Epoch 130: starting with 0/179 saved, ETA unknown
+Epoch 130: 16/179 saved (step 1549), elapsed 0s, ETA 0s
+Epoch 130: 32/179 saved (step 1550), elapsed 0s, ETA 0s
+Epoch 130: 48/179 saved (step 1551), elapsed 0s, ETA 0s
+Epoch 130: 64/179 saved (step 1552), elapsed 0s, ETA 0s
+Epoch 130: 80/179 saved (step 1553), elapsed 0s, ETA 0s
+Epoch 130: 96/179 saved (step 1554), elapsed 0s, ETA 0s
+Epoch 130: 112/179 saved (step 1555), elapsed 0s, ETA 0s
+Epoch 130: 128/179 saved (step 1556), elapsed 0s, ETA 0s
+Epoch 130: 144/179 saved (step 1557), elapsed 0s, ETA 0s
+Epoch 130: 160/179 saved (step 1558), elapsed 0s, ETA 0s
+Epoch 130: 176/179 saved (step 1559), elapsed 0s, ETA 0s
+Epoch 130: 179/179 saved (step 1560), elapsed 0s, ETA 0s
+Epoch 130: validation loss 0.25732, position accuracy 0.836
+Epoch 131: starting with 0/179 saved, ETA unknown
+Epoch 131: 16/179 saved (step 1561), elapsed 0s, ETA 0s
+Epoch 131: 32/179 saved (step 1562), elapsed 0s, ETA 0s
+Epoch 131: 48/179 saved (step 1563), elapsed 0s, ETA 0s
+Epoch 131: 64/179 saved (step 1564), elapsed 0s, ETA 0s
+Epoch 131: 80/179 saved (step 1565), elapsed 0s, ETA 0s
+Epoch 131: 96/179 saved (step 1566), elapsed 0s, ETA 0s
+Epoch 131: 112/179 saved (step 1567), elapsed 0s, ETA 0s
+Epoch 131: 128/179 saved (step 1568), elapsed 0s, ETA 0s
+Epoch 131: 144/179 saved (step 1569), elapsed 0s, ETA 0s
+Epoch 131: 160/179 saved (step 1570), elapsed 0s, ETA 0s
+Epoch 131: 176/179 saved (step 1571), elapsed 0s, ETA 0s
+Epoch 131: 179/179 saved (step 1572), elapsed 0s, ETA 0s
+Epoch 131: validation loss 0.26287, position accuracy 0.836
+Epoch 132: starting with 0/179 saved, ETA unknown
+Epoch 132: 16/179 saved (step 1573), elapsed 0s, ETA 0s
+Epoch 132: 32/179 saved (step 1574), elapsed 0s, ETA 0s
+Epoch 132: 48/179 saved (step 1575), elapsed 0s, ETA 0s
+Epoch 132: 64/179 saved (step 1576), elapsed 0s, ETA 0s
+Epoch 132: 80/179 saved (step 1577), elapsed 0s, ETA 0s
+Epoch 132: 96/179 saved (step 1578), elapsed 0s, ETA 0s
+Epoch 132: 112/179 saved (step 1579), elapsed 0s, ETA 0s
+Epoch 132: 128/179 saved (step 1580), elapsed 0s, ETA 0s
+Epoch 132: 144/179 saved (step 1581), elapsed 0s, ETA 0s
+Epoch 132: 160/179 saved (step 1582), elapsed 0s, ETA 0s
+Epoch 132: 176/179 saved (step 1583), elapsed 0s, ETA 0s
+Epoch 132: 179/179 saved (step 1584), elapsed 0s, ETA 0s
+Epoch 132: validation loss 0.25217, position accuracy 0.829
+Epoch 133: starting with 0/179 saved, ETA unknown
+Epoch 133: 16/179 saved (step 1585), elapsed 0s, ETA 0s
+Epoch 133: 32/179 saved (step 1586), elapsed 0s, ETA 0s
+Epoch 133: 48/179 saved (step 1587), elapsed 0s, ETA 0s
+Epoch 133: 64/179 saved (step 1588), elapsed 0s, ETA 0s
+Epoch 133: 80/179 saved (step 1589), elapsed 0s, ETA 0s
+Epoch 133: 96/179 saved (step 1590), elapsed 0s, ETA 0s
+Epoch 133: 112/179 saved (step 1591), elapsed 0s, ETA 0s
+Epoch 133: 128/179 saved (step 1592), elapsed 0s, ETA 0s
+Epoch 133: 144/179 saved (step 1593), elapsed 0s, ETA 0s
+Epoch 133: 160/179 saved (step 1594), elapsed 0s, ETA 0s
+Epoch 133: 176/179 saved (step 1595), elapsed 0s, ETA 0s
+Epoch 133: 179/179 saved (step 1596), elapsed 0s, ETA 0s
+Epoch 133: validation loss 0.25331, position accuracy 0.829
+Epoch 134: starting with 0/179 saved, ETA unknown
+Epoch 134: 16/179 saved (step 1597), elapsed 0s, ETA 0s
+Epoch 134: 32/179 saved (step 1598), elapsed 0s, ETA 0s
+Epoch 134: 48/179 saved (step 1599), elapsed 0s, ETA 0s
+Epoch 134: 64/179 saved (step 1600), elapsed 0s, ETA 0s
+Epoch 134: 80/179 saved (step 1601), elapsed 0s, ETA 0s
+Epoch 134: 96/179 saved (step 1602), elapsed 0s, ETA 0s
+Epoch 134: 112/179 saved (step 1603), elapsed 0s, ETA 0s
+Epoch 134: 128/179 saved (step 1604), elapsed 0s, ETA 0s
+Epoch 134: 144/179 saved (step 1605), elapsed 0s, ETA 0s
+Epoch 134: 160/179 saved (step 1606), elapsed 0s, ETA 0s
+Epoch 134: 176/179 saved (step 1607), elapsed 0s, ETA 0s
+Epoch 134: 179/179 saved (step 1608), elapsed 0s, ETA 0s
+Epoch 134: validation loss 0.24990, position accuracy 0.836
+Epoch 135: starting with 0/179 saved, ETA unknown
+Epoch 135: 16/179 saved (step 1609), elapsed 0s, ETA 0s
+Epoch 135: 32/179 saved (step 1610), elapsed 0s, ETA 0s
+Epoch 135: 48/179 saved (step 1611), elapsed 0s, ETA 0s
+Epoch 135: 64/179 saved (step 1612), elapsed 0s, ETA 0s
+Epoch 135: 80/179 saved (step 1613), elapsed 0s, ETA 0s
+Epoch 135: 96/179 saved (step 1614), elapsed 0s, ETA 0s
+Epoch 135: 112/179 saved (step 1615), elapsed 0s, ETA 0s
+Epoch 135: 128/179 saved (step 1616), elapsed 0s, ETA 0s
+Epoch 135: 144/179 saved (step 1617), elapsed 0s, ETA 0s
+Epoch 135: 160/179 saved (step 1618), elapsed 0s, ETA 0s
+Epoch 135: 176/179 saved (step 1619), elapsed 0s, ETA 0s
+Epoch 135: 179/179 saved (step 1620), elapsed 0s, ETA 0s
+Epoch 135: validation loss 0.25134, position accuracy 0.822
+Epoch 136: starting with 0/179 saved, ETA unknown
+Epoch 136: 16/179 saved (step 1621), elapsed 0s, ETA 0s
+Epoch 136: 32/179 saved (step 1622), elapsed 0s, ETA 0s
+Epoch 136: 48/179 saved (step 1623), elapsed 0s, ETA 0s
+Epoch 136: 64/179 saved (step 1624), elapsed 0s, ETA 0s
+Epoch 136: 80/179 saved (step 1625), elapsed 0s, ETA 0s
+Epoch 136: 96/179 saved (step 1626), elapsed 0s, ETA 0s
+Epoch 136: 112/179 saved (step 1627), elapsed 0s, ETA 0s
+Epoch 136: 128/179 saved (step 1628), elapsed 0s, ETA 0s
+Epoch 136: 144/179 saved (step 1629), elapsed 0s, ETA 0s
+Epoch 136: 160/179 saved (step 1630), elapsed 0s, ETA 0s
+Epoch 136: 176/179 saved (step 1631), elapsed 0s, ETA 0s
+Epoch 136: 179/179 saved (step 1632), elapsed 0s, ETA 0s
+Epoch 136: validation loss 0.25255, position accuracy 0.836
+Epoch 137: starting with 0/179 saved, ETA unknown
+Epoch 137: 16/179 saved (step 1633), elapsed 0s, ETA 0s
+Epoch 137: 32/179 saved (step 1634), elapsed 0s, ETA 0s
+Epoch 137: 48/179 saved (step 1635), elapsed 0s, ETA 0s
+Epoch 137: 64/179 saved (step 1636), elapsed 0s, ETA 0s
+Epoch 137: 80/179 saved (step 1637), elapsed 0s, ETA 0s
+Epoch 137: 96/179 saved (step 1638), elapsed 0s, ETA 0s
+Epoch 137: 112/179 saved (step 1639), elapsed 0s, ETA 0s
+Epoch 137: 128/179 saved (step 1640), elapsed 0s, ETA 0s
+Epoch 137: 144/179 saved (step 1641), elapsed 0s, ETA 0s
+Epoch 137: 160/179 saved (step 1642), elapsed 0s, ETA 0s
+Epoch 137: 176/179 saved (step 1643), elapsed 0s, ETA 0s
+Epoch 137: 179/179 saved (step 1644), elapsed 0s, ETA 0s
+Epoch 137: validation loss 0.25668, position accuracy 0.829
+Epoch 138: starting with 0/179 saved, ETA unknown
+Epoch 138: 16/179 saved (step 1645), elapsed 0s, ETA 0s
+Epoch 138: 32/179 saved (step 1646), elapsed 0s, ETA 0s
+Epoch 138: 48/179 saved (step 1647), elapsed 0s, ETA 0s
+Epoch 138: 64/179 saved (step 1648), elapsed 0s, ETA 0s
+Epoch 138: 80/179 saved (step 1649), elapsed 0s, ETA 0s
+Epoch 138: 96/179 saved (step 1650), elapsed 0s, ETA 0s
+Epoch 138: 112/179 saved (step 1651), elapsed 0s, ETA 0s
+Epoch 138: 128/179 saved (step 1652), elapsed 0s, ETA 0s
+Epoch 138: 144/179 saved (step 1653), elapsed 0s, ETA 0s
+Epoch 138: 160/179 saved (step 1654), elapsed 0s, ETA 0s
+Epoch 138: 176/179 saved (step 1655), elapsed 0s, ETA 0s
+Epoch 138: 179/179 saved (step 1656), elapsed 0s, ETA 0s
+Epoch 138: validation loss 0.25590, position accuracy 0.829
+Epoch 139: starting with 0/179 saved, ETA unknown
+Epoch 139: 16/179 saved (step 1657), elapsed 0s, ETA 0s
+Epoch 139: 32/179 saved (step 1658), elapsed 0s, ETA 0s
+Epoch 139: 48/179 saved (step 1659), elapsed 0s, ETA 0s
+Epoch 139: 64/179 saved (step 1660), elapsed 0s, ETA 0s
+Epoch 139: 80/179 saved (step 1661), elapsed 0s, ETA 0s
+Epoch 139: 96/179 saved (step 1662), elapsed 0s, ETA 0s
+Epoch 139: 112/179 saved (step 1663), elapsed 0s, ETA 0s
+Epoch 139: 128/179 saved (step 1664), elapsed 0s, ETA 0s
+Epoch 139: 144/179 saved (step 1665), elapsed 0s, ETA 0s
+Epoch 139: 160/179 saved (step 1666), elapsed 0s, ETA 0s
+Epoch 139: 176/179 saved (step 1667), elapsed 0s, ETA 0s
+Epoch 139: 179/179 saved (step 1668), elapsed 0s, ETA 0s
+Epoch 139: validation loss 0.25689, position accuracy 0.829
+Epoch 140: starting with 0/179 saved, ETA unknown
+Epoch 140: 16/179 saved (step 1669), elapsed 0s, ETA 0s
+Epoch 140: 32/179 saved (step 1670), elapsed 0s, ETA 0s
+Epoch 140: 48/179 saved (step 1671), elapsed 0s, ETA 0s
+Epoch 140: 64/179 saved (step 1672), elapsed 0s, ETA 0s
+Epoch 140: 80/179 saved (step 1673), elapsed 0s, ETA 0s
+Epoch 140: 96/179 saved (step 1674), elapsed 0s, ETA 0s
+Epoch 140: 112/179 saved (step 1675), elapsed 0s, ETA 0s
+Epoch 140: 128/179 saved (step 1676), elapsed 0s, ETA 0s
+Epoch 140: 144/179 saved (step 1677), elapsed 0s, ETA 0s
+Epoch 140: 160/179 saved (step 1678), elapsed 0s, ETA 0s
+Epoch 140: 176/179 saved (step 1679), elapsed 0s, ETA 0s
+Epoch 140: 179/179 saved (step 1680), elapsed 0s, ETA 0s
+Epoch 140: validation loss 0.25462, position accuracy 0.836
+Epoch 141: starting with 0/179 saved, ETA unknown
+Epoch 141: 16/179 saved (step 1681), elapsed 0s, ETA 0s
+Epoch 141: 32/179 saved (step 1682), elapsed 0s, ETA 0s
+Epoch 141: 48/179 saved (step 1683), elapsed 0s, ETA 0s
+Epoch 141: 64/179 saved (step 1684), elapsed 0s, ETA 0s
+Epoch 141: 80/179 saved (step 1685), elapsed 0s, ETA 0s
+Epoch 141: 96/179 saved (step 1686), elapsed 0s, ETA 0s
+Epoch 141: 112/179 saved (step 1687), elapsed 0s, ETA 0s
+Epoch 141: 128/179 saved (step 1688), elapsed 0s, ETA 0s
+Epoch 141: 144/179 saved (step 1689), elapsed 0s, ETA 0s
+Epoch 141: 160/179 saved (step 1690), elapsed 0s, ETA 0s
+Epoch 141: 176/179 saved (step 1691), elapsed 0s, ETA 0s
+Epoch 141: 179/179 saved (step 1692), elapsed 0s, ETA 0s
+Epoch 141: validation loss 0.25020, position accuracy 0.842
+Epoch 142: starting with 0/179 saved, ETA unknown
+Epoch 142: 16/179 saved (step 1693), elapsed 0s, ETA 0s
+Epoch 142: 32/179 saved (step 1694), elapsed 0s, ETA 0s
+Epoch 142: 48/179 saved (step 1695), elapsed 0s, ETA 0s
+Epoch 142: 64/179 saved (step 1696), elapsed 0s, ETA 0s
+Epoch 142: 80/179 saved (step 1697), elapsed 0s, ETA 0s
+Epoch 142: 96/179 saved (step 1698), elapsed 0s, ETA 0s
+Epoch 142: 112/179 saved (step 1699), elapsed 0s, ETA 0s
+Epoch 142: 128/179 saved (step 1700), elapsed 0s, ETA 0s
+Epoch 142: 144/179 saved (step 1701), elapsed 0s, ETA 0s
+Epoch 142: 160/179 saved (step 1702), elapsed 0s, ETA 0s
+Epoch 142: 176/179 saved (step 1703), elapsed 0s, ETA 0s
+Epoch 142: 179/179 saved (step 1704), elapsed 0s, ETA 0s
+Epoch 142: validation loss 0.26328, position accuracy 0.836
+Epoch 143: starting with 0/179 saved, ETA unknown
+Epoch 143: 16/179 saved (step 1705), elapsed 0s, ETA 0s
+Epoch 143: 32/179 saved (step 1706), elapsed 0s, ETA 0s
+Epoch 143: 48/179 saved (step 1707), elapsed 0s, ETA 0s
+Epoch 143: 64/179 saved (step 1708), elapsed 0s, ETA 0s
+Epoch 143: 80/179 saved (step 1709), elapsed 0s, ETA 0s
+Epoch 143: 96/179 saved (step 1710), elapsed 0s, ETA 0s
+Epoch 143: 112/179 saved (step 1711), elapsed 0s, ETA 0s
+Epoch 143: 128/179 saved (step 1712), elapsed 0s, ETA 0s
+Epoch 143: 144/179 saved (step 1713), elapsed 0s, ETA 0s
+Epoch 143: 160/179 saved (step 1714), elapsed 0s, ETA 0s
+Epoch 143: 176/179 saved (step 1715), elapsed 0s, ETA 0s
+Epoch 143: 179/179 saved (step 1716), elapsed 0s, ETA 0s
+Epoch 143: validation loss 0.25980, position accuracy 0.836
+Epoch 144: starting with 0/179 saved, ETA unknown
+Epoch 144: 16/179 saved (step 1717), elapsed 0s, ETA 0s
+Epoch 144: 32/179 saved (step 1718), elapsed 0s, ETA 0s
+Epoch 144: 48/179 saved (step 1719), elapsed 0s, ETA 0s
+Epoch 144: 64/179 saved (step 1720), elapsed 0s, ETA 0s
+Epoch 144: 80/179 saved (step 1721), elapsed 0s, ETA 0s
+Epoch 144: 96/179 saved (step 1722), elapsed 0s, ETA 0s
+Epoch 144: 112/179 saved (step 1723), elapsed 0s, ETA 0s
+Epoch 144: 128/179 saved (step 1724), elapsed 0s, ETA 0s
+Epoch 144: 144/179 saved (step 1725), elapsed 0s, ETA 0s
+Epoch 144: 160/179 saved (step 1726), elapsed 0s, ETA 0s
+Epoch 144: 176/179 saved (step 1727), elapsed 0s, ETA 0s
+Epoch 144: 179/179 saved (step 1728), elapsed 0s, ETA 0s
+Epoch 144: validation loss 0.25434, position accuracy 0.822
+Epoch 145: starting with 0/179 saved, ETA unknown
+Epoch 145: 16/179 saved (step 1729), elapsed 0s, ETA 0s
+Epoch 145: 32/179 saved (step 1730), elapsed 0s, ETA 0s
+Epoch 145: 48/179 saved (step 1731), elapsed 0s, ETA 0s
+Epoch 145: 64/179 saved (step 1732), elapsed 0s, ETA 0s
+Epoch 145: 80/179 saved (step 1733), elapsed 0s, ETA 0s
+Epoch 145: 96/179 saved (step 1734), elapsed 0s, ETA 0s
+Epoch 145: 112/179 saved (step 1735), elapsed 0s, ETA 0s
+Epoch 145: 128/179 saved (step 1736), elapsed 0s, ETA 0s
+Epoch 145: 144/179 saved (step 1737), elapsed 0s, ETA 0s
+Epoch 145: 160/179 saved (step 1738), elapsed 0s, ETA 0s
+Epoch 145: 176/179 saved (step 1739), elapsed 0s, ETA 0s
+Epoch 145: 179/179 saved (step 1740), elapsed 0s, ETA 0s
+Epoch 145: validation loss 0.25520, position accuracy 0.829
+Epoch 146: starting with 0/179 saved, ETA unknown
+Epoch 146: 16/179 saved (step 1741), elapsed 0s, ETA 0s
+Epoch 146: 32/179 saved (step 1742), elapsed 0s, ETA 0s
+Epoch 146: 48/179 saved (step 1743), elapsed 0s, ETA 0s
+Epoch 146: 64/179 saved (step 1744), elapsed 0s, ETA 0s
+Epoch 146: 80/179 saved (step 1745), elapsed 0s, ETA 0s
+Epoch 146: 96/179 saved (step 1746), elapsed 0s, ETA 0s
+Epoch 146: 112/179 saved (step 1747), elapsed 0s, ETA 0s
+Epoch 146: 128/179 saved (step 1748), elapsed 0s, ETA 0s
+Epoch 146: 144/179 saved (step 1749), elapsed 0s, ETA 0s
+Epoch 146: 160/179 saved (step 1750), elapsed 0s, ETA 0s
+Epoch 146: 176/179 saved (step 1751), elapsed 0s, ETA 0s
+Epoch 146: 179/179 saved (step 1752), elapsed 0s, ETA 0s
+Epoch 146: validation loss 0.25829, position accuracy 0.829
+Epoch 147: starting with 0/179 saved, ETA unknown
+Epoch 147: 16/179 saved (step 1753), elapsed 0s, ETA 0s
+Epoch 147: 32/179 saved (step 1754), elapsed 0s, ETA 0s
+Epoch 147: 48/179 saved (step 1755), elapsed 0s, ETA 0s
+Epoch 147: 64/179 saved (step 1756), elapsed 0s, ETA 0s
+Epoch 147: 80/179 saved (step 1757), elapsed 0s, ETA 0s
+Epoch 147: 96/179 saved (step 1758), elapsed 0s, ETA 0s
+Epoch 147: 112/179 saved (step 1759), elapsed 0s, ETA 0s
+Epoch 147: 128/179 saved (step 1760), elapsed 0s, ETA 0s
+Epoch 147: 144/179 saved (step 1761), elapsed 0s, ETA 0s
+Epoch 147: 160/179 saved (step 1762), elapsed 0s, ETA 0s
+Epoch 147: 176/179 saved (step 1763), elapsed 0s, ETA 0s
+Epoch 147: 179/179 saved (step 1764), elapsed 0s, ETA 0s
+Epoch 147: validation loss 0.25169, position accuracy 0.836
+Epoch 148: starting with 0/179 saved, ETA unknown
+Epoch 148: 16/179 saved (step 1765), elapsed 0s, ETA 0s
+Epoch 148: 32/179 saved (step 1766), elapsed 0s, ETA 0s
+Epoch 148: 48/179 saved (step 1767), elapsed 0s, ETA 0s
+Epoch 148: 64/179 saved (step 1768), elapsed 0s, ETA 0s
+Epoch 148: 80/179 saved (step 1769), elapsed 0s, ETA 0s
+Epoch 148: 96/179 saved (step 1770), elapsed 0s, ETA 0s
+Epoch 148: 112/179 saved (step 1771), elapsed 0s, ETA 0s
+Epoch 148: 128/179 saved (step 1772), elapsed 0s, ETA 0s
+Epoch 148: 144/179 saved (step 1773), elapsed 0s, ETA 0s
+Epoch 148: 160/179 saved (step 1774), elapsed 0s, ETA 0s
+Epoch 148: 176/179 saved (step 1775), elapsed 0s, ETA 0s
+Epoch 148: 179/179 saved (step 1776), elapsed 0s, ETA 0s
+Epoch 148: validation loss 0.26204, position accuracy 0.836
+Epoch 149: starting with 0/179 saved, ETA unknown
+Epoch 149: 16/179 saved (step 1777), elapsed 0s, ETA 0s
+Epoch 149: 32/179 saved (step 1778), elapsed 0s, ETA 0s
+Epoch 149: 48/179 saved (step 1779), elapsed 0s, ETA 0s
+Epoch 149: 64/179 saved (step 1780), elapsed 0s, ETA 0s
+Epoch 149: 80/179 saved (step 1781), elapsed 0s, ETA 0s
+Epoch 149: 96/179 saved (step 1782), elapsed 0s, ETA 0s
+Epoch 149: 112/179 saved (step 1783), elapsed 0s, ETA 0s
+Epoch 149: 128/179 saved (step 1784), elapsed 0s, ETA 0s
+Epoch 149: 144/179 saved (step 1785), elapsed 0s, ETA 0s
+Epoch 149: 160/179 saved (step 1786), elapsed 0s, ETA 0s
+Epoch 149: 176/179 saved (step 1787), elapsed 0s, ETA 0s
+Epoch 149: 179/179 saved (step 1788), elapsed 0s, ETA 0s
+Epoch 149: validation loss 0.25102, position accuracy 0.849
+Epoch 150: starting with 0/179 saved, ETA unknown
+Epoch 150: 16/179 saved (step 1789), elapsed 0s, ETA 0s
+Epoch 150: 32/179 saved (step 1790), elapsed 0s, ETA 0s
+Epoch 150: 48/179 saved (step 1791), elapsed 0s, ETA 0s
+Epoch 150: 64/179 saved (step 1792), elapsed 0s, ETA 0s
+Epoch 150: 80/179 saved (step 1793), elapsed 0s, ETA 0s
+Epoch 150: 96/179 saved (step 1794), elapsed 0s, ETA 0s
+Epoch 150: 112/179 saved (step 1795), elapsed 0s, ETA 0s
+Epoch 150: 128/179 saved (step 1796), elapsed 0s, ETA 0s
+Epoch 150: 144/179 saved (step 1797), elapsed 0s, ETA 0s
+Epoch 150: 160/179 saved (step 1798), elapsed 0s, ETA 0s
+Epoch 150: 176/179 saved (step 1799), elapsed 0s, ETA 0s
+Epoch 150: 179/179 saved (step 1800), elapsed 0s, ETA 0s
+Epoch 150: validation loss 0.25311, position accuracy 0.836
+Epoch 151: starting with 0/179 saved, ETA unknown
+Epoch 151: 16/179 saved (step 1801), elapsed 0s, ETA 0s
+Epoch 151: 32/179 saved (step 1802), elapsed 0s, ETA 0s
+Epoch 151: 48/179 saved (step 1803), elapsed 0s, ETA 0s
+Epoch 151: 64/179 saved (step 1804), elapsed 0s, ETA 0s
+Epoch 151: 80/179 saved (step 1805), elapsed 0s, ETA 0s
+Epoch 151: 96/179 saved (step 1806), elapsed 0s, ETA 0s
+Epoch 151: 112/179 saved (step 1807), elapsed 0s, ETA 0s
+Epoch 151: 128/179 saved (step 1808), elapsed 0s, ETA 0s
+Epoch 151: 144/179 saved (step 1809), elapsed 0s, ETA 0s
+Epoch 151: 160/179 saved (step 1810), elapsed 0s, ETA 0s
+Epoch 151: 176/179 saved (step 1811), elapsed 0s, ETA 0s
+Epoch 151: 179/179 saved (step 1812), elapsed 0s, ETA 0s
+Epoch 151: validation loss 0.25717, position accuracy 0.822
+Epoch 152: starting with 0/179 saved, ETA unknown
+Epoch 152: 16/179 saved (step 1813), elapsed 0s, ETA 0s
+Epoch 152: 32/179 saved (step 1814), elapsed 0s, ETA 0s
+Epoch 152: 48/179 saved (step 1815), elapsed 0s, ETA 0s
+Epoch 152: 64/179 saved (step 1816), elapsed 0s, ETA 0s
+Epoch 152: 80/179 saved (step 1817), elapsed 0s, ETA 0s
+Epoch 152: 96/179 saved (step 1818), elapsed 0s, ETA 0s
+Epoch 152: 112/179 saved (step 1819), elapsed 0s, ETA 0s
+Epoch 152: 128/179 saved (step 1820), elapsed 0s, ETA 0s
+Epoch 152: 144/179 saved (step 1821), elapsed 0s, ETA 0s
+Epoch 152: 160/179 saved (step 1822), elapsed 0s, ETA 0s
+Epoch 152: 176/179 saved (step 1823), elapsed 0s, ETA 0s
+Epoch 152: 179/179 saved (step 1824), elapsed 0s, ETA 0s
+Epoch 152: validation loss 0.26439, position accuracy 0.849
+Epoch 153: starting with 0/179 saved, ETA unknown
+Epoch 153: 16/179 saved (step 1825), elapsed 0s, ETA 0s
+Epoch 153: 32/179 saved (step 1826), elapsed 0s, ETA 0s
+Epoch 153: 48/179 saved (step 1827), elapsed 0s, ETA 0s
+Epoch 153: 64/179 saved (step 1828), elapsed 0s, ETA 0s
+Epoch 153: 80/179 saved (step 1829), elapsed 0s, ETA 0s
+Epoch 153: 96/179 saved (step 1830), elapsed 0s, ETA 0s
+Epoch 153: 112/179 saved (step 1831), elapsed 0s, ETA 0s
+Epoch 153: 128/179 saved (step 1832), elapsed 0s, ETA 0s
+Epoch 153: 144/179 saved (step 1833), elapsed 0s, ETA 0s
+Epoch 153: 160/179 saved (step 1834), elapsed 0s, ETA 0s
+Epoch 153: 176/179 saved (step 1835), elapsed 0s, ETA 0s
+Epoch 153: 179/179 saved (step 1836), elapsed 0s, ETA 0s
+Epoch 153: validation loss 0.25507, position accuracy 0.836
+Checkpoint: /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/training/last.pt. Best validation loss: 0.24258
+Part training: completed after 26.449s
+Part training_metrics_export: completed after 0.037s
+Stage 03.1_dummy_train: completed after 27.462s

@@ -1,0 +1,80 @@
+Stage 04.1_dummy_test_and_export: started 2026-10-11T18:39:14.054055+00:00
+SYNTHETIC SOFTWARE DEMONSTRATION: exported design is not physically validated.
+Export: loading checkpoint and dataset
+Export: writing predicted design and comparisons
+Export: report saved to /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/design/report.json
+{
+  "backend": "synthetic",
+  "physical_validation": "not_run",
+  "test": {
+    "loss": 0.2722961902618408,
+    "position_accuracy": 0.8397436141967773,
+    "exact_accuracy": 0.3589743673801422
+  },
+  "test_sample_count": 39,
+  "training_complete": true,
+  "checkpoint_sha256": "5301a573cc43f4578d6ceb8da6d4029576110a628b870dda0f460f2eae185c3d",
+  "nearest_neighbor": {
+    "position_accuracy": 0.7179487347602844,
+    "exact_accuracy": 0.0
+  },
+  "target_features": [
+    23.45,
+    -17.54999999999993,
+    0.35555555555555346,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "target_source": "held_out_row_193",
+  "predicted_codes": [
+    3,
+    0,
+    0,
+    0
+  ],
+  "class_probabilities": [
+    [
+      3.980291325615734e-21,
+      2.203486948459954e-09,
+      0.008743999525904655,
+      0.9912559986114502
+    ],
+    [
+      0.9990618824958801,
+      0.0009380838018842041,
+      2.3323494177662774e-11,
+      2.8943741102354377e-26
+    ],
+    [
+      0.9826576113700867,
+      0.01734236441552639,
+      3.4976965768152013e-09,
+      7.94383612123639e-20
+    ],
+    [
+      0.5294194221496582,
+      0.15029655396938324,
+      0.3202643096446991,
+      1.970186349353753e-05
+    ]
+  ],
+  "out_of_training_range": true,
+  "cached_descriptor_comparison": {
+    "notch_count_matches": true,
+    "frequency_error_ghz": [
+      0.09999999999999787
+    ],
+    "depth_error_db": [
+      1.5987211554602254e-13
+    ],
+    "width_error_ghz": [
+      3.774758283725532e-15
+    ]
+  },
+  "cached_spectrum_provenance": "synthetic"
+}
+Part evaluation_export: completed after 0.336s
+Stage 04.1_dummy_test_and_export: completed after 1.713s

@@ -1,0 +1,14 @@
+Stage 03.1_dummy_train: started 2026-10-11T18:39:11.353771+00:00
+Prepared dataset is unchanged: /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/data/training_dataset.npz
+Part dataset_preparation: completed after 0.079s
+/home/matheus/src/tp544-assignment3-metasurface-ml/.venv/lib/python3.12/site-packages/torch/cuda/__init__.py:228: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 804: forward compatibility was attempted on non supported HW (Triggered internally at /__w/pytorch/pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return torch._C._cuda_getDeviceCount() > 0
+SYNTHETIC SOFTWARE DEMONSTRATION: training on cpu.
+Network parameters: paper_unrestricted=587224, paper_restricted=788648, reduced=3440
+Part network_analysis: completed after 0.015s
+Part dataset_metrics_export: completed after 0.029s
+Training: resuming epoch 154, minibatch cursor 0, 1836 saved steps
+Checkpoint: /home/matheus/src/tp544-assignment3-metasurface-ml/runs/dummy/training/last.pt. Best validation loss: 0.24258
+Part training: completed after 0.984s
+Part training_metrics_export: completed after 0.054s
+Stage 03.1_dummy_train: completed after 2.061s
