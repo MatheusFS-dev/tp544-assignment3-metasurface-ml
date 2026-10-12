@@ -47,7 +47,8 @@ def load_simulations(path):
     return state
 
 
-def simulate_geometries(geometry_path, directory, physics, backend="lumerical", limit=None, simulator=None):
+def simulate_geometries(geometry_path, directory, physics, backend="lumerical", limit=None,
+                        simulator=None, preflight_mode="full"):
     """Simulate saved layouts, durably committing each completed raw spectrum.
 
     Args:
@@ -77,6 +78,8 @@ def simulate_geometries(geometry_path, directory, physics, backend="lumerical", 
         raise ValueError("Geometry pixel scale differs from simulation configuration.")
     if backend not in ("synthetic", "lumerical"):
         raise ValueError("Invalid simulation backend.")
+    if preflight_mode not in ("full", "reference_only"):
+        raise ValueError("Invalid preflight mode.")
     if limit is not None and (not isinstance(limit, int) or isinstance(limit, bool) or limit < 1):
         raise ValueError("Simulation limit must be a positive integer or None.")
     if simulator is not None and backend != "synthetic":
@@ -86,7 +89,8 @@ def simulate_geometries(geometry_path, directory, physics, backend="lumerical", 
     path = directory / "simulation_checkpoint.npz"
     metadata = canonical_json({"schema": 2, "stage": "simulations",
                                "family": "mirrored-square-rings-v1", "backend": backend,
-                               "physics": physics, "geometry_id": plan["checksum"].item()})
+                               "physics": physics, "geometry_id": plan["checksum"].item(),
+                               "preflight_mode": preflight_mode})
     f = np.linspace(physics["frequency_min_hz"], physics["frequency_max_hz"], physics["frequency_points"])
     if path.exists():
         state = load_simulations(path)
@@ -117,7 +121,7 @@ def simulate_geometries(geometry_path, directory, physics, backend="lumerical", 
 
         solver = LumericalSolver(physics)
         with timed_part("lumerical_preflight"):
-            solver.preflight(directory)
+            solver.preflight(directory, mode=preflight_mode)
         simulator = solver.simulate
     with timed_part("layout_collection"):
         for i in pending:

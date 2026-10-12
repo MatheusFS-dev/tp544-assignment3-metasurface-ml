@@ -93,7 +93,8 @@ def project_script(codes, physics, reference="device", rectangle_fn=rectangles):
     period = 32 * p["pixel_m"]
     h = p["substrate_thickness_m"]
     t = p["metal_thickness_m"]
-    metal = "Copper_RF" if p["metal_model"] == "copper" else "PEC"
+    pec = "PEC (Perfect Electrical Conductor)"
+    metal = "Copper_RF" if p["metal_model"] == "copper" else pec
     fmin, fmax = p["frequency_min_hz"], p["frequency_max_hz"]
     script = f'''# Generated metasurface. All dimensions use SI units.
 switchtolayout; selectall; delete;
@@ -102,12 +103,13 @@ if(materialexists("Copper_RF")) {{ deletematerial("Copper_RF"); }}
 mat=addmaterial("Sampled data"); setmaterial(mat,"name","FR4_RF");
 mf=linspace({fmin:.12g},{fmax:.12g},101);
 meps=({p['epsilon_real']:.12g}+1i*{p['epsilon_imag']:.12g})*ones(101,1);
-setmaterial("FR4_RF","max coefficients",6);
+setmaterial("FR4_RF","max coefficients",8);
+setmaterial("FR4_RF","tolerance",0.001);
 setmaterial("FR4_RF","sampled data",[mf,meps]);
 mat=addmaterial("Conductive"); setmaterial(mat,"name","Copper_RF");
 setmaterial("Copper_RF","Permittivity",1);
 setmaterial("Copper_RF","Conductivity",{p['copper_conductivity_s_m']:.12g});
-addfdtd; set("name","FDTD"); set("dimension","3D");
+addfdtd; set("dimension","3D");
 set("x",0); set("y",0); set("x span",{period:.12g}); set("y span",{period:.12g});
 set("z min",{p['z_min_m']:.12g}); set("z max",{p['z_max_m']:.12g});
 set("x min bc","Periodic"); set("x max bc","Periodic");
@@ -132,7 +134,7 @@ setglobalmonitor("frequency points",{p['frequency_points']});
         script += (f'addpower; set("name","{name}"); set("monitor type","2D Z-normal"); '
                    f'set("x",0); set("y",0); set("x span",{period:.12g}); set("y span",{period:.12g}); set("z",{z:.12g});\n')
     if reference == "mirror":
-        script += rectangle_script("mirror", 0, 0, period, period, 0, t, "PEC")
+        script += rectangle_script("mirror", 0, 0, period, period, 0, t, pec)
     if reference == "device":
         script += rectangle_script("substrate", 0, 0, period, period, -h, 0, "FR4_RF")
         script += rectangle_script("ground", 0, 0, period, period, -h - t, -h, metal)
@@ -277,17 +279,17 @@ class LumericalSolver:
         lumapi = importlib.import_module("lumapi")
         p = self.physics
         expected = np.linspace(p["frequency_min_hz"], p["frequency_max_hz"], p["frequency_points"])
+        if project_path is None:
+            if self.directory is None:
+                raise RuntimeError("Set a solver directory before running an unnamed project.")
+            project_path = self.directory / "active_device.fsp"
         with lumapi.FDTD(hide=True) as sim:
             sim.eval(project_script(codes, p, reference, self.rectangle_fn))
             fitted = np.asarray(sim.getfdtdindex("FR4_RF", expected, expected[0], expected[-1])).reshape(-1)**2
             target = p["epsilon_real"] + 1j * p["epsilon_imag"]
             if len(fitted) != len(expected) or not np.isfinite(fitted).all() or np.max(abs(fitted - target)) > p["material_fit_tolerance"]:
                 raise RuntimeError("FR4 material fit does not reproduce the specified complex permittivity.")
-            sim.putv("check_f", expected)
-            sim.eval('check_pulse=sourcenorm(check_f,"source");')
-            check_pulse(sim.getv("check_pulse"), p["minimum_pulse_power"])
-            if project_path is not None:
-                sim.save(str(project_path))
+            sim.save(str(Path(project_path).resolve()))
             sim.run()
             check_status(sim.getresult("FDTD", "status"))
             reflection = sim.getresult("reflection", "E")
@@ -302,8 +304,15 @@ class LumericalSolver:
             output = {"frequencies": f[order], "incident": plane_field(incident, "Ex")[order],
                       "ex": plane_field(reflection, "Ex")[order], "ey": plane_field(reflection, "Ey")[order],
                       "total": total}
-            if project_path is not None:
-                sim.save(str(project_path))
+            # Validate the pulse from the recorded incident field.  Lumerical
+            # 2025 R2 rejects sourcenorm before a solve, while the monitor is
+            # the actual excitation delivered across the requested band.
+            if reference == "empty":
+                check_pulse(output["incident"], p["minimum_pulse_power"])
+            # Keep the pre-run construction project small and reproducible.
+            # Raw monitor results are returned to the NPZ checkpoint; saving
+            # the solved project here produced multi-gigabyte files and a
+            # native lumapi crash when the session was closed on Windows.
         return output
 
     def _powers(self, raw):
@@ -331,7 +340,7 @@ class LumericalSolver:
             raise RuntimeError("Field-derived and flux-derived reflection disagree. Check monitors and convergence.")
         return {"co": co, "cross": cross, "total": total}
 
-    def preflight(self, directory):
+    def preflight(self, directory, mode="full"):
         """Calibrate references and verify representative mesh/time convergence.
 
         Args:
@@ -345,11 +354,32 @@ class LumericalSolver:
             Preflight covers one representative geometry. Final designs still
             require their own convergence checks for quantitative claims.
         """
+        if mode not in ("full", "reference_only"):
+            raise ValueError("Preflight mode must be 'full' or 'reference_only'.")
         directory = Path(directory)
         directory.mkdir(parents=True, exist_ok=True)
         self.directory = directory
-        path = directory / "physical_preflight.npz"
         signature = canonical_json(self.physics)
+        if mode == "reference_only":
+            path = directory / "physical_reference.npz"
+            if path.exists():
+                reference = load_npz(path)
+                if (reference["physics"].item() != signature
+                        or reference["mode"].item() != mode):
+                    raise ValueError("Saved physical reference configuration mismatch.")
+                self.reference = reference
+                print("Reference only: accepted saved empty-space calibration; validation skipped", flush=True)
+                return
+            print("Reference only: empty-space calibration (physical validation skipped)", flush=True)
+            raw = self._run([0] * self.code_count, "empty", directory / "reference_empty.fsp")
+            if np.max(abs(raw["total"])) > 0.01:
+                raise RuntimeError("Empty-space reflection calibration exceeds 1%.")
+            record = {**raw, "physics": np.asarray(signature), "mode": np.asarray(mode)}
+            save_npz(path, record)
+            self.reference = record
+            print("Reference only: calibration saved; PEC and convergence gates skipped", flush=True)
+            return
+        path = directory / "physical_preflight.npz"
         if path.exists():
             reference = load_npz(path)
             if reference["physics"].item() != signature or not bool(reference["passed"].item()):
@@ -374,6 +404,7 @@ class LumericalSolver:
         refined["metal_mesh_divisions"] = 4
         refined["simulation_time_s"] *= 2
         fine_solver = LumericalSolver(refined, self.rectangle_fn, self.code_count)
+        fine_solver.directory = directory
         print("Preflight: refined reference", flush=True)
         fine_solver.reference = fine_solver._run([0] * 4, "empty")
         print("Preflight: refined pilot", flush=True)

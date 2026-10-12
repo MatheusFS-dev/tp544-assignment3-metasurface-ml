@@ -53,6 +53,9 @@ Edite `src/metasurface/config.py`. Os scripts não recebem argumentos:
   Confira sua instalação antes de usar um exemplo.
 - `GENERATION_LIMIT = 4` para um piloto de quatro simulações adicionais.
   Depois use `None` para retomar todas as restantes. Esse limite não limita máscaras.
+- `PREFLIGHT_MODE = "reference_only"` faz apenas a referência vazia necessária
+  para normalização e pula espelho PEC e convergência. Use `"full"` para dados
+  destinados a alegações físicas validadas.
 - `TRAINING["device"] = "cuda"` para treino na GPU NVIDIA.
 - `RUN_EXPORTED_DESIGN = False` para exportar sem iniciar o solver.
 - `GEOMETRY_DIR`, `DATA_DIR`, `TRAIN_DIR`, `EXPORT_DIR`: diretórios do fluxo real reduzido.

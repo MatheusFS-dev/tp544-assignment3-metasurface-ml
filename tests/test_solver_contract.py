@@ -24,6 +24,21 @@ def test_project_has_physical_geometry_and_boundaries():
     assert 'set("z max",1.8e-05)' in script
 
 
+def test_project_keeps_lumerical_default_fdtd_region_name():
+    """Avoid renaming the solver region, which Lumerical 2025 R2 rejects."""
+    script = module("metasurface.reduced.lumerical").project_script(
+        [0, 0, 0, 0], module("metasurface.config").PHYSICS, "empty")
+    assert 'set("name","FDTD")' not in script
+
+
+def test_fr4_requests_fit_settings_that_meet_material_tolerance():
+    """Use the fit controls validated against Lumerical 2025 R2."""
+    script = module("metasurface.reduced.lumerical").project_script(
+        [0, 0, 0, 0], module("metasurface.config").PHYSICS, "empty")
+    assert 'setmaterial("FR4_RF","max coefficients",8)' in script
+    assert 'setmaterial("FR4_RF","tolerance",0.001)' in script
+
+
 def test_pec_option_and_reference_do_not_include_copper_pixels():
     """Pec option and reference do not include copper pixels.
 
@@ -37,7 +52,9 @@ def test_pec_option_and_reference_do_not_include_copper_pixels():
     m = module("metasurface.reduced.lumerical")
     p = module("metasurface.config").PHYSICS.copy()
     p["metal_model"] = "pec"
-    assert 'set("material","PEC")' in m.project_script([1, 2, 3, 0], p)
+    pec_script = m.project_script([1, 2, 3, 0], p)
+    assert 'set("material","PEC (Perfect Electrical Conductor)")' in pec_script
+    assert 'set("material","PEC")' not in pec_script
     assert "pixel_" not in m.project_script([1, 2, 3, 0], p, "empty")
 
 
@@ -152,3 +169,36 @@ def test_invalid_physical_band_and_material_rejected():
     p["metal_model"] = "unverified_library_copper"
     with pytest.raises(ValueError):
         m.project_script([1, 2, 3, 0], p)
+
+
+def test_reference_only_preflight_skips_physical_validation(tmp_path, monkeypatch):
+    """Cache only the normalization reference when validation is disabled."""
+    m = module("metasurface.reduced.lumerical")
+    physics = module("metasurface.config").PHYSICS
+    solver = m.LumericalSolver(physics)
+    frequencies = np.linspace(
+        physics["frequency_min_hz"], physics["frequency_max_hz"],
+        physics["frequency_points"])
+    raw = {
+        "frequencies": frequencies,
+        "incident": np.ones(len(frequencies), dtype=complex),
+        "ex": np.zeros(len(frequencies), dtype=complex),
+        "ey": np.zeros(len(frequencies), dtype=complex),
+        "total": np.zeros(len(frequencies)),
+    }
+    calls = []
+
+    def reference_run(codes, reference="device", project_path=None):
+        calls.append((list(codes), reference, project_path))
+        return raw
+
+    monkeypatch.setattr(solver, "_run", reference_run)
+    solver.preflight(tmp_path, mode="reference_only")
+    assert len(calls) == 1
+    assert calls[0][1] == "empty"
+    assert (tmp_path / "physical_reference.npz").exists()
+
+    cached = m.LumericalSolver(physics)
+    monkeypatch.setattr(cached, "_run", lambda *args, **kwargs: pytest.fail("cache not reused"))
+    cached.preflight(tmp_path, mode="reference_only")
+    assert np.array_equal(cached.reference["incident"], raw["incident"])

@@ -72,7 +72,11 @@ def atomic_write(path, writer, rotate_backup=True):
         if path.exists() and rotate_backup:
             backup_temp = Path(temporary + ".backup")
             shutil.copyfile(path, backup_temp)
-            with backup_temp.open("rb") as stream:
+            # Windows requires a writable descriptor for FlushFileBuffers,
+            # which is what os.fsync() uses there.  The copy is already
+            # complete; opening it read/write only makes the durability flush
+            # portable and does not modify its contents.
+            with backup_temp.open("rb+") as stream:
                 os.fsync(stream.fileno())
             os.replace(backup_temp, path.with_suffix(path.suffix + ".bak"))
         os.replace(temporary, path)
