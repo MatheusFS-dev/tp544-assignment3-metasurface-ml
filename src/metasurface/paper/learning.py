@@ -96,6 +96,8 @@ def train(dataset_path, output_dir, options, max_steps=None):
     metadata = json.loads(data["metadata"].item())
     if metadata["backend"] == "test_fixture" and not options.get("allow_test_fixture", False):
         raise ValueError("Paper training refuses test fixture data by default.")
+    if metadata["backend"] == "synthetic_surrogate" and not options.get("allow_synthetic_surrogate", False):
+        raise ValueError("Paper training refuses synthetic surrogate data by default.")
     eligible = np.flatnonzero(data["completed"] & (data["reason"] == "ok"))
     if len(eligible) < 24:
         raise ValueError(f"Only {len(eligible)} eligible paper layouts. Need at least 24.")
@@ -190,10 +192,20 @@ def train(dataset_path, output_dir, options, max_steps=None):
             train_bit_accuracy = ((output >= 0.5) == (target >= 0.5)).float().mean().item()
             train_tile_accuracy = match.float().mean().item()
             train_exact_accuracy = match.all(dim=1).float().mean().item()
+            test_ids = state["splits"]["test"]
+            test_output = model(x[test_ids])
+            test_target = y[test_ids]
+            test_match = decode_bits(test_output) == decode_bits(test_target)
+            test_loss = nn.functional.mse_loss(test_output, test_target).item()
+            test_bit_accuracy = ((test_output >= 0.5) == (test_target >= 0.5)).float().mean().item()
+            test_tile_accuracy = test_match.float().mean().item()
+            test_exact_accuracy = test_match.all(dim=1).float().mean().item()
         state["epoch"] += 1
         record = {"epoch": state["epoch"], "train_loss": state["sum_loss"] / state["seen"],
                   "train_eval_loss": train_eval_loss, "train_bit_accuracy": train_bit_accuracy,
-                  "train_tile_accuracy": train_tile_accuracy, "train_exact_accuracy": train_exact_accuracy}
+                  "train_tile_accuracy": train_tile_accuracy, "train_exact_accuracy": train_exact_accuracy,
+                  "test_loss": test_loss, "test_bit_accuracy": test_bit_accuracy,
+                  "test_tile_accuracy": test_tile_accuracy, "test_exact_accuracy": test_exact_accuracy}
         state["history"].append(record)
         state["order"] = torch.empty(0, dtype=torch.long)
         state["cursor"] = 0

@@ -51,6 +51,7 @@ TRAINING = {
 
 DUMMY_ROOT = ROOT / "runs" / "dummy"
 PAPER_ROOT = ROOT / "runs" / "real_paper"
+SYNTHETIC_PAPER_ROOT = ROOT / "runs" / "synthetic_paper"
 
 PAPER_COUNT = 2000
 PAPER_GENERATION_LIMIT = None
@@ -63,4 +64,29 @@ PAPER_TRAINING = {
     "dropout": 0.5,
     "device": "cuda",
     "allow_test_fixture": False,
+}
+
+SYNTHETIC_PAPER_COUNT = 2000
+SYNTHETIC_PAPER_GENERATION_LIMIT = None
+SYNTHETIC_PAPER_RUN_VALIDATION = False
+SYNTHETIC_PAPER_SURROGATE = {
+    "schema": 1,
+    "effective_permittivity": 2.6,
+    "frequency_scale_ghz_pixel": 285.0,
+    "internal_loss_ghz": 0.16,
+    "external_loss_ghz": 0.22,
+    "neighbour_shift_ghz": 0.13,
+    "position_shift_ghz": 0.08,
+    "merge_distance_ghz": 0.30,
+    "maximum_modes": 8,
+}
+SYNTHETIC_PAPER_TRAINING = {
+    "seed": 2026,
+    "batch_size": 30,
+    "learning_rate": 0.001,
+    "max_epochs": 10000,
+    "dropout": 0.5,
+    "device": "cuda",
+    "allow_test_fixture": False,
+    "allow_synthetic_surrogate": True,
 }

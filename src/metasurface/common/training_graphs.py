@@ -76,13 +76,17 @@ def generate(metrics_path, output_dir):
     plots = [
         ("training_loss.png", [("train_loss", "Train minibatch mean"),
                                ("train_eval_loss", "Train evaluation"),
+                               ("test_loss", "Held-out synthetic test"),
                                ("loss", "Validation")], "Loss"),
         ("training_accuracy.png", [("train_position_accuracy", "Train position"),
                                    ("position_accuracy", "Validation position"),
                                    ("train_exact_accuracy", "Train exact layout"),
                                    ("exact_accuracy", "Validation exact layout"),
                                    ("train_bit_accuracy", "Train bit"),
-                                   ("train_tile_accuracy", "Train tile")], "Accuracy (fraction)"),
+                                   ("train_tile_accuracy", "Train tile"),
+                                   ("test_bit_accuracy", "Held-out bit"),
+                                   ("test_tile_accuracy", "Held-out tile"),
+                                   ("test_exact_accuracy", "Held-out exact layout")], "Accuracy (fraction)"),
     ]
     for filename, series, ylabel in plots:
         path = destination / filename

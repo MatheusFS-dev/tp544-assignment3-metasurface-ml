@@ -32,7 +32,7 @@ def load_raw(path):
     count = len(state["codes"])
     p = metadata["physics"]
     expected = np.linspace(p["frequency_min_hz"], p["frequency_max_hz"], p["frequency_points"])
-    if (metadata.get("family") != "paper-scale-rings-v1" or metadata.get("stage") not in ("simulations", "training_dataset") or metadata.get("backend") not in ("lumerical", "test_fixture")
+    if (metadata.get("family") != "paper-scale-rings-v1" or metadata.get("stage") not in ("simulations", "training_dataset") or metadata.get("backend") not in ("lumerical", "test_fixture", "synthetic_surrogate")
             or state["codes"].shape != (count, 16) or state["completed"].shape != (count,)
             or state["seconds"].shape != (count,) or not np.array_equal(state["frequencies"], expected)
             or not np.isfinite(state["seconds"]).all() or np.any(state["seconds"] < 0)):
@@ -117,7 +117,7 @@ def prepare(raw_path, output_path):
         raise ValueError("Prepared paper dataset must not overwrite raw spectra.")
     raw = load_raw(raw_path)
     meta = json.loads(raw["metadata"].item())
-    if meta.get("backend") not in ("lumerical", "test_fixture"):
+    if meta.get("backend") not in ("lumerical", "test_fixture", "synthetic_surrogate"):
         raise ValueError("Unsupported paper data provenance.")
     source_id = raw.pop("checksum").item()
     meta.update(stage="training_dataset", raw_simulation_id=source_id)
