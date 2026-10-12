@@ -1,0 +1,176 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{margin=2.2cm}
+\setlist[itemize]{leftmargin=*,itemsep=2pt,topsep=4pt}
+\renewcommand{\arraystretch}{1.15}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{Justificativa técnica para a não conclusão\\da reprodução integral}
+\author{Projeto TP544 Assignment 3}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Síntese}
+
+O prazo de uma semana não é compatível com uma reprodução integral de Ghorbani et al. (2021). O principal limite não é o treinamento da rede neural, mas a construção e a validação do conjunto de dados eletromagnéticos. Cada amostra exige uma simulação pelo método das diferenças finitas no domínio do tempo, com licença de software. Os resultados ainda precisam passar por verificações de malha, tempo de simulação, material, condições de contorno e convergência.
+
+O trabalho realizado deve ser apresentado como \textbf{implementação independente e reprodução reduzida do método}, e não como réplica exata dos resultados publicados.
+
+\section{Escala do problema}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Comparação entre o experimento publicado e o escopo reduzido.}
+\label{tab:escala}
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.21\textwidth}p{0.19\textwidth}Y@{}}
+\toprule
+Item & Artigo original & Reprodução reduzida & Consequência prática \\
+\midrule
+Padrões por posição & 8 & 4 & A redução simplifica a família geométrica. \\
+\addlinespace
+Posições independentes & 16 & 4, com espelhamento & O número de combinações diminui drasticamente. \\
+\addlinespace
+Espaço restrito & $8^{16}=281\,474\,976\,710\,656$ & $4^4=256$ & O espaço original não pode ser enumerado. As 2.000 amostras não representam uma busca exaustiva. \\
+\addlinespace
+Geometrias simuladas & 2.000 amostras aleatórias & Até 256 candidatas & Cada candidata ainda exige uma simulação física. \\
+\addlinespace
+Faixa de frequência & 4 a 45~GHz & 4 a 45~GHz & A banda larga aumenta o custo numérico. \\
+\addlinespace
+Pontos de frequência & Sem precisão suficiente para réplica & 1.641 & A resolução espectral deve permitir a medição dos notches. \\
+\addlinespace
+Simulador & CST Microwave Studio & Lumerical FDTD & A troca de solver impede equivalência numérica direta. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{itemize}
+\item As 2.000 geometrias do artigo são uma amostra de aproximadamente \textbf{281 trilhões} de layouts possíveis na família restrita.
+\item O espaço original é cerca de \textbf{1,10 trilhão de vezes maior} que o conjunto reduzido de 256 layouts.
+\item Reduzir para 256 casos torna o experimento menor, mas não elimina o custo da solução eletromagnética de cada geometria.
+\item Nem toda simulação produz uma resposta utilizável. Casos sem notch, com excesso de notches ou com notches truncados podem não servir para treinamento.
+\end{itemize}
+
+\section{Custo de simulação}
+
+O pré-teste executado no Lumerical produziu uma estimativa de aproximadamente \textbf{10 horas} apenas para a etapa preliminar de verificação das geometrias e da configuração numérica. Esse valor é uma estimativa obtida no ambiente deste projeto. Não corresponde à duração medida da campanha completa nem a um tempo reportado pelo artigo.
+
+Mesmo desconsiderando preparação, falhas e repetições, o custo cresce linearmente com o número de geometrias. A Tabela~\ref{tab:tempo} apresenta cenários ilustrativos, e não medições do conjunto completo.
+
+\begin{table}[htbp]
+\centering
+\caption{Projeções ilustrativas de tempo contínuo de simulação.}
+\label{tab:tempo}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Tempo hipotético por geometria & 256 geometrias & 2.000 geometrias \\
+\midrule
+10 min & 42,7 h, ou 1,8 dia & 333,3 h, ou 13,9 dias \\
+30 min & 128 h, ou 5,3 dias & 1.000 h, ou 41,7 dias \\
+60 min & 256 h, ou 10,7 dias & 2.000 h, ou 83,3 dias \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O tempo real também inclui:
+
+\begin{itemize}
+\item preflight do solver e validação da referência vazia e do espelho condutor elétrico perfeito.
+\item ajuste e verificação do material FR4.
+\item refinamento de malha, tempo de simulação e critério de desligamento.
+\item repetição de pilotos para demonstrar convergência numérica.
+\item tratamento de erros da API, licenças, reinicializações e retomada de checkpoints.
+\item nova simulação da geometria prevista pela rede.
+\item análise dos espectros e extração consistente de frequência, profundidade e largura dos notches.
+\end{itemize}
+
+Uma execução contínua não equivale a uma semana de trabalho disponível. Desenvolvimento, inspeção dos resultados e correção de configurações ocorrem entre as rodadas e podem exigir repetições.
+
+\section{Informações insuficientes para uma réplica exata}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Lacunas que exigem decisões próprias de implementação.}
+\label{tab:lacunas}
+\begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}p{0.27\textwidth}Y@{}}
+\toprule
+Informação necessária & Situação no artigo & Impacto na reprodução \\
+\midrule
+Dataset com 2.000 geometrias e espectros & Não foi localizado um link público no artigo & Todo o conjunto precisa ser gerado novamente. \\
+\addlinespace
+Código e checkpoints & Não disponibilizados no material consultado & A implementação e o treinamento precisam ser refeitos. \\
+\addlinespace
+Máscaras dos oito padrões de $8\times8$ pixels & As figuras não definem todas as matrizes binárias & A reconstrução contém aproximações geométricas. \\
+\addlinespace
+Critério da largura do notch & Não especificado suficientemente & Regras diferentes produzem descritores diferentes. \\
+\addlinespace
+Probabilidade de dropout & Não informada & A arquitetura não pode ser repetida exatamente. \\
+\addlinespace
+Projeto CST completo & Não disponibilizado & Malha, limites, materiais e critérios precisam ser reinterpretados. \\
+\addlinespace
+Semente e divisão exata & Não estabelecidas de forma reprodutível & Curvas e acurácia não podem ser esperadas como idênticas. \\
+\addlinespace
+Definição operacional da acurácia & Insuficiente para comparação inequívoca & Não é válido prometer reproduzir os valores de aproximadamente 91\% e 92\%. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Há ainda uma inconsistência interna. A Tabela 1 do artigo atribui 90.300 parâmetros à camada densa de 24 para 300 neurônios, mas suas dimensões implicam 7.500 parâmetros. O total calculado pelas dimensões é 587.224, enquanto a soma dos valores publicados é 670.024. Os números do artigo, portanto, não podem ser transcritos automaticamente como uma especificação executável.
+
+\section{Por que uma semana é insuficiente}
+
+Em sete dias seria necessário, ao mesmo tempo:
+
+\begin{itemize}
+\item interpretar detalhes geométricos e numéricos ausentes.
+\item implementar e depurar a automação pela API do Lumerical.
+\item validar a física antes de coletar dados.
+\item executar centenas ou milhares de simulações.
+\item verificar convergência e repetir casos problemáticos.
+\item preparar, filtrar e dividir o dataset sem vazamento de dados.
+\item treinar, ajustar e avaliar a rede.
+\item revalidar fisicamente ao menos uma previsão.
+\item documentar diferenças, limitações e resultados.
+\end{itemize}
+
+O prazo pode comportar a implementação do fluxo, testes sintéticos claramente identificados e alguns pilotos físicos. Ele não comporta, com rigor, a geração e a validação de todo o conjunto eletromagnético nem a reprodução dos resultados quantitativos do artigo.
+
+\section{Conclusão e escopo defensável}
+
+\begin{itemize}
+\item \textbf{Não foi possível concluir a reprodução integral no prazo de uma semana.}
+\item O gargalo dominante é a geração e a validação dos dados por FDTD, não somente o código da rede neural.
+\item A ausência de artefatos e parâmetros essenciais impede uma réplica exata mesmo com mais capacidade computacional.
+\item O fluxo reduzido de 256 candidatas é uma mudança metodológica explícita e não deve ser confundido com o experimento original.
+\item Uma reprodução física completa e auditável exigiria, de forma realista, \textbf{várias semanas e potencialmente alguns meses}. A duração depende do tempo por simulação, da disponibilidade da licença e da quantidade de refinamentos e repetições.
+\item Resultados sintéticos podem validar o software, mas não podem ser apresentados como resultados eletromagnéticos reproduzidos.
+\end{itemize}
+
+O produto adequado para o prazo é uma prova de implementação com escopo reduzido, acompanhada dos testes e pilotos efetivamente concluídos e desta declaração de limitações. A obtenção de métricas físicas comparáveis às do artigo deve permanecer como trabalho futuro condicionado à conclusão das simulações.
+
+\section*{Fontes consultadas}
+
+\begin{itemize}
+\item Ghorbani et al. \textit{Deep neural network-based automatic metasurface design with a wide frequency range}. Scientific Reports 11, 7102 (2021). DOI: \href{https://doi.org/10.1038/s41598-021-86588-2}{10.1038/s41598-021-86588-2}.
+\item Arquivos \texttt{paper/s41598-021-86588-2.pdf} e \texttt{paper/paper.txt}.
+\item Contexto da atividade em \texttt{.agents/prompts/assignment\_context.md}.
+\item Documentos \texttt{JUSTIFICATIVA\_REDUCAO.md} e \texttt{docs/REAL\_PAPER.md}.
+\end{itemize}
+
+\end{document}
