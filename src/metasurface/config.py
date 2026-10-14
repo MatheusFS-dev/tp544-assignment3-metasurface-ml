@@ -39,6 +39,13 @@ PHYSICS = {
     "convergence_power_tolerance": 0.02,
 }
 
+NARROWBAND_PHYSICS = {
+    **PHYSICS,
+    "frequency_min_hz": 22e9,
+    "frequency_max_hz": 28e9,
+    "frequency_points": 301,
+}
+
 TRAINING = {
     "seed": 2026,
     "batch_size": 16,
@@ -48,6 +55,17 @@ TRAINING = {
     "device": "cuda",  # NVIDIA GPU required; explicitly choose cpu for software tests.
     "allow_synthetic": ALLOW_SYNTHETIC_TRAINING,
 }
+
+NARROWBAND_ROOT = ROOT / "runs" / "real_narrowband"
+NARROWBAND_GEOMETRY_DIR = NARROWBAND_ROOT / "geometries"
+NARROWBAND_DATA_DIR = NARROWBAND_ROOT / "data"
+NARROWBAND_TRAIN_DIR = NARROWBAND_ROOT / "training"
+NARROWBAND_EXPORT_DIR = NARROWBAND_ROOT / "design"
+NARROWBAND_GENERATION_LIMIT = None
+NARROWBAND_PREFLIGHT_MODE = "reference_only"
+NARROWBAND_RUN_EXPORTED_DESIGN = False
+NARROWBAND_TARGET_NOTCHES = None
+NARROWBAND_TRAINING = dict(TRAINING)
 
 DUMMY_ROOT = ROOT / "runs" / "dummy"
 PAPER_ROOT = ROOT / "runs" / "real_paper"
@@ -65,6 +83,13 @@ PAPER_TRAINING = {
     "device": "cuda",
     "allow_test_fixture": False,
 }
+
+PAPER_NARROWBAND_ROOT = ROOT / "runs" / "real_paper_narrowband"
+PAPER_NARROWBAND_COUNT = 2000
+PAPER_NARROWBAND_GENERATION_LIMIT = None
+PAPER_NARROWBAND_PREFLIGHT_MODE = "reference_only"
+PAPER_NARROWBAND_RUN_EXPORTED_DESIGN = False
+PAPER_NARROWBAND_TRAINING = dict(PAPER_TRAINING)
 
 SYNTHETIC_PAPER_COUNT = 2000
 SYNTHETIC_PAPER_GENERATION_LIMIT = None

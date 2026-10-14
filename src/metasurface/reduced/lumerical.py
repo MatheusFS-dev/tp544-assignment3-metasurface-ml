@@ -14,6 +14,32 @@ from metasurface.common.storage import canonical_json, load_npz, save_npz
 C0 = 299792458.0
 
 
+def run_on_gpu(sim):
+    """Check and launch one Lumerical FDTD solve explicitly on GPU.
+
+    Args:
+        sim: Active ``lumapi.FDTD`` session containing a constructed project.
+
+    Returns:
+        None.
+
+    Raises:
+        RuntimeError: If GPU compatibility checking or GPU execution fails.
+
+    Notes:
+        There is deliberately no CPU fallback. The two explicit arguments to
+        ``run`` override the resource type selected in the Lumerical GUI.
+    """
+    try:
+        sim.runsystemcheck("FDTD", "GPU")
+        sim.run("FDTD", "GPU")
+    except Exception as error:
+        raise RuntimeError(
+            "GPU-required Lumerical FDTD execution failed. Configure an active "
+            "GPU resource and ensure this project is GPU-compatible."
+        ) from error
+
+
 def validate_physics(p):
     """Reject physical configurations incompatible with this normal-incidence model.
 
@@ -290,7 +316,7 @@ class LumericalSolver:
             if len(fitted) != len(expected) or not np.isfinite(fitted).all() or np.max(abs(fitted - target)) > p["material_fit_tolerance"]:
                 raise RuntimeError("FR4 material fit does not reproduce the specified complex permittivity.")
             sim.save(str(Path(project_path).resolve()))
-            sim.run()
+            run_on_gpu(sim)
             check_status(sim.getresult("FDTD", "status"))
             reflection = sim.getresult("reflection", "E")
             incident = sim.getresult("incident", "E")

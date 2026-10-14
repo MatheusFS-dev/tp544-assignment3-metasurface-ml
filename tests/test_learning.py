@@ -165,10 +165,12 @@ def test_evaluation_exports_exactly_one_nn_geometry(tmp_path):
     (tmp_path / "export").mkdir()
     for name in ("design.fsp", "design_validation_spectrum.csv", "report.json"):
         (tmp_path / "export" / name).write_text("stale")
-    report = module("metasurface.reduced.evaluation").evaluate(checkpoint, data, tmp_path / "export")
+    report = module("metasurface.reduced.evaluation").evaluate(
+        checkpoint, data, tmp_path / "export", preflight_mode="reference_only")
     assert len(list((tmp_path / "export").glob("*_pixels.csv"))) == 1
     assert report["backend"] == "synthetic"
     assert report["physical_validation"] == "not_run"
+    assert report["physical_preflight_mode"] == "reference_only"
     layout = np.loadtxt(tmp_path / "export" / "design_pixels.csv", delimiter=",")
     assert layout.shape == (32, 32)
     assert np.array_equal(layout, module("metasurface.reduced.geometry").pixel_layout(report["predicted_codes"]))

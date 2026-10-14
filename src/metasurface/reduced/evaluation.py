@@ -68,7 +68,8 @@ def physical_errors(target, observed, reason):
             "depth_error_db": delta[:, 1].tolist(), "width_error_ghz": delta[:, 2].tolist()}
 
 
-def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumerical=False):
+def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumerical=False,
+             preflight_mode="full"):
     """Evaluate saved best weights and export one NN-selected Lumerical layout.
 
     Args:
@@ -78,6 +79,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
         target (list[tuple] or None): Optional custom notch specifications. Otherwise
             use the first held-out test row, without selecting by performance.
         run_lumerical (bool): Re-simulate this one exported NN geometry if true.
+        preflight_mode (str): ``full`` or reference-only solver preflight.
     Returns:
         dict: Test/baseline metrics, provenance, selected codes, and validation status.
     Raises:
@@ -90,6 +92,8 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
     Examples:
         evaluate('runs/training/last.pt', 'runs/data/dataset_checkpoint.npz', 'runs/design')
     """
+    if preflight_mode not in ("full", "reference_only"):
+        raise ValueError("Invalid preflight mode.")
     print("Export: loading checkpoint and dataset", flush=True)
     state = load_checkpoint(checkpoint_path)
     data = load_dataset(dataset_path)
@@ -103,6 +107,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
     labels = torch.tensor(data["codes"], dtype=torch.long)
     test_ids, train_ids = state["splits"]["test"], state["splits"]["train"]
     report = {"backend": state["metadata"]["backend"], "physical_validation": "not_run",
+              "physical_preflight_mode": preflight_mode,
               "test": metrics(model, x, labels, test_ids), "test_sample_count": len(test_ids),
               "training_complete": state["finished"], "checkpoint_sha256": hashlib.sha256(Path(checkpoint_path).read_bytes()).hexdigest()}
     distances = torch.cdist(x[test_ids], x[train_ids])
@@ -180,7 +185,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, target=None, run_lumeric
     if run_lumerical:
         print("Export: running Lumerical preflight and fresh validation", flush=True)
         solver = LumericalSolver(physics)
-        solver.preflight(Path(dataset_path).parent)
+        solver.preflight(Path(dataset_path).parent, mode=preflight_mode)
         raw = solver._run(codes, project_path=directory / "design.fsp")
         power = solver._powers(raw)
         observed, reason = extract_features(data["frequencies"], power["co"])

@@ -40,7 +40,12 @@ uv run --locked python -c "import torch; print(torch.__version__, torch.version.
 
 Mantenha esse ambiente para retomar checkpoints. Mudanças de versão do PyTorch
 invalidam o treino existente. Testes de software CPU usam `requirements-cpu.txt`.
-O fluxo real reduzido e o fluxo `real_paper` não fazem fallback automático de CUDA para CPU. O fluxo dummy escolhe CPU explicitamente quando CUDA não está disponível. GPU no PyTorch não habilita GPU FDTD.
+Os fluxos físicos não fazem fallback para CPU: o treino exige CUDA e cada solve
+Lumerical executa uma verificação GPU e chama explicitamente
+`run("FDTD", "GPU")`. A execução falha se não houver recurso GPU ativo ou se o
+projeto for incompatível. O fluxo dummy pode usar CPU porque gera apenas dados
+sintéticos e não abre o FDTD. GPU no PyTorch não configura automaticamente o
+recurso GPU do Lumerical.
 
 ## 2. Configurar
 
@@ -253,6 +258,47 @@ As saídas ficam em `runs/real_paper/`. Consulte
 [as hipóteses do cenário em escala do artigo](docs/REAL_PAPER.md) antes de
 interpretar resultados. Oito máscaras aproximadas e convenções explícitas de
 pré-processamento não tornam este fluxo uma réplica exata dos dados CST do artigo.
+
+## Variantes narrowband
+
+Há dois fluxos físicos adicionais e independentes com banda inclusiva de 22 a
+28 GHz, 301 pontos e espaçamento exato de 20 MHz:
+
+- `src/real_narrowband/`: as mesmas 256 geometrias e a mesma rede do fluxo
+  reduzido, com resultados em `runs/real_narrowband/`.
+- `src/real_paper_narrowband/`: 2.000 geometrias amostradas e a rede restrita
+  paper-scale, com resultados em `runs/real_paper_narrowband/`.
+
+Execute os scripts numerados em ordem conforme [RUN_COMMANDS.md](RUN_COMMANDS.md).
+As configurações, limites, treino, alvo e flags de validação dessas variantes
+ficam separados em `src/metasurface/config.py`. O alvo padrão continua sendo o
+primeiro exemplo de teste, sem forçar notches em 23,5 ou 25,3 GHz.
+
+```bash
+uv run --locked python src/real_narrowband/00_analyze_networks.py
+uv run --locked python src/real_narrowband/01_generate_geometries.py
+uv run --locked python src/real_narrowband/02_simulate_geometries.py
+uv run --locked python src/real_narrowband/03_train.py
+uv run --locked python src/real_narrowband/04_test_and_export.py
+uv run --locked python src/real_narrowband/05_training_graphs.py
+
+uv run --locked python src/real_paper_narrowband/01_generate_geometries.py
+uv run --locked python src/real_paper_narrowband/02_simulate_geometries.py
+uv run --locked python src/real_paper_narrowband/03_train.py
+uv run --locked python src/real_paper_narrowband/04_test_and_export.py
+uv run --locked python src/real_paper_narrowband/05_training_graphs.py
+```
+
+Cada raiz contém subpastas independentes para geometrias, dados brutos e dataset
+preparado, checkpoints de treino, desenho exportado, gráficos, métricas e logs.
+Repetir uma etapa retoma apenas checkpoints com a mesma identidade física e de
+treino. Alterações de banda, preflight ou configuração exigem outra raiz.
+
+As duas variantes passam `reference_only` explicitamente na coleta e na
+validação opcional do desenho. Esse modo executa somente a referência vazia e
+pula espelho PEC e convergência. Portanto, os resultados narrowband não
+constituem validação numérica completa e não substituem a análise de 4--45 GHz.
+Notches interceptados por 22 ou 28 GHz continuam classificados como truncados.
 
 ## Referências
 

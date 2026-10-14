@@ -45,7 +45,8 @@ def load_raw(path):
     return state
 
 
-def simulate(manifest_path, directory, physics, limit=None, simulator=None):
+def simulate(manifest_path, directory, physics, limit=None, simulator=None,
+             preflight_mode="full"):
     """Run Lumerical for sampled layouts and commit every raw spectrum.
 
     Args:
@@ -54,6 +55,7 @@ def simulate(manifest_path, directory, physics, limit=None, simulator=None):
         physics (dict): Physical simulation settings.
         limit (int or None): Additional layouts to simulate.
         simulator (callable or None): Labeled test fixture, never for a real run.
+        preflight_mode (str): ``full`` or reference-only solver preflight.
 
     Returns:
         Path: Raw simulation checkpoint.
@@ -66,8 +68,13 @@ def simulate(manifest_path, directory, physics, limit=None, simulator=None):
     directory = Path(directory)
     path = directory / "simulation_checkpoint.npz"
     backend = "test_fixture" if simulator is not None else "lumerical"
-    meta = canonical_json({"schema": 1, "stage": "simulations", "family": "paper-scale-rings-v1", "backend": backend,
-                           "physics": physics, "geometry_id": manifest["checksum"].item()})
+    if preflight_mode not in ("full", "reference_only"):
+        raise ValueError("Invalid preflight mode.")
+    identity = {"schema": 1, "stage": "simulations", "family": "paper-scale-rings-v1", "backend": backend,
+                "physics": physics, "geometry_id": manifest["checksum"].item()}
+    if preflight_mode != "full":
+        identity["preflight_mode"] = preflight_mode
+    meta = canonical_json(identity)
     count = len(manifest["codes"])
     f = np.linspace(physics["frequency_min_hz"], physics["frequency_max_hz"], physics["frequency_points"])
     if path.exists():
@@ -88,7 +95,7 @@ def simulate(manifest_path, directory, physics, limit=None, simulator=None):
         from metasurface.reduced.lumerical import LumericalSolver
         solver = LumericalSolver(physics, rectangle_fn=rectangles, code_count=16)
         with timed_part("lumerical_preflight"):
-            solver.preflight(directory)
+            solver.preflight(directory, mode=preflight_mode)
         simulator = solver.simulate
     with timed_part("layout_collection"):
         for i in pending:

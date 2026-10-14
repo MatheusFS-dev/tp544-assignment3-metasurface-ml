@@ -79,10 +79,12 @@ def test_paper_fixture_pipeline_is_separate_and_labeled(tmp_path, capsys):
     assert resumed["history"] == full["history"]
     assert all(torch.equal(resumed["model"][name], full["model"][name])
                for name in full["model"])
-    report = evaluate(checkpoint, prepared, tmp_path / "design")
+    report = evaluate(checkpoint, prepared, tmp_path / "design",
+                      preflight_mode="reference_only")
     with pytest.raises(ValueError, match="physically validated"):
         evaluate(checkpoint, prepared, tmp_path / "blocked", run_lumerical=True)
     assert report["backend"] == "test_fixture"
     assert report["physical_validation"] == "not_run"
+    assert report["physical_preflight_mode"] == "reference_only"
     assert report["scenario"] == "paper_scale_approximation"
     assert json.loads((tmp_path / "design/design_spec.json").read_text())["backend"] == "test_fixture"

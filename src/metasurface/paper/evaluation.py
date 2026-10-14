@@ -40,7 +40,8 @@ def _notch_errors(target, observed):
     return result
 
 
-def evaluate(checkpoint_path, dataset_path, output_dir, run_lumerical=False):
+def evaluate(checkpoint_path, dataset_path, output_dir, run_lumerical=False,
+             preflight_mode="full"):
     """Score held-out layouts and export one paper-scale predicted design.
 
     Args:
@@ -48,6 +49,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, run_lumerical=False):
         dataset_path (Path-like): Unchanged prepared paper dataset.
         output_dir (Path-like): Independent paper export directory.
         run_lumerical (bool): Run fresh physical validation if explicitly enabled.
+        preflight_mode (str): ``full`` or reference-only solver preflight.
 
     Returns:
         dict: Labeled held-out and physical comparison results.
@@ -55,6 +57,8 @@ def evaluate(checkpoint_path, dataset_path, output_dir, run_lumerical=False):
     Raises:
         ValueError: If dataset identity or provenance is invalid.
     """
+    if preflight_mode not in ("full", "reference_only"):
+        raise ValueError("Invalid preflight mode.")
     state = load_checkpoint(checkpoint_path)
     data = load_dataset(dataset_path)
     if state["dataset_id"] != data["checksum"].item() or "model" not in state:
@@ -72,7 +76,8 @@ def evaluate(checkpoint_path, dataset_path, output_dir, run_lumerical=False):
     truth = data["codes"][test_ids]
     bits = encode_bits(truth)
     report = {"scenario": "paper_scale_approximation", "backend": state["metadata"]["backend"],
-              "physical_validation": "not_run", "training_complete": state["finished"],
+              "physical_validation": "not_run", "physical_preflight_mode": preflight_mode,
+              "training_complete": state["finished"],
               "test_sample_count": len(test_ids),
               "bit_accuracy": float(((outputs >= 0.5) == bits.bool()).float().mean()),
               "tile_accuracy": float((predicted == truth).mean()),
@@ -116,7 +121,7 @@ def evaluate(checkpoint_path, dataset_path, output_dir, run_lumerical=False):
     plt.close(fig)
     if run_lumerical:
         solver = LumericalSolver(physics, rectangle_fn=rectangles, code_count=16)
-        solver.preflight(Path(dataset_path).parent)
+        solver.preflight(Path(dataset_path).parent, mode=preflight_mode)
         raw = solver._run(codes, project_path=output / "design.fsp")
         power = solver._powers(raw)
         features, reason = extract_features(data["frequencies"], power["co"])

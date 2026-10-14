@@ -202,3 +202,50 @@ def test_reference_only_preflight_skips_physical_validation(tmp_path, monkeypatc
     monkeypatch.setattr(cached, "_run", lambda *args, **kwargs: pytest.fail("cache not reused"))
     cached.preflight(tmp_path, mode="reference_only")
     assert np.array_equal(cached.reference["incident"], raw["incident"])
+
+
+def test_lumerical_run_explicitly_requires_gpu():
+    """Require every physical solve to select FDTD GPU explicitly."""
+    m = module("metasurface.reduced.lumerical")
+    calls = []
+
+    class FakeSession:
+        """Record the hardware check and solver launch arguments."""
+
+        def runsystemcheck(self, *args):
+            calls.append(("check", args))
+            return {"memory": "fixture"}
+
+        def run(self, *args):
+            calls.append(("run", args))
+
+    m.run_on_gpu(FakeSession())
+    assert calls == [
+        ("check", ("FDTD", "GPU")),
+        ("run", ("FDTD", "GPU")),
+    ]
+
+
+@pytest.mark.parametrize("failure_method", ["runsystemcheck", "run"])
+def test_lumerical_gpu_failure_has_no_cpu_fallback(failure_method):
+    """Raise a clear error instead of retrying an unavailable GPU solve on CPU."""
+    m = module("metasurface.reduced.lumerical")
+    calls = []
+
+    class FailingSession:
+        """Fail one GPU operation while recording all requested devices."""
+
+        def runsystemcheck(self, *args):
+            calls.append(("check", args))
+            if failure_method == "runsystemcheck":
+                raise RuntimeError("GPU unavailable")
+            return {}
+
+        def run(self, *args):
+            calls.append(("run", args))
+            if failure_method == "run":
+                raise RuntimeError("GPU unavailable")
+
+    with pytest.raises(RuntimeError, match="GPU-required Lumerical FDTD"):
+        m.run_on_gpu(FailingSession())
+    assert all("CPU" not in args for _, args in calls)
