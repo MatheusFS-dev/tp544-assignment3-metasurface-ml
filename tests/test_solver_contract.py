@@ -17,7 +17,7 @@ def test_project_has_physical_geometry_and_boundaries():
         AssertionError: If the expected contract is violated.
     """
     script = module("metasurface.reduced.lumerical").project_script([1, 2, 3, 0], module("metasurface.config").PHYSICS)
-    for text in ['"Periodic"', '"PML"', '"Backward"', '"Conductivity"', '"Sampled data"', '"reflection"', '"incident"', '"simulation time"']:
+    for text in ['"Periodic"', '"PML"', '"Backward"', '"Copper_RF"', '"Sampled data"', '"reflection"', '"incident"', '"simulation time"']:
         assert text in script
     assert 'set("polarization angle",0)' in script
     assert 'set("z min",-0.0015)' in script
@@ -37,6 +37,19 @@ def test_fr4_requests_fit_settings_that_meet_material_tolerance():
         [0, 0, 0, 0], module("metasurface.config").PHYSICS, "empty")
     assert 'setmaterial("FR4_RF","max coefficients",8)' in script
     assert 'setmaterial("FR4_RF","tolerance",0.001)' in script
+
+
+def test_copper_uses_sampled_complex_permittivity_not_conductive_material():
+    """Represent finite-conductivity copper with a GPU-compatible 3D fit."""
+    m = module("metasurface.reduced.lumerical")
+    physics = module("metasurface.config").PHYSICS
+    script = m.project_script([1, 2, 3, 0], physics)
+    coefficient = physics["copper_conductivity_s_m"] / (2 * np.pi * m.EPS0)
+    assert 'mat=addmaterial("Sampled data"); setmaterial(mat,"name","Copper_RF")' in script
+    assert 'addmaterial("Conductive")' not in script
+    assert 'setmaterial("Copper_RF","Conductivity"' not in script
+    assert f'ceps=1+1i*{coefficient:.12g}/mf' in script
+    assert 'setmaterial("Copper_RF","sampled data",[mf,ceps])' in script
 
 
 def test_pec_option_and_reference_do_not_include_copper_pixels():
@@ -224,6 +237,37 @@ def test_lumerical_run_explicitly_requires_gpu():
         ("check", ("FDTD", "GPU")),
         ("run", ("FDTD", "GPU")),
     ]
+
+
+def test_native_solver_log_failure_is_reported_before_status(tmp_path):
+    """Surface a native engine crash from the documented project log."""
+    m = module("metasurface.reduced.lumerical")
+    project = tmp_path / "active_device.fsp"
+    project.with_name("active_device_p0.log").write_text(
+        "GPU streaming multiprocessors(SMs): 28\ninvalid unordered_map<K, T> key\n")
+
+    with pytest.raises(RuntimeError, match=r"invalid unordered_map<K, T> key"):
+        m.check_solver_log(project)
+
+
+def test_gpu_run_reports_native_log_failure_even_when_api_run_raises(tmp_path):
+    """Prefer the engine's diagnostic over a generic Automation API failure."""
+    m = module("metasurface.reduced.lumerical")
+    project = tmp_path / "device.fsp"
+    project.with_name("device_p0.log").write_text(
+        "GPU streaming multiprocessors(SMs): 28\ninvalid unordered_map<K, T> key\n")
+
+    class CrashedSession:
+        """Emulate an engine crash after a successful GPU compatibility check."""
+
+        def runsystemcheck(self, *args):
+            return {}
+
+        def run(self, *args):
+            raise RuntimeError("Failed to evaluate code")
+
+    with pytest.raises(RuntimeError, match=r"invalid unordered_map<K, T> key"):
+        m.run_on_gpu(CrashedSession(), project)
 
 
 @pytest.mark.parametrize("failure_method", ["runsystemcheck", "run"])

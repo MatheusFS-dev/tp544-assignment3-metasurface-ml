@@ -12,9 +12,56 @@ from metasurface.reduced.geometry import rectangles
 from metasurface.common.storage import canonical_json, load_npz, save_npz
 
 C0 = 299792458.0
+EPS0 = 8.8541878128e-12
 
 
-def run_on_gpu(sim):
+def _solver_log_paths(project_path):
+    """Return the documented per-process logs for a saved Lumerical project.
+
+    Args:
+        project_path (Path-like): Saved ``.fsp`` project passed to the engine.
+
+    Returns:
+        list[Path]: Existing ``<project stem>_p*.log`` files in process order.
+    """
+    project = Path(project_path)
+    return sorted(project.parent.glob(f"{project.stem}_p*.log"))
+
+
+def check_solver_log(project_path):
+    """Raise with a native FDTD engine diagnostic when its log reports a crash.
+
+    Args:
+        project_path (Path-like): Saved ``.fsp`` project passed to the engine.
+
+    Returns:
+        None.
+
+    Raises:
+        RuntimeError: If a process log contains a native fatal diagnostic.
+
+    Notes:
+        Lumerical writes ``<project stem>_p0.log`` beside the project. Missing
+        logs are left to the Automation API because some resource setups route
+        logs elsewhere.
+    """
+    fatal_markers = (
+        "invalid unordered_map",
+        "fatal error",
+        "terminate called",
+        "unhandled exception",
+        "solver exited unexpectedly",
+        "cuda error",
+    )
+    for path in _solver_log_paths(project_path):
+        text = path.read_text(errors="replace")
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        for line in reversed(lines):
+            if any(marker in line.lower() for marker in fatal_markers):
+                raise RuntimeError(f"Lumerical FDTD engine failed ({path.name}): {line}")
+
+
+def run_on_gpu(sim, project_path=None):
     """Check and launch one Lumerical FDTD solve explicitly on GPU.
 
     Args:
@@ -34,10 +81,14 @@ def run_on_gpu(sim):
         sim.runsystemcheck("FDTD", "GPU")
         sim.run("FDTD", "GPU")
     except Exception as error:
+        if project_path is not None:
+            check_solver_log(project_path)
         raise RuntimeError(
             "GPU-required Lumerical FDTD execution failed. Configure an active "
-            "GPU resource and ensure this project is GPU-compatible."
+            f"GPU resource and ensure this project is GPU-compatible. API error: {error}"
         ) from error
+    if project_path is not None:
+        check_solver_log(project_path)
 
 
 def validate_physics(p):
@@ -132,9 +183,11 @@ meps=({p['epsilon_real']:.12g}+1i*{p['epsilon_imag']:.12g})*ones(101,1);
 setmaterial("FR4_RF","max coefficients",8);
 setmaterial("FR4_RF","tolerance",0.001);
 setmaterial("FR4_RF","sampled data",[mf,meps]);
-mat=addmaterial("Conductive"); setmaterial(mat,"name","Copper_RF");
-setmaterial("Copper_RF","Permittivity",1);
-setmaterial("Copper_RF","Conductivity",{p['copper_conductivity_s_m']:.12g});
+mat=addmaterial("Sampled data"); setmaterial(mat,"name","Copper_RF");
+ceps=1+1i*{p['copper_conductivity_s_m'] / (2 * np.pi * EPS0):.12g}/mf;
+setmaterial("Copper_RF","max coefficients",8);
+setmaterial("Copper_RF","tolerance",0.001);
+setmaterial("Copper_RF","sampled data",[mf,ceps]);
 addfdtd; set("dimension","3D");
 set("x",0); set("y",0); set("x span",{period:.12g}); set("y span",{period:.12g});
 set("z min",{p['z_min_m']:.12g}); set("z max",{p['z_max_m']:.12g});
@@ -316,7 +369,7 @@ class LumericalSolver:
             if len(fitted) != len(expected) or not np.isfinite(fitted).all() or np.max(abs(fitted - target)) > p["material_fit_tolerance"]:
                 raise RuntimeError("FR4 material fit does not reproduce the specified complex permittivity.")
             sim.save(str(Path(project_path).resolve()))
-            run_on_gpu(sim)
+            run_on_gpu(sim, project_path)
             check_status(sim.getresult("FDTD", "status"))
             reflection = sim.getresult("reflection", "E")
             incident = sim.getresult("incident", "E")
