@@ -14,6 +14,40 @@ All Lumerical-backed stages require an active FDTD GPU resource. The shared
 solver runs the GPU system check and launches `run("FDTD", "GPU")`; it raises
 an error instead of falling back to CPU.
 
+## Standalone FDTD GUI scripts
+
+Each physical workflow also has one `.lsf` that generates its tile codes and
+32 × 32 copper masks, constructs each FDTD model, runs it on GPU, and writes
+the geometry manifest and one MAT result per completed sample. These scripts
+run directly in the Lumerical FDTD Script File Editor. Set the GUI working
+directory to a new, empty experiment directory before pressing Run. Configure
+an active GPU resource first. An interrupted run can resume in the same
+directory. Change the directory and `run_prefix` when changing physics or tile
+definitions.
+
+| Workflow | Standalone script |
+|---|---|
+| Real | `src/real/02_simulate_in_fdtd_gui.lsf` |
+| Real paper | `src/real_paper/02_simulate_in_fdtd_gui.lsf` |
+| Real narrowband | `src/real_narrowband/02_simulate_in_fdtd_gui.lsf` |
+| Real paper narrowband | `src/real_paper_narrowband/02_simulate_in_fdtd_gui.lsf` |
+
+Each script saves `<run_prefix>_geometry_manifest.mat`,
+`<run_prefix>_preflight.mat`, and `<run_prefix>_sample_<id>.mat` files.
+Sample files contain tile codes, the binary pixel mask, frequency in Hz,
+co-polarized, cross-polarized, and total reflected power, and solver runtime.
+A `.done` file marks a completed export. A failed reference or pilot stops
+collection. Only the wideband paper script enables the full PEC and mesh/time
+pilot gate, matching its existing Python workflow. The other configurations
+use empty-reference calibration only and therefore do not establish numerical
+convergence.
+
+The LSF results are an **independent dataset**. They do not create Python
+`simulation_checkpoint.npz` files for Stage 3. In particular, Lumerical's
+seeded random generator gives the paper-scale scripts a different 2,000-layout
+sample from NumPy's generator in the Python workflow. Do not combine their
+results or training identities without an explicit import and provenance check.
+
 ```bash
 uv run --locked python src/real/00_analyze_networks.py
 uv run --locked python src/real/01_generate_geometries.py

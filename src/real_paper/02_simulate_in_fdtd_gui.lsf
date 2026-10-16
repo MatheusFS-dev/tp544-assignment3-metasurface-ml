@@ -1,0 +1,338 @@
+# Standalone paper-scale metasurface generation and GPU simulation.
+# Open in the Lumerical FDTD Script File Editor. Set its working directory to
+# an EMPTY experiment directory before running. Reruns resume completed cases.
+# Changing physics or tile rules requires a new directory and run_prefix.
+# Outputs are independent of the Python NPZ checkpoints.
+
+geometry_family = "paper";
+sample_count = 2000;
+frequency_min_hz = 4e9;
+frequency_max_hz = 45e9;
+frequency_points = 1641;
+full_preflight = 1; # Matches this workflow preflight mode.
+run_prefix = "paper_4_45_copper_v1";
+?"Output directory: "+pwd;
+
+function make_mask(tile_codes, family_name) {
+    mask = matrix(32,32);
+    if (family_name == "reduced") {
+        sides = [0,4,6,6];
+        widths = [0,1,1,2];
+    } else {
+        sides = [4,6,6,8,8,8];
+        widths = [1,1,2,1,2,3];
+    }
+    for (row_idx=1:32) {
+        tile_row = floor((row_idx-1)/8)+1;
+        if ((family_name == "reduced") & (tile_row > 2)) { tile_row = 5-tile_row; }
+        local_y = mod(row_idx-1,8)+1;
+        for (col_idx=1:32) {
+            tile_col = floor((col_idx-1)/8)+1;
+            if ((family_name == "reduced") & (tile_col > 2)) { tile_col = 5-tile_col; }
+            local_x = mod(col_idx-1,8)+1;
+            if (family_name == "reduced") {
+                pattern_id = tile_codes((tile_row-1)*2+tile_col);
+            } else {
+                pattern_id = tile_codes((tile_row-1)*4+tile_col);
+            }
+            radius_x = abs(local_x-4.5);
+            radius_y = abs(local_y-4.5);
+            if ((family_name == "reduced") & (pattern_id == 0)) {
+                mask(row_idx,col_idx) = 0;
+            } else {
+                if ((family_name == "paper") & (pattern_id >= 6)) {
+                    distance = radius_x+radius_y;
+                    if (pattern_id == 6) {
+                        mask(row_idx,col_idx) = (distance >= 3) & (distance <= 4);
+                    } else {
+                        mask(row_idx,col_idx) = (distance >= 5) & (distance <= 6);
+                    }
+                } else {
+                    side = sides(pattern_id+1);
+                    width = widths(pattern_id+1);
+                    outer = (radius_x <= side/2-0.5) & (radius_y <= side/2-0.5);
+                    inner = (radius_x <= side/2-width-0.5) & (radius_y <= side/2-width-0.5);
+                    mask(row_idx,col_idx) = outer & (inner == 0);
+                }
+            }
+        }
+    }
+    return mask;
+}
+
+function solve_cell(tile_codes, family_name, reference_mode, fine_mode,
+                    f_min, f_max, n_points, prefix_name) {
+    pixel_m = 0.2e-3;
+    period_m = 32*pixel_m;
+    substrate_m = 1.5e-3;
+    copper_m = 18e-6;
+    conductivity = 5.8e7;
+    eps0_value = 8.8541878128e-12;
+    light_speed = 299792458;
+    mesh_xy = 0.1e-3;
+    mesh_z = 0.1e-3;
+    simulation_seconds = 30e-9;
+    copper_divisions = 3;
+    if (fine_mode == 1) {
+        mesh_xy = 0.75*mesh_xy;
+        mesh_z = 0.75*mesh_z;
+        simulation_seconds = 2*simulation_seconds;
+        copper_divisions = 4;
+    }
+    switchtolayout;
+    groupscope("::model");
+    selectall; delete;
+    if (materialexists("FR4_RF")) { deletematerial("FR4_RF"); }
+    if (materialexists("Copper_RF")) { deletematerial("Copper_RF"); }
+    material_frequencies = linspace(f_min,f_max,101);
+    fr4_eps = (4.2+1i*0.025)*ones(101,1);
+    material_handle = addmaterial("Sampled data");
+    setmaterial(material_handle,"name","FR4_RF");
+    setmaterial("FR4_RF","max coefficients",8);
+    setmaterial("FR4_RF","tolerance",0.001);
+    setmaterial("FR4_RF","sampled data",[material_frequencies,fr4_eps]);
+    copper_eps = 1+1i*conductivity/(2*pi*eps0_value*material_frequencies);
+    material_handle = addmaterial("Sampled data");
+    setmaterial(material_handle,"name","Copper_RF");
+    setmaterial("Copper_RF","max coefficients",8);
+    setmaterial("Copper_RF","tolerance",0.001);
+    setmaterial("Copper_RF","sampled data",[material_frequencies,copper_eps]);
+
+    addfdtd; set("dimension","3D");
+    set("x",0); set("y",0); set("x span",period_m); set("y span",period_m);
+    set("z min",-5e-3); set("z max",10e-3);
+    set("x min bc","Periodic"); set("x max bc","Periodic");
+    set("y min bc","Periodic"); set("y max bc","Periodic");
+    set("z min bc","PML"); set("z max bc","PML");
+    set("simulation time",simulation_seconds); set("auto shutoff min",1e-6);
+    addmesh; set("name","cell_mesh");
+    set("x",0); set("y",0); set("x span",period_m); set("y span",period_m);
+    set("z min",-substrate_m-copper_m); set("z max",copper_m);
+    set("override x mesh",1); set("override y mesh",1); set("override z mesh",1);
+    set("dx",mesh_xy); set("dy",mesh_xy); set("dz",mesh_z);
+    addplane; set("name","source"); set("injection axis","z");
+    set("direction","Backward"); set("x",0); set("y",0);
+    set("x span",period_m); set("y span",period_m); set("z",4e-3);
+    set("angle theta",0); set("angle phi",0); set("polarization angle",0);
+    set("override global source settings",1);
+    set("wavelength start",light_speed/f_max);
+    set("wavelength stop",light_speed/f_min);
+    setglobalmonitor("use source limits",1);
+    setglobalmonitor("use linear wavelength spacing",0);
+    setglobalmonitor("frequency points",n_points);
+    addpower; set("name","incident"); set("monitor type","2D Z-normal");
+    set("x",0); set("y",0); set("x span",period_m); set("y span",period_m);
+    set("z",3e-3);
+    addpower; set("name","reflection"); set("monitor type","2D Z-normal");
+    set("x",0); set("y",0); set("x span",period_m); set("y span",period_m);
+    set("z",6e-3);
+
+    pixel_mask = matrix(32,32);
+    if (reference_mode == "mirror") {
+        addrect; set("name","mirror"); set("x",0); set("y",0);
+        set("x span",period_m); set("y span",period_m);
+        set("z min",0); set("z max",copper_m);
+        set("material","PEC (Perfect Electrical Conductor)");
+    }
+    if (reference_mode == "device") {
+        pixel_mask = make_mask(tile_codes,family_name);
+        addrect; set("name","substrate"); set("x",0); set("y",0);
+        set("x span",period_m); set("y span",period_m);
+        set("z min",-substrate_m); set("z max",0); set("material","FR4_RF");
+        addrect; set("name","ground"); set("x",0); set("y",0);
+        set("x span",period_m); set("y span",period_m);
+        set("z min",-substrate_m-copper_m); set("z max",-substrate_m);
+        set("material","Copper_RF");
+        for (row_idx=1:32) {
+            run_start = 0;
+            for (col_idx=1:33) {
+                pixel_value = 0;
+                if (col_idx <= 32) { pixel_value = pixel_mask(row_idx,col_idx); }
+                if ((pixel_value == 1) & (run_start == 0)) { run_start = col_idx; }
+                if ((pixel_value == 0) & (run_start > 0)) {
+                    run_end = col_idx-1;
+                    addrect; set("name","pixel_"+num2str(row_idx)+"_"+num2str(run_start));
+                    set("x",((run_start-1+run_end)/2-16)*pixel_m);
+                    set("y",(row_idx-0.5-16)*pixel_m);
+                    set("x span",(run_end-run_start+1)*pixel_m);
+                    set("y span",pixel_m); set("z min",0); set("z max",copper_m);
+                    set("material","Copper_RF");
+                    run_start = 0;
+                }
+            }
+        }
+        addmesh; set("name","copper_mesh_top");
+        set("x",0); set("y",0); set("x span",period_m); set("y span",period_m);
+        set("z min",0); set("z max",copper_m);
+        set("override x mesh",0); set("override y mesh",0); set("override z mesh",1);
+        set("dz",copper_m/copper_divisions);
+        addmesh; set("name","copper_mesh_ground");
+        set("x",0); set("y",0); set("x span",period_m); set("y span",period_m);
+        set("z min",-substrate_m-copper_m); set("z max",-substrate_m);
+        set("override x mesh",0); set("override y mesh",0); set("override z mesh",1);
+        set("dz",copper_m/copper_divisions);
+    }
+    fit_index = getfdtdindex("FR4_RF",linspace(f_min,f_max,n_points),f_min,f_max);
+    fit_error = max(abs(fit_index^2-(4.2+1i*0.025)));
+    save(prefix_name+"_active.fsp");
+    gpu_requirements = runsystemcheck("FDTD","GPU");
+    started_ms = now;
+    run("FDTD","GPU");
+    elapsed_seconds = (now-started_ms)/1000;
+    solver_status = getresult("FDTD","status");
+    frequency_hz = getdata("reflection","f");
+    incident_frequency_hz = getdata("incident","f");
+    incident_x = getdata("incident","x"); incident_y = getdata("incident","y");
+    reflection_x = getdata("reflection","x"); reflection_y = getdata("reflection","y");
+    incident_ex = integrate(getdata("incident","Ex"),1:2,incident_x,incident_y)/
+        ((incident_x(length(incident_x))-incident_x(1))*(incident_y(length(incident_y))-incident_y(1)));
+    reflection_ex = integrate(getdata("reflection","Ex"),1:2,reflection_x,reflection_y)/
+        ((reflection_x(length(reflection_x))-reflection_x(1))*(reflection_y(length(reflection_y))-reflection_y(1)));
+    reflection_ey = integrate(getdata("reflection","Ey"),1:2,reflection_x,reflection_y)/
+        ((reflection_x(length(reflection_x))-reflection_x(1))*(reflection_y(length(reflection_y))-reflection_y(1)));
+    total_reflection = transmission("reflection");
+    order = 1:length(frequency_hz);
+    if (frequency_hz(1) > frequency_hz(length(frequency_hz))) {
+        order = length(frequency_hz):-1:1;
+    }
+    result = struct;
+    result.frequency_hz = frequency_hz(order);
+    result.incident_frequency_hz = incident_frequency_hz(order);
+    result.incident_ex = incident_ex(order);
+    result.reflection_ex = reflection_ex(order);
+    result.reflection_ey = reflection_ey(order);
+    result.total_reflection = total_reflection(order);
+    result.pixel_mask = pixel_mask;
+    result.solver_status = solver_status;
+    result.fit_error = fit_error;
+    result.elapsed_seconds = elapsed_seconds;
+    return result;
+}
+
+# Geometry generation is entirely inside this script. The paper-family RNG is
+# Lumerical's randreset(2026), not NumPy's default_rng(2026).
+tile_count = 16;
+randreset(2026);
+all_codes = matrix(sample_count,tile_count);
+all_masks = matrix(32,32,sample_count);
+for (sample_idx = 1:sample_count) {
+    duplicate = 1;
+    for (0; duplicate; 0) {
+        candidate = matrix(1,tile_count);
+        for (tile_idx = 1:tile_count) { candidate(tile_idx) = rand(0,7,2); }
+        duplicate = 0;
+        if (sample_idx > 1) {
+            for (previous_idx = 1:sample_idx-1) {
+                if (sum(abs(all_codes(previous_idx,1:tile_count)-candidate)) == 0) {
+                    duplicate = 1;
+                }
+            }
+        }
+    }
+    all_codes(sample_idx,1:tile_count) = candidate;
+    all_masks(:,:,sample_idx) = make_mask(candidate,geometry_family);
+}
+matlabsavelegacy(run_prefix+"_geometry_manifest",all_codes,all_masks,
+                 geometry_family,sample_count,frequency_min_hz,frequency_max_hz,
+                 frequency_points,full_preflight);
+
+preflight_marker = run_prefix+"_preflight.done";
+preflight_ok = 1;
+convergence_error = -1;
+if (fileexists(preflight_marker)) {
+    matlabload(run_prefix+"_preflight.mat");
+} else {
+    reference_codes = 2*ones(1,tile_count);
+    empty_case = solve_cell(reference_codes,geometry_family,"empty",0,
+                            frequency_min_hz,frequency_max_hz,frequency_points,run_prefix);
+    if ((empty_case.solver_status != 2) | (empty_case.fit_error > 0.01) |
+        (length(empty_case.frequency_hz) != frequency_points) |
+        (abs(empty_case.frequency_hz(1)-frequency_min_hz) > 1e3) |
+        (abs(empty_case.frequency_hz(frequency_points)-frequency_max_hz) > 1e3) |
+        (max(abs(empty_case.incident_frequency_hz-empty_case.frequency_hz)) > 1e3) |
+        (max(abs(empty_case.total_reflection)) > 0.01)) { preflight_ok = 0; }
+    if (preflight_ok) {
+        empty_incident = empty_case.incident_ex;
+        empty_ex = empty_case.reflection_ex;
+        empty_ey = empty_case.reflection_ey;
+        pulse_power = abs(empty_incident)^2;
+        if (max(pulse_power) <= 0) { preflight_ok = 0; }
+        if (preflight_ok & (min(pulse_power)/max(pulse_power) < 0.001)) { preflight_ok = 0; }
+    }
+    if (preflight_ok & full_preflight) {
+        mirror_case = solve_cell(reference_codes,geometry_family,"mirror",0,
+                                 frequency_min_hz,frequency_max_hz,frequency_points,run_prefix);
+        mirror_co = abs(mirror_case.reflection_ex-empty_ex)^2/abs(empty_incident)^2;
+        mirror_cross = abs(mirror_case.reflection_ey-empty_ey)^2/abs(empty_incident)^2;
+        if ((mirror_case.solver_status != 2) | (mirror_case.fit_error > 0.01) |
+            (max(abs(mirror_co-1)) > 0.05) | (max(mirror_cross) > 0.01) |
+            (max(abs(mirror_co+mirror_cross-mirror_case.total_reflection)) > 0.05)) {
+            preflight_ok = 0;
+        }
+    }
+    if (preflight_ok & full_preflight) {
+        coarse_case = solve_cell(reference_codes,geometry_family,"device",0,
+                                 frequency_min_hz,frequency_max_hz,frequency_points,run_prefix);
+        coarse_co = abs(coarse_case.reflection_ex-empty_ex)^2/abs(empty_incident)^2;
+        coarse_total = coarse_case.total_reflection;
+        fine_empty = solve_cell(reference_codes,geometry_family,"empty",1,
+                                frequency_min_hz,frequency_max_hz,frequency_points,run_prefix);
+        fine_case = solve_cell(reference_codes,geometry_family,"device",1,
+                               frequency_min_hz,frequency_max_hz,frequency_points,run_prefix);
+        fine_co = abs(fine_case.reflection_ex-fine_empty.reflection_ex)^2/
+                  abs(fine_empty.incident_ex)^2;
+        convergence_error = max([max(abs(coarse_co-fine_co)),
+                                 max(abs(coarse_total-fine_case.total_reflection))]);
+        fine_pulse_power = abs(fine_empty.incident_ex)^2;
+        if ((coarse_case.solver_status != 2) | (fine_empty.solver_status != 2) |
+            (fine_case.solver_status != 2) | (coarse_case.fit_error > 0.01) |
+            (fine_empty.fit_error > 0.01) | (fine_case.fit_error > 0.01) |
+            (max(abs(fine_empty.total_reflection)) > 0.01) |
+            (max(fine_pulse_power) <= 0) |
+            (min(fine_pulse_power)/max(fine_pulse_power) < 0.001) |
+            (convergence_error > 0.02)) { preflight_ok = 0; }
+    }
+    if (preflight_ok) {
+        matlabsavelegacy(run_prefix+"_preflight",empty_incident,empty_ex,empty_ey,
+                         convergence_error,full_preflight);
+        write(preflight_marker,"complete","overwrite");
+    }
+}
+
+if (preflight_ok == 0) {
+    ?"Preflight failed. No geometry spectra were collected.";
+} else {
+    for (sample_idx = 1:sample_count) {
+        result_base = run_prefix+"_sample_"+num2str(sample_idx);
+        if (fileexists(result_base+".done") == 0) {
+            tile_codes = all_codes(sample_idx,1:tile_count);
+            device_case = solve_cell(tile_codes,geometry_family,"device",0,
+                                     frequency_min_hz,frequency_max_hz,frequency_points,run_prefix);
+            frequency_hz = device_case.frequency_hz;
+            co_power = abs(device_case.reflection_ex-empty_ex)^2/abs(empty_incident)^2;
+            cross_power = abs(device_case.reflection_ey-empty_ey)^2/abs(empty_incident)^2;
+            total_power = device_case.total_reflection;
+            mismatch = max(abs(co_power+cross_power-total_power));
+            if ((device_case.solver_status != 2) | (device_case.fit_error > 0.01) |
+                (length(frequency_hz) != frequency_points) |
+                (abs(frequency_hz(1)-frequency_min_hz) > 1e3) |
+                (abs(frequency_hz(frequency_points)-frequency_max_hz) > 1e3) |
+                (max(abs(device_case.incident_frequency_hz-frequency_hz)) > 1e3) |
+                (mismatch > 0.05) | (min(total_power) < -1e-5) |
+                (max(total_power) > 1.05)) {
+                ?"Rejected sample "+num2str(sample_idx)+". Check the solver and monitors.";
+                break;
+            }
+            for (frequency_idx = 1:frequency_points) {
+                if (total_power(frequency_idx) < 0) { total_power(frequency_idx) = 0; }
+            }
+            pixel_mask = all_masks(:,:,sample_idx);
+            elapsed_seconds = device_case.elapsed_seconds;
+            matlabsavelegacy(result_base,sample_idx,tile_codes,pixel_mask,
+                             frequency_hz,co_power,cross_power,total_power,elapsed_seconds,
+                             geometry_family,frequency_min_hz,frequency_max_hz,frequency_points);
+            write(result_base+".done","complete","overwrite");
+            ?"Saved sample "+num2str(sample_idx)+" / "+num2str(sample_count);
+        }
+    }
+}
