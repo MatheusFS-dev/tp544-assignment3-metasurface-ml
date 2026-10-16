@@ -32,12 +32,17 @@ def load_raw(path):
     count = len(state["codes"])
     p = metadata["physics"]
     expected = np.linspace(p["frequency_min_hz"], p["frequency_max_hz"], p["frequency_points"])
-    if (metadata.get("family") != "paper-scale-rings-v1" or metadata.get("stage") not in ("simulations", "training_dataset") or metadata.get("backend") not in ("lumerical", "test_fixture", "synthetic_surrogate")
+    available_traces = tuple(metadata.get("available_traces", ("co", "cross", "total")))
+    feature_trace = metadata.get("feature_trace", "co")
+    if (metadata.get("family") != "paper-scale-rings-v1" or metadata.get("stage") not in ("simulations", "training_dataset") or metadata.get("backend") not in ("lumerical", "test_fixture", "synthetic_surrogate", "external_lumerical_import")
             or state["codes"].shape != (count, 16) or state["completed"].shape != (count,)
             or state["seconds"].shape != (count,) or not np.array_equal(state["frequencies"], expected)
-            or not np.isfinite(state["seconds"]).all() or np.any(state["seconds"] < 0)):
+            or not np.isfinite(state["seconds"]).all() or np.any(state["seconds"] < 0)
+            or not available_traces or feature_trace not in available_traces):
         raise ValueError("Invalid paper raw-spectrum checkpoint.")
-    for key in ("co", "cross", "total"):
+    for key in available_traces:
+        if key not in state:
+            raise ValueError("Invalid paper spectrum shape.")
         if state[key].shape != (count, len(expected)):
             raise ValueError("Invalid paper spectrum shape.")
         for i in np.flatnonzero(state["completed"]):
@@ -124,7 +129,7 @@ def prepare(raw_path, output_path):
         raise ValueError("Prepared paper dataset must not overwrite raw spectra.")
     raw = load_raw(raw_path)
     meta = json.loads(raw["metadata"].item())
-    if meta.get("backend") not in ("lumerical", "test_fixture", "synthetic_surrogate"):
+    if meta.get("backend") not in ("lumerical", "test_fixture", "synthetic_surrogate", "external_lumerical_import"):
         raise ValueError("Unsupported paper data provenance.")
     source_id = raw.pop("checksum").item()
     meta.update(stage="training_dataset", raw_simulation_id=source_id)
@@ -140,7 +145,8 @@ def prepare(raw_path, output_path):
     completed = np.flatnonzero(raw["completed"])
     progress = Progress("Paper dataset preparation", len(completed))
     for position, i in enumerate(completed, 1):
-        raw["features"][i], raw["reason"][i] = extract_features(raw["frequencies"], raw["co"][i])
+        trace = meta.get("feature_trace", "co")
+        raw["features"][i], raw["reason"][i] = extract_features(raw["frequencies"], raw[trace][i])
         if position % 100 == 0 or position == len(completed):
             print(f"Paper dataset: {position}/{len(completed)} extracted", flush=True)
     save_npz(destination, raw)
@@ -165,7 +171,8 @@ def load_dataset(path):
     if meta.get("stage") != "training_dataset" or state["features"].shape != (len(state["codes"]), 24):
         raise ValueError("Invalid paper dataset identity or dimensions.")
     for i in np.flatnonzero(state["completed"]):
-        features, reason = extract_features(state["frequencies"], state["co"][i])
+        trace = meta.get("feature_trace", "co")
+        features, reason = extract_features(state["frequencies"], state[trace][i])
         if reason != state["reason"][i] or not np.array_equal(features, state["features"][i]):
             raise ValueError("Paper descriptors differ from source spectra.")
     return state

@@ -1,0 +1,196 @@
+###########################################################################
+#  02_simular_22_28.lsf  -  Ghorbani et al. (2021), versao 22 a 28 GHz
+#
+#  SIMULA AS AMOSTRAS SO DE 22 A 28 GHZ E GRAVA NUM UNICO ARQUIVO:
+#       resultados_22_28/s11_todos.txt   (1 linha por amostra: id + S11 em dB)
+#       resultados_22_28/frequencias.txt (as 601 frequencias em GHz)
+#
+#  As amostras que JA FORAM simuladas de 4 a 45 GHz (resultados/s11_todos.txt)
+#  sao PULADAS: o Python corta-as para 22-28 GHz e reaproveita-as.
+#
+#  ANTES DE RODAR: crie a pasta  resultados_22_28  dentro de ghorbani_repro.
+#  Se parar (luz, fechar o Lumerical): rode  python 09_verificar_resultados.py
+#  e depois rode ESTE script outra vez -> continua de onde parou.
+#
+#  NAO usar como nome de variavel: c, e, i, pi, h, hbar, kb, eps0, mu0
+###########################################################################
+
+###########################################################################
+# 0) CONFIGURACAO - so confira a pasta
+###########################################################################
+pasta       = "C:/Users/Aluno/Documents/TP544/Trabalho3/ghorbani_repro";  # barras /
+arquivo_in  = "amostras_lumerical.txt";   # passo 6: "projetos_lumerical.txt"
+pasta_saida = "resultados_22_28";         # passo 6: "resultados_projetos"
+pasta_antiga = "resultados";              # amostras ja feitas em 4-45 GHz (sao puladas)
+k_ini       = 1;                          # primeira amostra
+k_fim       = 2000;                       # ultima amostra
+
+###########################################################################
+# 1) CONSTANTES (artigo + configuracao validada)
+###########################################################################
+cd(pasta);
+format long;
+um     = 1e-6;
+per    = 6400*um;      # periodo da celula  p = 6,4 mm
+lpix   = 200*um;       # pixel              l = 0,2 mm
+t_cu   = 18*um;        # cobre              t = 0,018 mm
+h_sub  = 1500*um;      # FR4                h = 1,5 mm
+f_ini  = 22e9;
+f_fim  = 28e9;
+n_pts  = 601;          # passo de 10 MHz
+t_sim  = 8e-9;         # 8 ns (o auto shutoff para antes)
+
+###########################################################################
+# 2) ESTRUTURA FIXA: FR4, regiao FDTD, malha, fonte, monitor
+###########################################################################
+switchtolayout;
+groupscope("::model");
+deleteall;
+
+if (materialexists("FR4_ghorbani") == 0) {
+    nome_mat = addmaterial("(n,k) Material");
+    setmaterial(nome_mat, "name", "FR4_ghorbani");
+}
+setmaterial("FR4_ghorbani", "Refractive Index", 2.0494);          # eps = 4,2 + 0,025i
+setmaterial("FR4_ghorbani", "Imaginary Refractive Index", 0.0061);
+
+addrect;
+set("name", "FR4");
+set("x", 0);   set("x span", per + 2*lpix);
+set("y", 0);   set("y span", per + 2*lpix);
+set("z min", -h_sub - 100*um);   set("z max", 0);
+set("material", "FR4_ghorbani");
+
+addfdtd;                                         # terra = fronteira Metal em z = -1500 um
+set("dimension", "3D");
+set("x", 0);   set("x span", per);
+set("y", 0);   set("y span", per);
+set("z min", -h_sub);   set("z max", 15000*um);
+set("x min bc", "Periodic");
+set("y min bc", "Periodic");
+set("z min bc", "Metal");
+set("z max bc", "PML");
+set("simulation time", t_sim);
+set("mesh accuracy", 2);
+set("auto shutoff min", 1e-5);
+
+setglobalsource("set frequency", 1);
+setglobalsource("frequency start", f_ini);
+setglobalsource("frequency stop",  f_fim);
+setglobalmonitor("frequency points", n_pts);
+
+addmesh;
+set("name", "malha_cobre");
+set("override x mesh", 1);   set("dx", lpix/2);
+set("override y mesh", 1);   set("dy", lpix/2);
+set("override z mesh", 1);   set("dz", 18*um);
+set("x", 0);   set("x span", per);
+set("y", 0);   set("y span", per);
+set("z min", 0);   set("z max", t_cu);
+
+addplane;
+set("name", "fonte");
+set("injection axis", "z-axis");
+set("direction", "Backward");
+set("plane wave type", "Bloch/periodic");
+set("polarization angle", 0);
+set("x", 0);   set("x span", per);
+set("y", 0);   set("y span", per);
+set("z", 8000*um);
+
+addpower;
+set("name", "R");
+set("monitor type", "2D Z-normal");
+set("x", 0);   set("x span", per);
+set("y", 0);   set("y span", per);
+set("z", 11000*um);
+
+###########################################################################
+# 3) LER AS AMOSTRAS E O QUE JA FOI FEITO
+###########################################################################
+dados = readdata(arquivo_in);                    # cada linha: id + 1024 pixels
+tam   = size(dados);
+n_am  = tam(1);
+if (k_fim > n_am) { k_fim = n_am; }
+?"Arquivo " + arquivo_in + ": " + num2str(n_am) + " amostras. Vou simular de " + num2str(k_ini) + " a " + num2str(k_fim) + ".";
+
+arq_todos  = pasta_saida + "/s11_todos.txt";
+arq_freq   = pasta_saida + "/frequencias.txt";
+ids_feitos = [-1];
+if (fileexists(arq_todos) == 1) {
+    tmp_todos  = readdata(arq_todos);
+    tam_todos  = size(tmp_todos);
+    ids_feitos = tmp_todos(1:tam_todos(1), 1);
+    ?"O arquivo unico ja tem " + num2str(tam_todos(1)) + " amostras: elas serao puladas.";
+}
+arq_antigo = pasta_antiga + "/s11_todos.txt";
+if (fileexists(arq_antigo) == 1) {
+    tmp_ant = readdata(arq_antigo);
+    tam_ant = size(tmp_ant);
+    ids_feitos = [ids_feitos; tmp_ant(1:tam_ant(1), 1)];
+    ?"Ja simuladas em 4-45 GHz (" + arq_antigo + "): " + num2str(tam_ant(1)) + " amostras -> puladas tambem.";
+}
+
+###########################################################################
+# 4) LACO: montar -> simular -> acrescentar ao arquivo unico
+###########################################################################
+for (k = k_ini:k_fim) {
+    id_am = dados(k, 1);
+    if (sum(ids_feitos == id_am) > 0) {
+        ?"Amostra " + num2str(id_am) + ": ja esta no arquivo, pulando.";
+    } else {
+        switchtolayout;
+        groupscope("::model");
+        if (getnamednumber("cobre") > 0) { select("cobre"); delete; }
+
+        # cobre: 1 retangulo PEC por trecho continuo de pixels de cada linha
+        addstructuregroup;
+        set("name", "cobre");
+        set("x", 0); set("y", 0); set("z", 0);
+        groupscope("::model::cobre");
+        n_ret = 0;
+        for (lin = 1:32) {
+            inicio = 0;
+            for (col = 1:33) {
+                val = 0;
+                if (col <= 32) { val = dados(k, 1 + (lin - 1)*32 + col); }
+                if ((val > 0.5) & (inicio == 0)) { inicio = col; }
+                if ((val < 0.5) & (inicio > 0)) {
+                    fim = col - 1;
+                    addrect;
+                    set("name", "cu");
+                    set("x", -per/2 + ((inicio - 1) + fim)/2*lpix);
+                    set("x span", (fim - inicio + 1)*lpix);
+                    set("y", per/2 - (lin - 0.5)*lpix);
+                    set("y span", lpix);
+                    set("z min", 0);
+                    set("z max", t_cu);
+                    set("material", "PEC (Perfect Electrical Conductor)");
+                    n_ret = n_ret + 1;
+                    inicio = 0;
+                }
+            }
+        }
+        groupscope("::model");
+        ?"Amostra " + num2str(id_am) + " (" + num2str(k) + " de " + num2str(k_fim) + "): " + num2str(n_ret) + " retangulos. Simulando...";
+
+        save(pasta + "/sim_trabalho.fsp");
+        run;
+
+        refl = abs(transmission("R"));
+        freq = getdata("R", "f");
+        n_f  = length(freq);
+        if (freq(1) > freq(n_f)) { ordem = n_f:-1:1; } else { ordem = 1:n_f; }
+        f_ghz = freq(ordem)*1e-9;
+        s11   = 10*log10(refl(ordem));
+
+        if (fileexists(arq_freq) == 0) { format long; write(arq_freq, num2str(f_ghz)); }
+        format short;
+        write(arq_todos, num2str(id_am) + " " + num2str(transpose(s11)));
+        format long;
+        ids_feitos = [ids_feitos; id_am];
+        ?"   acrescentada ao arquivo unico (S11 min = " + num2str(min(s11)) + " dB)";
+    }
+}
+?"FIM: amostras " + num2str(k_ini) + " a " + num2str(k_fim) + " estao em " + arq_todos;
+?"Proximo passo (cmd):  python 04_montar_dataset.py";

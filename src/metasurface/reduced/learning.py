@@ -267,5 +267,8 @@ def train(dataset_path, output_dir, options, max_steps=None):
               f"val_exact_accuracy={val['exact_accuracy']:.3f}", flush=True)
     if state["best_model"] is None:
         raise ValueError("No validation epoch completed. Resume training before evaluation.")
+    model.load_state_dict(state["best_model"])
+    state["model"] = model.state_dict()
+    save_checkpoint(path, state)
     print(f"Checkpoint: {path}. Best validation loss: {state['best_loss']:.5f}")
     return path

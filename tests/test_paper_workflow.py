@@ -24,6 +24,56 @@ def test_restricted_network_shapes_and_parameters():
     assert sum(p.numel() for p in model.parameters()) == 788648
 
 
+def test_paper_training_stops_after_thirty_stale_validation_epochs(tmp_path):
+    """Stop paper training at the configured stale-validation threshold.
+
+    Args:
+        tmp_path (Path): Isolated output directory.
+    """
+    import copy
+
+    from metasurface import config
+    from metasurface.common.storage import load_npz
+    from metasurface.paper.dataset import prepare, simulate
+    from metasurface.paper.learning import train
+    from metasurface.paper.manifest import generate
+    from metasurface.reduced.learning import load_checkpoint, save_checkpoint
+
+    manifest = generate(tmp_path / "geometries", count=32)
+
+    def artificial_response(codes, frequencies):
+        """Return a resolved fixture notch for every layout.
+
+        Args:
+            codes (ndarray): Tile choices.
+            frequencies (ndarray): Frequency samples in Hz.
+
+        Returns:
+            dict: Fixture reflection powers.
+        """
+        ghz = frequencies / 1e9
+        db = -20 * np.maximum(1 - abs(ghz - (18 + int(codes[0])) / 1.5), 0)
+        power = 10 ** (db / 10)
+        return {"co": power, "cross": np.zeros_like(power), "total": power.copy()}
+
+    raw = simulate(manifest, tmp_path / "data", config.PHYSICS, simulator=artificial_response)
+    dataset = prepare(raw, tmp_path / "data/training_dataset.npz")
+    options = {**config.PAPER_TRAINING, "device": "cpu", "max_epochs": 2,
+               "patience": 30, "allow_test_fixture": True}
+    checkpoint = train(dataset, tmp_path / "training", options, max_steps=1)
+    state = load_checkpoint(checkpoint)
+    state.update(best_loss=0.0, best_model=copy.deepcopy(state["model"]), stale=29)
+    save_checkpoint(checkpoint, state)
+
+    completed = load_checkpoint(train(dataset, tmp_path / "training", options))
+    assert completed["epoch"] == 1
+    assert completed["stale"] == 30
+    assert completed["finished"]
+    assert all(torch.equal(completed["model"][key], completed["best_model"][key])
+               for key in completed["model"])
+    assert load_npz(raw)["completed"].all()
+
+
 def test_paper_fixture_pipeline_is_separate_and_labeled(tmp_path, capsys):
     """Exercise paper-scale checkpoints without claiming a physical result.
 

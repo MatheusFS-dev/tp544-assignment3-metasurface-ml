@@ -79,6 +79,7 @@ def train(dataset_path, output_dir, options, max_steps=None):
     """
     import json
     import time
+    import copy
     from pathlib import Path
 
     import numpy as np
@@ -89,7 +90,7 @@ def train(dataset_path, output_dir, options, max_steps=None):
     from metasurface.reduced.learning import load_checkpoint, save_checkpoint
 
     options = dict(options)
-    if (options["batch_size"] < 1 or options["max_epochs"] < 1 or
+    if (options["batch_size"] < 1 or options["max_epochs"] < 1 or options["patience"] < 1 or
             options["learning_rate"] <= 0 or not 0 <= options["dropout"] < 1):
         raise ValueError("Invalid paper training options.")
     data = load_dataset(dataset_path)
@@ -125,17 +126,21 @@ def train(dataset_path, output_dir, options, max_steps=None):
             torch.cuda.set_rng_state_all(state["cuda_rng"])
     else:
         shuffled = np.random.default_rng(options["seed"]).permutation(eligible)
-        cutoff = int(0.70 * len(shuffled))
-        train_ids, test_ids = shuffled[:cutoff].tolist(), shuffled[cutoff:].tolist()
+        train_end = int(0.70 * len(shuffled))
+        val_end = train_end + max(1, int(0.15 * len(shuffled)))
+        train_ids = shuffled[:train_end].tolist()
+        val_ids = shuffled[train_end:val_end].tolist()
+        test_ids = shuffled[val_end:].tolist()
         rows = data["features"][train_ids]
         mean, std = rows.mean(axis=0), rows.std(axis=0)
         std[std < 1e-8] = 1
         state = {"schema": 1, "dataset_id": data["checksum"].item(), "options_json": option_id,
                  "torch_version": str(torch.__version__), "metadata": metadata,
-                 "splits": {"train": train_ids, "test": test_ids},
+                 "splits": {"train": train_ids, "val": val_ids, "test": test_ids},
                  "mean": torch.tensor(mean, dtype=torch.float32),
                  "std": torch.tensor(std, dtype=torch.float32), "epoch": 0, "step": 0,
-                 "cursor": 0, "order": torch.empty(0, dtype=torch.long), "history": [],
+                 "cursor": 0, "order": torch.empty(0, dtype=torch.long), "best_loss": float("inf"),
+                 "best_model": None, "stale": 0, "history": [],
                  "batch_history": [],
                  "sum_loss": 0.0, "seen": 0, "finished": False}
     state.setdefault("batch_history", [])
@@ -192,6 +197,14 @@ def train(dataset_path, output_dir, options, max_steps=None):
             train_bit_accuracy = ((output >= 0.5) == (target >= 0.5)).float().mean().item()
             train_tile_accuracy = match.float().mean().item()
             train_exact_accuracy = match.all(dim=1).float().mean().item()
+            val_ids = state["splits"]["val"]
+            val_output = model(x[val_ids])
+            val_target = y[val_ids]
+            val_match = decode_bits(val_output) == decode_bits(val_target)
+            val_loss = nn.functional.mse_loss(val_output, val_target).item()
+            val_bit_accuracy = ((val_output >= 0.5) == (val_target >= 0.5)).float().mean().item()
+            val_tile_accuracy = val_match.float().mean().item()
+            val_exact_accuracy = val_match.all(dim=1).float().mean().item()
             test_ids = state["splits"]["test"]
             test_output = model(x[test_ids])
             test_target = y[test_ids]
@@ -204,17 +217,32 @@ def train(dataset_path, output_dir, options, max_steps=None):
         record = {"epoch": state["epoch"], "train_loss": state["sum_loss"] / state["seen"],
                   "train_eval_loss": train_eval_loss, "train_bit_accuracy": train_bit_accuracy,
                   "train_tile_accuracy": train_tile_accuracy, "train_exact_accuracy": train_exact_accuracy,
+                  "val_loss": val_loss, "val_bit_accuracy": val_bit_accuracy,
+                  "val_tile_accuracy": val_tile_accuracy, "val_exact_accuracy": val_exact_accuracy,
                   "test_loss": test_loss, "test_bit_accuracy": test_bit_accuracy,
                   "test_tile_accuracy": test_tile_accuracy, "test_exact_accuracy": test_exact_accuracy}
         state["history"].append(record)
+        if val_loss < state["best_loss"]:
+            state["best_loss"] = val_loss
+            state["best_model"] = copy.deepcopy(model.state_dict())
+            state["stale"] = 0
+        else:
+            state["stale"] += 1
         state["order"] = torch.empty(0, dtype=torch.long)
         state["cursor"] = 0
         state["sum_loss"] = 0.0
         state["seen"] = 0
-        state["finished"] = state["epoch"] >= options["max_epochs"]
+        state["finished"] = state["stale"] >= options["patience"] or state["epoch"] >= options["max_epochs"]
         save_checkpoint(path, state)
         print(f"Paper epoch {state['epoch']}: train_loss={record['train_loss']:.5f} "
+              f"val_loss={val_loss:.5f} "
               f"train_bit_accuracy={train_bit_accuracy:.3f} "
               f"train_tile_accuracy={train_tile_accuracy:.3f} "
               f"train_exact_accuracy={train_exact_accuracy:.3f}", flush=True)
+    if state["best_model"] is None:
+        raise ValueError("No validation epoch completed. Resume training before evaluation.")
+    model.load_state_dict(state["best_model"])
+    state["model"] = model.state_dict()
+    save_checkpoint(path, state)
+    print(f"Checkpoint: {path}. Best validation loss: {state['best_loss']:.5f}")
     return path

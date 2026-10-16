@@ -1,0 +1,15 @@
+{
+  "stage": "04_test_and_export",
+  "started_at_utc": "2026-10-16T19:21:10.210318+00:00",
+  "status": "completed",
+  "log": "logs/04_test_and_export/20261016T192110210318Z-1096966.log",
+  "parts": [
+    {
+      "name": "evaluation_export",
+      "status": "completed",
+      "elapsed_seconds": 0.5281406999856699
+    }
+  ],
+  "ended_at_utc": "2026-10-16T19:21:12.704160+00:00",
+  "elapsed_seconds": 2.493822924006963
+}

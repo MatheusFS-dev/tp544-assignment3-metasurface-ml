@@ -1,0 +1,57 @@
+{
+  "dataset_id": "d83c3d39556e831b8314889b3b1b767ae0bf216b6686a18a7568ebbcac14bf44",
+  "metadata": {
+    "available_traces": [
+      "reflection_power"
+    ],
+    "backend": "external_lumerical_import",
+    "export_physics": "repository_default_geometry_with_PEC_from_supplied_lsf",
+    "family": "paper-scale-rings-v1",
+    "feature_trace": "reflection_power",
+    "geometry_labels": "p11_to_p44_minus_one_from_amostras_csv",
+    "geometry_pixel_manifest": "not_supplied",
+    "physics": {
+      "autoshutoff": 1e-06,
+      "convergence_power_tolerance": 0.02,
+      "copper_conductivity_s_m": 58000000.0,
+      "epsilon_imag": 0.025,
+      "epsilon_real": 4.2,
+      "frequency_max_hz": 45000000000.0,
+      "frequency_min_hz": 4000000000.0,
+      "frequency_points": 4001,
+      "incident_z_m": 0.003,
+      "material_fit_tolerance": 0.01,
+      "mesh_xy_m": 0.0001,
+      "mesh_z_m": 0.0001,
+      "metal_model": "pec",
+      "metal_thickness_m": 1.8e-05,
+      "minimum_pulse_power": 0.001,
+      "pixel_m": 0.0002,
+      "reflection_z_m": 0.006,
+      "simulation_time_s": 3e-08,
+      "source_z_m": 0.004,
+      "substrate_thickness_m": 0.0015,
+      "z_max_m": 0.01,
+      "z_min_m": -0.005
+    },
+    "raw_simulation_id": "e2c9da38b430613e96af58f27d2b96e45bcccfa0f587cdec92bfee70f3ab39d9",
+    "reflection_trace": "S11_dB_supplied_as_total_or_co_polarization_unspecified",
+    "schema": 1,
+    "source_files": {
+      "frequencies": "frequencias.txt",
+      "notches": "preliminar_notches.csv",
+      "samples": "amostras.csv",
+      "spectra": "s11_todos.txt"
+    },
+    "stage": "training_dataset"
+  },
+  "completed": 302,
+  "total": 302,
+  "eligible": 175,
+  "reasons": {
+    "no_notches": 86,
+    "ok": 175,
+    "truncated_notch": 4,
+    "unresolved_notch": 37
+  }
+}

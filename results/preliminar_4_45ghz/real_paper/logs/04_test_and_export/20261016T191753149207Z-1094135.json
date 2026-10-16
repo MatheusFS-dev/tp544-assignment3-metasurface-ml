@@ -1,0 +1,18 @@
+{
+  "stage": "04_test_and_export",
+  "started_at_utc": "2026-10-16T19:17:53.149207+00:00",
+  "status": "failed",
+  "log": "logs/04_test_and_export/20261016T191753149207Z-1094135.log",
+  "parts": [
+    {
+      "name": "evaluation_export",
+      "status": "failed",
+      "error_type": "KeyError",
+      "elapsed_seconds": 0.2747465360153001
+    }
+  ],
+  "error_type": "KeyError",
+  "error_message": "'pixel_m'",
+  "ended_at_utc": "2026-10-16T19:17:55.337559+00:00",
+  "elapsed_seconds": 2.188326782983495
+}
